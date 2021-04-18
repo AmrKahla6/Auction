@@ -46,6 +46,16 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'user-api' => [
+            'driver'   => 'jwt',
+            'provider' => 'users',
+        ],
+
+        'member-api' => [
+            'driver'   => 'jwt',
+            'provider' => 'members',
+        ],
     ],
 
     /*
@@ -69,6 +79,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'members' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Member::class,
         ],
 
         // 'users' => [
@@ -95,6 +110,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'members' => [
+            'provider' => 'members',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
