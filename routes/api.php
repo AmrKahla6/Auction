@@ -14,13 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(
-    ['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
-    ], function(){
-        Route::namespace('API')->group(function(){
-
+Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], function () {
+            //user Controller routes
+            Route::post('register-business', 'UserController@registerBusiness');
+            Route::post('register', 'UserController@register');
         });
-    });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
