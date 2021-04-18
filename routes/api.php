@@ -19,6 +19,16 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('register-business', 'UserController@registerBusiness');
             Route::post('register', 'UserController@register');
             Route::post('login', 'UserController@login');
+            Route::post('forgetpassword', 'UserController@forgetpassword');
+            Route::post('activcode', 'UserController@activcode');
+
+            //Auth guard Member
+            Route::group(['middleware' => ['auth.guard:member-api'],], function () {
+                Route::post('logout', 'UserController@logout');
+                Route::post('rechangepass', 'UserController@rechangepass');
+                Route::post('update-commercial-profile', 'UserController@updateCommercialProfile');
+                Route::post('update-profile', 'UserController@updateProfile');
+            });
         });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

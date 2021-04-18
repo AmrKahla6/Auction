@@ -15,6 +15,15 @@
         'username'          => 'User Name is required',
         'nationality'       => 'Nationality is required',
         'false_info'        => "Error credentials",
-        'login'                 => "Successfully logged in",
+        'login'             => "Successfully logged in",
+        'wrangs'            => "some thing went wrongs",
+        'logout'            => "Successfully logged out",
+        'wrang_email'       => "Invalid email",
+        'sent_email'        => "Code send box",
+        'wrang_code'        => "Code is wrong",
+        'new_pass'          => "Password changed successfully",
+        'successMesg'       => "Message sent successfully",
+        'usernotexist'      => "User not exist",
+        "infoupdate"        => "Information updated successfully",
     ];
 ?>
