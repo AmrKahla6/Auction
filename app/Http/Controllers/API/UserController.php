@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Validator;
 use App\Models\Member;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -111,5 +112,50 @@ class UserController extends BaseController
         }catch (\Exception $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
+    }
+
+
+    /**
+     * Member Login
+     */
+
+    public function login(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email'          => 'required',
+                'password'       => 'required',
+            ], [
+                'email.required'        => __("user.email"),
+                'password.required'     => __("user.password"),
+            ]);
+
+                if ($validator->fails()) {
+                    $code = $this->returnCodeAccordingToInput($validator);
+                    return $this->returnValidationError($code, $validator);
+                }
+                //login
+
+                $credentials = $request->only(['email', 'password']);
+                $token = Auth::guard('member-api')->attempt($credentials);  //generate token
+
+                if (!$token)
+                    return $this->returnError('E001', __('user.false_info'));
+
+                $user = Auth::guard('member-api')->user();
+                $user ->api_token = $token;
+
+                $response = [
+                    'id'        => $user->id,
+                    'username'  => $user->username,
+                    'phone'     => $user->phone,
+                    'email'     => $user->email,
+                    'api_token' => $token,
+                ];
+                //return token
+                return $this->returnData('user', $response,__('user.login'));  //return json response
+        } catch (\Exception $ex) {
+                return $this->returnError($ex->getCode(), $ex->getMessage());
+            }
     }
 }

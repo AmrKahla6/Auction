@@ -14,6 +14,7 @@
         'regist_success'    => 'successfully registered',
         'username'          => 'User Name is required',
         'nationality'       => 'Nationality is required',
-
+        'false_info'        => "Error credentials",
+        'login'                 => "Successfully logged in",
     ];
 ?>
