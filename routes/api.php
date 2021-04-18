@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(
+    ['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){
+        Route::namespace('API')->group(function(){
+
+        });
+    });
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
