@@ -22,6 +22,15 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('forgetpassword', 'UserController@forgetpassword');
             Route::post('activcode', 'UserController@activcode');
 
+
+            //Get Main Category
+            Route::post('main-category','CategoyController@mainCategory');
+
+
+            //Get Sub Category
+            Route::post('sub-category','CategoyController@subCategory');
+
+
             //Auth guard Member
             Route::group(['middleware' => ['auth.guard:member-api'],], function () {
                 Route::post('logout', 'UserController@logout');

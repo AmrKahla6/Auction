@@ -25,5 +25,6 @@
         'successMesg'       => "Message sent successfully",
         'usernotexist'      => "User not exist",
         "infoupdate"        => "Information updated successfully",
+        'no_categories'     => 'No Categories Yet',
     ];
 ?>
