@@ -25,6 +25,11 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
             //Get Main Category
             Route::post('main-category','CategoyController@mainCategory');
+            //Get Sub Category
+            Route::post('sub-category','CategoyController@subCategory');
+
+            //Category Parameters
+            Route::post('category-params','CategoyController@catParam');
 
 
             //App Setting
@@ -34,8 +39,6 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Contact Us
             Route::post('contact-us', 'AppsettingController@contactus');
 
-            //Get Sub Category
-            Route::post('sub-category','CategoyController@subCategory');
 
             //Get common Questions
             Route::post('common-quetions','CategoyController@commonQuetions');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Category;
+use App\Models\catParameter;
 use Illuminate\Http\Request;
 use App\Models\CommonQuestion;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,20 @@ class CategoyController extends BaseController
             return $this -> returnError('',$errormessage);
         }
     }
+
+    /**
+     * Category Parameters
+     */
+
+     public function catParam(Request $request){
+        $barams = catParameter::select("id","param_name_" .app()->getLocale() . ' as Parameters','type')->where('cat_id',$request->cat_id)->get();
+        if($barams){
+            return $this->returnData('Parameters', $barams);
+        }else{
+            $errormessage = __('user.no_params');
+            return $this -> returnError('',$errormessage);
+        }
+     }
 
     /**
      * Get Common Questions

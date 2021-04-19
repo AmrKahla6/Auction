@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
          $this->call(CommonQuestionsSeeder::class);
          $this->call(TermsSeeder::class);
          $this->call(AboutSeeder::class);
+         $this->call(CategoryParamSeeder::class);
     }
 }
