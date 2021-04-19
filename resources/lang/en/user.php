@@ -29,5 +29,6 @@
         'no_questions'      => 'No Questions',
         'no_term'           => 'No Terms',
         'no_detials'        => 'No Detials',
+        'message'           => 'Message is required',
     ];
 ?>
