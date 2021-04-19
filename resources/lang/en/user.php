@@ -26,5 +26,6 @@
         'usernotexist'      => "User not exist",
         "infoupdate"        => "Information updated successfully",
         'no_categories'     => 'No Categories Yet',
+        'no_questions'      => 'No Questions',
     ];
 ?>

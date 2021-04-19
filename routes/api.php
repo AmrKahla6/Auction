@@ -30,6 +30,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Get Sub Category
             Route::post('sub-category','CategoyController@subCategory');
 
+            //Get common Questions
+            Route::post('common-quetions','CategoyController@commonQuetions');
+
 
             //Auth guard Member
             Route::group(['middleware' => ['auth.guard:member-api'],], function () {
