@@ -27,6 +27,10 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('main-category','CategoyController@mainCategory');
 
 
+            //App Setting
+            Route::post('terms','AppsettingController@terms');
+            Route::post('about-as','AppsettingController@about_as');
+
             //Get Sub Category
             Route::post('sub-category','CategoyController@subCategory');
 

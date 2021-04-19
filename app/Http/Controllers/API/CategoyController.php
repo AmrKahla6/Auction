@@ -38,6 +38,10 @@ class CategoyController extends BaseController
         }
     }
 
+    /**
+     * Get Common Questions
+     */
+
     public function commonQuetions(){
         $common = CommonQuestion::select("id","question_" .app()->getLocale() . ' as question', "answer_" .app()->getLocale() . ' as answer')->get();
         if($common){

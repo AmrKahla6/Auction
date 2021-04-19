@@ -27,5 +27,7 @@
         "infoupdate"        => "Information updated successfully",
         'no_categories'     => 'No Categories Yet',
         'no_questions'      => 'No Questions',
+        'no_term'           => 'No Terms',
+        'no_detials'        => 'No Detials',
     ];
 ?>
