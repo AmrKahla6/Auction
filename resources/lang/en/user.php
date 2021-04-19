@@ -31,5 +31,16 @@
         'no_detials'        => 'No Detials',
         'message'           => 'Message is required',
         'no_params'         => 'No Parameters',
+        'address'           => "Address is required",
+        'price'             => 'Price is required',
+        'price_opining'     => 'Price Opining is required',
+        'start_data'        => 'Start Data is required',
+        'end_data'          => 'End Data is required',
+        'start_time'        => 'Start Time is required',
+        'end_time'          => 'End Time is required',
+        'detials'           => 'Detials is required',
+        'cat_id'            => 'Category is required',
+        'type_id'           => 'Auction type is required',
+        'auction_success'   => 'Added Auction Successfuly',
     ];
 ?>

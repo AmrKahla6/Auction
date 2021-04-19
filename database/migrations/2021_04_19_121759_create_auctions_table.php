@@ -15,14 +15,23 @@ class CreateAuctionsTable extends Migration
     {
         Schema::create('auctions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('member_id')->nullable();
             $table->string('address')->nullable();
             $table->decimal('price',8,2)->nullable();
+            $table->decimal('price_opining',8,2)->nullable();
+            $table->decimal('price_closing',8,2)->nullable();
+            $table->string('start_data')->nullable();
+            $table->string('end_data')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->text('detials',8,2)->nullable();
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
+
+
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('auction_types')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
