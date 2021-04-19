@@ -53,6 +53,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
                 Route::post('rechangepass', 'UserController@rechangepass');
                 Route::post('update-commercial-profile', 'UserController@updateCommercialProfile');
                 Route::post('update-profile', 'UserController@updateProfile');
+
+                //New Auction
+                Route::post('store-auction', 'AuctionController@storeAcution');
             });
         });
 

@@ -15,4 +15,8 @@ class AuctionController extends BaseController
             return $this->returnData('Acution Type', $type);
         }
     }
+
+    public function storeAcution(Request $request){
+
+    }
 }
