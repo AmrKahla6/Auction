@@ -15,6 +15,8 @@ class CreateAuctionTypesTable extends Migration
     {
         Schema::create('auction_types', function (Blueprint $table) {
             $table->id();
+            $table->string('type_name_ar', 100)->nullable();
+            $table->string('type_name_en', 100)->nullable();
             $table->timestamps();
         });
     }

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
          $this->call(TermsSeeder::class);
          $this->call(AboutSeeder::class);
          $this->call(CategoryParamSeeder::class);
+         $this->call(AuctionTypesSeeder::class);
     }
 }

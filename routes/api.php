@@ -31,6 +31,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Category Parameters
             Route::post('category-params','CategoyController@catParam');
 
+            //Auction Type
+            Route::post('auction-type','AuctionController@auctionType');
+
 
             //App Setting
             Route::post('terms','AppsettingController@terms');
