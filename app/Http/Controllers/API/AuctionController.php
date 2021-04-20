@@ -7,7 +7,9 @@ use App\Models\Member;
 use App\Models\Auction;
 use App\Models\AuctionType;
 use App\Models\AuctionImage;
+use App\Models\catParameter;
 use Illuminate\Http\Request;
+use App\Models\AuctionDetials;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\BaseController as BaseController;
 
@@ -83,6 +85,20 @@ class AuctionController extends BaseController
                     }
                 }
             }
+            if ($request->paramsarr) {
+                $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
+                if($catParams){
+                    $param_value = $request['paramsarr'];
+                    foreach($catParams as $params){
+                        $newdetials = new AuctionDetials;
+                        $newdetials->auction_id     = $newauction->id;
+                        $newdetials->param_name_ar  = $params['param_name_ar'];
+                        $newdetials->param_name_en  = $params['param_name_en'];
+                        $newdetials->save();
+                    }
+                }
+            }
+
             $message = __("user.auction_success");
             return $this->returnData('Acution', $message);
         } else {
