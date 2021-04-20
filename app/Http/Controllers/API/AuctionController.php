@@ -88,12 +88,15 @@ class AuctionController extends BaseController
             if ($request->paramsarr) {
                 $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
                 if($catParams){
-                    $param_value = $request['paramsarr'];
-                    foreach($catParams as $params){
+                    $p_value = $request->paramsarr;
+                    foreach($catParams  as $params){
                         $newdetials = new AuctionDetials;
                         $newdetials->auction_id     = $newauction->id;
                         $newdetials->param_name_ar  = $params['param_name_ar'];
                         $newdetials->param_name_en  = $params['param_name_en'];
+                        foreach ($p_value as $key => $value) {
+                            $newdetials->param_value    = $value;
+                        }
                         $newdetials->save();
                     }
                 }
