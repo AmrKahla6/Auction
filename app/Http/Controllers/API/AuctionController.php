@@ -195,4 +195,28 @@ class AuctionController extends BaseController
             return $this -> returnError('',__('user.usernotexist'));
         }
      }
+
+    /**
+    * Cancle Auction
+    */
+
+    public function cancleAuction(Request $request){
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $auction = Auction::where("id", $request->auction_id)->first();
+            if($auction){
+                if($auction->status == 1){
+                    return $this -> returnError('error',__("user.auction_ar_cancle"));
+               }
+               $auction->status = 1;
+               $auction->save();
+               return $this->sendResponse('success', __("user.insur_cancle"));
+            }else{
+                return $this->sendError('success', __("user.acutionnitexists"));
+            }
+        }else{
+            return $this->sendError('success', __("user.usernotexist"));
+        }
+    }
+
 }

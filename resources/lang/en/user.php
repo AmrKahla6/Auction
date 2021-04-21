@@ -44,5 +44,7 @@
         'auction_success'   => 'Added Auction Successfuly',
         'acutionnitexists'  => 'Acution not exist',
         'upAcution'         => 'Acution updated successfuly',
+        'auction_ar_cancle' => "Auction arleady cancled",
+        'insur_cancle'      => "Auction cancled",
     ];
 ?>

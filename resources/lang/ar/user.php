@@ -43,5 +43,7 @@
         'auction_success'   => 'تم اضافه المزاد بنجاح',
         'acutionnitexists'  => 'مزاد غير موجود',
         'upAcution'         => 'تم تعديل المزاد بنجاح',
+        'auction_ar_cancle' => 'المزاد ملغي بالفعل',
+        'insur_cancle'      => "تم الغاء المزاد",
     ];
 ?>
