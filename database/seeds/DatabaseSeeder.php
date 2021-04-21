@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
          $this->call(AboutSeeder::class);
          $this->call(CategoryParamSeeder::class);
          $this->call(AuctionTypesSeeder::class);
+         $this->call(SelectParamsSeeder::class);
     }
 }

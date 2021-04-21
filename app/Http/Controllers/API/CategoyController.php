@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Category;
 use App\Models\catParameter;
+use App\Models\selectParams;
 use Illuminate\Http\Request;
 use App\Models\CommonQuestion;
 use App\Http\Controllers\Controller;
@@ -47,6 +48,21 @@ class CategoyController extends BaseController
         $barams = catParameter::select("id","param_name_" .app()->getLocale() . ' as Parameters','type')->where('cat_id',$request->cat_id)->get();
         if($barams){
             return $this->returnData('Parameters', $barams);
+        }else{
+            $errormessage = __('user.no_params');
+            return $this -> returnError('',$errormessage);
+        }
+     }
+
+
+     /**
+     * Select Category Parameters
+     */
+
+    public function selectParams(Request $request){
+        $select = selectParams::select("id","param_name_" .app()->getLocale() . ' as param_name')->where('param_id',$request->param_id)->get();
+        if($select){
+            return $this->returnData('Parameters', $select);
         }else{
             $errormessage = __('user.no_params');
             return $this -> returnError('',$errormessage);
