@@ -90,6 +90,7 @@ class AuctionController extends BaseController
                     for ($i=0; $i <count($catParams) ; $i++) {
                         $newdetials = new AuctionDetials;
                         $newdetials->auction_id     = $newauction->id;
+                        $newdetials->cat_id         = $request['cat_id'];
                         $newdetials->param_name_ar  = $catParams[$i]['param_name_ar'];
                         $newdetials->param_name_en  = $catParams[$i]['param_name_en'];
                         $newdetials->param_value    = $p_value[$i];
@@ -172,6 +173,20 @@ class AuctionController extends BaseController
                         }
                     }
                 }
+                if ($request->paramsarr) {
+                    $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
+                    if($catParams){
+                        $p_value = $request->paramsarr;
+                        $updetials = AuctionDetials::where('auction_id',$request->auction_id)->get();
+                        for ($i=0; $i <count($catParams) ; $i++) {
+                            $updetials[$i]->param_name_ar  = $catParams[$i]['param_name_ar'];
+                            $updetials[$i]->param_name_en  = $catParams[$i]['param_name_en'];
+                            $updetials[$i]->param_value    = $p_value[$i];
+                            $updetials[$i]->save();
+                        }
+                    }
+                }
+
                 return $this->returnData('success', __("user.upAcution"));
             }else{
                 return $this -> returnError('',__('user.acutionnitexists'));

@@ -19,7 +19,10 @@ class CreateAuctionDetialsTable extends Migration
             $table->string('param_name_en')->nullable();
             $table->string('param_value')->nullable();
             $table->unsignedBigInteger('auction_id')->nullable();
+            $table->unsignedBigInteger('cat_id')->nullable();
+
             $table->foreign('auction_id')->references('id')->on('auctions')->onDelete('cascade');
+            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
