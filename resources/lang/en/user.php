@@ -42,5 +42,7 @@
         'cat_id'            => 'Category is required',
         'type_id'           => 'Auction type is required',
         'auction_success'   => 'Added Auction Successfuly',
+        'acutionnitexists'  => 'Acution not exist',
+        'upAcution'         => 'Acution updated successfuly',
     ];
 ?>

@@ -56,6 +56,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //New Auction
                 Route::post('store-auction', 'AuctionController@storeAcution');
+
+                //Update Auction
+                Route::post('update-auction', 'AuctionController@updateAcution');
             });
         });
 

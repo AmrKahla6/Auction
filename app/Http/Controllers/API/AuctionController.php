@@ -29,7 +29,6 @@ class AuctionController extends BaseController
                 $request->all(),
                 [
                     'address'            => 'required',
-                    'price'              => 'required',
                     'price_opining'      => 'required',
                     'price_closing'      => 'nullable',
                     'start_data'         => 'required',
@@ -42,7 +41,6 @@ class AuctionController extends BaseController
                 ],
                 [
                     'address.required'             => __("user.address"),
-                    'price.required'               => __("user.price"),
                     'price_opining.required'       => __("user.price_opining"),
                     'start_data.required'          => __("user.start_data"),
                     'end_data.required'            => __("user.end_data"),
@@ -61,7 +59,7 @@ class AuctionController extends BaseController
             $newauction                     = new Auction;
             $newauction->member_id          = $request['member_id'];
             $newauction->address            = $request['address'];
-            $newauction->price              = $request['price'];
+            $newauction->price              = 0;
             $newauction->price_opining      = $request['price_opining'];
             $newauction->price_closing      = $request['price_closing'];
             $newauction->start_data         = $request['start_data'];
@@ -106,4 +104,80 @@ class AuctionController extends BaseController
             return $this -> returnError('',__('user.usernotexist'));
         }
     }
+
+    /**
+     * Update Acution
+     */
+
+     public function updateAcution(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'address'            => 'required',
+                'price_opining'      => 'required',
+                'price_closing'      => 'nullable',
+                'start_data'         => 'required',
+                'end_data'           => 'required',
+                'start_time'         => 'required',
+                'end_time'           => 'required',
+                'detials'            => 'required',
+                'cat_id'             => 'required',
+                'type_id'            => 'required',
+            ],
+            [
+                'address.required'             => __("user.address"),
+                'price_opining.required'       => __("user.price_opining"),
+                'start_data.required'          => __("user.start_data"),
+                'end_data.required'            => __("user.end_data"),
+                'start_time.required'          => __("user.start_time"),
+                'end_time.required'            => __("user.end_time"),
+                'cat_id.required'              => __("user.cat_id"),
+                'type_id.required'             => __("user.type_id"),
+            ]
+        );
+
+        if ($validator->fails()) {
+            $code = $this->returnCodeAccordingToInput($validator);
+            return $this->returnValidationError($code, $validator);
+        }
+
+        $user = Member::where('id', $request->member_id)->first();
+        if($user){
+            $upAcution = Auction::where('id', $request->auction_id)->where('member_id',$request->member_id)->first();
+
+            if($upAcution){
+                $upAcution->address       = $request->address;
+                $upAcution->price         = $upAcution->price;
+                $upAcution->price_opining = $request->price_opining;
+                $upAcution->price_closing = $request->price_closing;
+                $upAcution->start_data    = $request->start_data;
+                $upAcution->end_data      = $request->end_data;
+                $upAcution->start_time    = $request->start_time;
+                $upAcution->end_time      = $request->end_time;
+                $upAcution->detials       = $request->detials;
+                $upAcution->cat_id        = $request->cat_id;
+                $upAcution->type_id       = $request->type_id;
+                $upAcution->save();
+                //Update Images
+                if ($request->hasFile('imagesarr')) {
+                    $images = $request['imagesarr'];
+                    if($images){
+                        foreach ($images as $image) {
+                            $newimg = new AuctionImage;
+                            $img_name = rand(0, 999) . '.' . $image->getClientOriginalExtension();
+                            $image->move(base_path('/public/uploads/acution/'), $img_name);
+                            $newimg->img        = $img_name;
+                            $newimg->auction_id = $upAcution->id;
+                            $newimg->save();
+                        }
+                    }
+                }
+                return $this->returnData('success', __("user.upAcution"));
+            }else{
+                return $this -> returnError('',__('user.acutionnitexists'));
+            }
+        }else{
+            return $this -> returnError('',__('user.usernotexist'));
+        }
+     }
 }
