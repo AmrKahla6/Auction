@@ -52,5 +52,7 @@
         'tendersucc'        => 'tender added successfuly',
         'can_not_tender'    => 'Can not tender try another auction',
         'low_price'         => 'Low price for auction',
+        'noauctions'        => 'No Auctions',
+        'notender'          => 'No tender',
     ];
 ?>

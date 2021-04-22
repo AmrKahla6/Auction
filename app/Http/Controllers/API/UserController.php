@@ -4,12 +4,17 @@ namespace App\Http\Controllers\API;
 
 use Validator;
 use App\Models\Member;
+use App\Models\Tender;
+use App\Models\Auction;
+use App\Models\AuctionImage;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Models\AuctionDetials;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\Tender\TenderResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class UserController extends BaseController
@@ -348,4 +353,51 @@ class UserController extends BaseController
             return $this->returnError('E001', $errormessage);
         }
     }
+
+    /**
+     * My Acution v1
+     */
+
+     public function myAuction(Request $request){
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $auction = Auction::where('member_id',$request->member_id)->get();
+            if($auction){
+                for ($i=0; $i <count($auction) ; $i++) {
+                    $acutdetials = AuctionDetials::where('auction_id',$auction[$i]->id)->get();
+                    $acutimg     = AuctionImage::where('auction_id',$auction[$i]->id)->get();
+
+                    $response = [
+                        'acutions'    => $auction,
+                        'acutdetials' => $acutdetials,
+                        'images'      => $acutimg,
+                    ];
+
+                    return $this->returnData('success', $response);
+                }
+            }else{
+                return $this->sendError('success', __("user.usernoauctions"));
+            }
+        }else{
+            return $this->returnError('success', __("user.usernotexist"));
+        }
+     }
+
+     /**
+      * My Tender
+      */
+     public function myTender(Request $request){
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $tender = Tender::where('member_id',$request->member_id)->get();
+            if(count($tender) != 0){
+                $tend = TenderResource::collection(Tender::where('member_id',$request->member_id)->get());
+                return $this->returnData('success', $tend);
+            }else{
+                return $this->returnError('success', __("user.notender"));
+            }
+        }else{
+            return $this->returnError('success', __("user.usernotexist"));
+        }
+     }
 }
