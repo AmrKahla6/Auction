@@ -70,8 +70,11 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
                 //delete image
                 Route::post('delete-image-auction', 'AuctionController@delimage');
 
-                //delete image
+                //Get All  Auctions
                 Route::post('get-all-auction', 'AuctionController@getAll');
+
+                //get Auction
+                Route::post('get-auction', 'AuctionController@getAcution');
             });
         });
 

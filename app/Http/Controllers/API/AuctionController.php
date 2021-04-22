@@ -240,13 +240,28 @@ class AuctionController extends BaseController
 
 
     public function getAll(Request $request){
-        if($request->lang == "en"){
-            $auctions = AcutionResource_en::collection(Auction::get());
-        }else{
-            $auctions = AcutionResource_ar::collection(Auction::get());
-        }
-        if($auctions){
+        $aucs = Auction::where('status',0)->get();
+
+        if($aucs){
+            if($request->lang == "en"){
+                $auctions = AcutionResource_en::collection(Auction::where('status',0)->get());
+            }else{
+                $auctions = AcutionResource_ar::collection(Auction::where('status',0)->get());
+            }
             return $this->returnData('success', $auctions);
+        }
+            return $this->returnError('error', __('user.no_auctions'));
+        }
+
+    public function getAcution(Request $request){
+        $auc = Auction::where('id', $request->auction_id)->where('status',0)->first();
+        if($auc){
+            if($request->lang == "en"){
+                $auction = new AcutionResource_en(Auction::where('id', $request->auction_id)->first());
+            }else{
+                $auction = new AcutionResource_ar(Auction::where('id', $request->auction_id)->first());
+            }
+            return $this->returnData('success', $auction);
         }else{
             return $this->returnError('error', __('user.no_auctions'));
         }

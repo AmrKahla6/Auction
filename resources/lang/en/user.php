@@ -48,5 +48,6 @@
         'insur_cancle'      => "Auction cancled",
         'delimage'          => 'Image deleted successfuly',
         'imagenotexsist'    => 'Image not exist',
+        'no_auctions'       => 'Auction not exist',
     ];
 ?>
