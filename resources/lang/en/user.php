@@ -46,5 +46,7 @@
         'upAcution'         => 'Acution updated successfuly',
         'auction_ar_cancle' => "Auction arleady cancled",
         'insur_cancle'      => "Auction cancled",
+        'delimage'          => 'Image deleted successfuly',
+        'imagenotexsist'    => 'Image not exist',
     ];
 ?>

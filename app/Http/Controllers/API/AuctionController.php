@@ -11,6 +11,8 @@ use App\Models\catParameter;
 use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Acution\AcutionResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class AuctionController extends BaseController
@@ -55,7 +57,6 @@ class AuctionController extends BaseController
                 $code = $this->returnCodeAccordingToInput($validator);
                 return $this->returnValidationError($code, $validator);
             }
-
             $newauction                     = new Auction;
             $newauction->member_id          = $request['member_id'];
             $newauction->address            = $request['address'];
@@ -210,12 +211,39 @@ class AuctionController extends BaseController
                }
                $auction->status = 1;
                $auction->save();
-               return $this->sendResponse('success', __("user.insur_cancle"));
+               return $this->returnData('success', __("user.insur_cancle"));
             }else{
-                return $this->sendError('success', __("user.acutionnitexists"));
+                return $this -> returnError('error',__("user.acutionnitexists"));
             }
         }else{
             return $this->sendError('success', __("user.usernotexist"));
+        }
+    }
+
+    /**
+     * Delete Auction image
+     */
+
+    public function delimage(Request $request)
+    {
+        $image = AuctionImage::where('id', $request->image_id)->first();
+        $img   = AuctionImage::find($image->id)->img;
+        if($image){
+            Storage::disk('uploads')->delete('acution/' . $img);
+            $image->delete();
+            return $this->returnData('success', __('user.delimage'));
+        }else{
+            return $this->returnError('error', __('user.imagenotexsist'));
+        }
+    }
+
+
+    public function getAll(){
+        $auctions = AcutionResource_en::collection(Auction::get());
+        if($auctions){
+            return $this->returnData('success', $auctions);
+        }else{
+            return $this->returnError('error', __('user.no_auctions'));
         }
     }
 

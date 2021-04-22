@@ -66,6 +66,12 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //Cancle Auction
                 Route::post('cancel-auction', 'AuctionController@cancleAuction');
+
+                //delete image
+                Route::post('delete-image-auction', 'AuctionController@delimage');
+
+                //delete image
+                Route::post('get-all-auction', 'AuctionController@getAll');
             });
         });
 
