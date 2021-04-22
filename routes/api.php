@@ -75,6 +75,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //get Auction
                 Route::post('get-auction', 'AuctionController@getAcution');
+
+                //store tender
+                Route::post('store-tender', 'AuctionController@tender');
             });
         });
 

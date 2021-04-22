@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Validator;
 use App\Models\Member;
+use App\Models\Tender;
 use App\Models\Auction;
 use App\Models\AuctionType;
 use App\Models\AuctionImage;
@@ -264,6 +265,56 @@ class AuctionController extends BaseController
             return $this->returnData('success', $auction);
         }else{
             return $this->returnError('error', __('user.no_auctions'));
+        }
+    }
+
+
+    /**
+     * tender function
+    */
+
+    public function tender(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'price' => 'required',
+            ],
+            [
+                'address.required' => __("user.price"),
+            ]
+        );
+
+        if ($validator->fails()) {
+            $code = $this->returnCodeAccordingToInput($validator);
+            return $this->returnValidationError($code, $validator);
+        }
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $auction = Auction::where('id',$request->auction_id)->first();
+            if($request->member_id == $auction->member_id){
+                return $this -> returnError('',__('user.can_not_tender'));
+            }
+            if($request->price < $auction->price_opining){
+                return $this -> returnError('',__('user.low_price'));
+            }
+            if($auction){
+                $newtender = new Tender;
+                $newtender->member_id   = $request['member_id'];
+                $newtender->auction_id  = $request['auction_id'];
+                $newtender->price       = $request['price'];
+                $newtender->save();
+
+                if($request['price'] > $auction->price){
+                    $auction->price = $request['price'];
+                    $auction->save();
+                }
+                $successMeg = __('user.tendersucc');
+                return $this->returnData('success', $successMeg);
+            }else{
+                return $this -> returnError('',__('user.acutionnitexists'));
+            }
+        }else{
+            return $this->sendError('success', __("user.usernotexist"));
         }
     }
 
