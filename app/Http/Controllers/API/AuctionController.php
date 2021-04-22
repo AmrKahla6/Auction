@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Acution\AcutionResource_ar;
 use App\Http\Resources\Acution\AcutionResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
 
@@ -238,8 +239,12 @@ class AuctionController extends BaseController
     }
 
 
-    public function getAll(){
-        $auctions = AcutionResource_en::collection(Auction::get());
+    public function getAll(Request $request){
+        if($request->lang == "en"){
+            $auctions = AcutionResource_en::collection(Auction::get());
+        }else{
+            $auctions = AcutionResource_ar::collection(Auction::get());
+        }
         if($auctions){
             return $this->returnData('success', $auctions);
         }else{
