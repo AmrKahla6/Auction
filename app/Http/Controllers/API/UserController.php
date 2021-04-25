@@ -6,6 +6,7 @@ use Validator;
 use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
+use App\Models\favorite;
 use App\Models\AuctionImage;
 use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
@@ -400,4 +401,27 @@ class UserController extends BaseController
             return $this->returnError('success', __("user.usernotexist"));
         }
      }
+
+     /**
+      * Favorites auction for member
+      */
+
+      public function storeFavorite(Request $request){
+          $member = Member::where('id',$request->member_id)->first();
+          if($member){
+            $auction = Auction::where('id',$request->auction_id)->first();
+            if($member->id == $auction->member_id){
+                return $this->returnError('success', __("user.impossible"));
+            }else{
+                $favorite = new favorite;
+                $favorite->member_id  = $request->member_id;
+                $favorite->auction_id = $request->auction_id;
+                $favorite->is_like = 1;
+                $favorite->save();
+                return $this->returnData('success', __("user.add_favourit"));
+            }
+          }else{
+            return $this->returnError('success', __("user.usernotexist"));
+          }
+      }
 }

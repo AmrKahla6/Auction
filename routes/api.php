@@ -59,6 +59,7 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
                 Route::post('update-profile', 'UserController@updateProfile');
                 Route::post('my-auction', 'UserController@myAuction');
                 Route::post('my-tender', 'UserController@myTender');
+                Route::post('store-favorite', 'UserController@storeFavorite');
                 //New Auction
                 Route::post('store-auction', 'AuctionController@storeAcution');
 

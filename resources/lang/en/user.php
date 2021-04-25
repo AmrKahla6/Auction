@@ -54,5 +54,7 @@
         'low_price'         => 'Low price for auction',
         'noauctions'        => 'No Auctions',
         'notender'          => 'No tender',
+        'impossible'        => 'You can not favorite auction',
+        'add_favourit'      => 'Add to favourit',
     ];
 ?>
