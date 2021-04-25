@@ -55,6 +55,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Get common Questions
             Route::post('common-quetions','CategoyController@commonQuetions');
 
+            //Search
+            Route::get('search','AuctionController@search');
+
 
             //Auth guard Member
             Route::group(['middleware' => ['auth.guard:member-api'],], function () {

@@ -21,4 +21,8 @@ class Auction extends Model
     public function more_detials(){
         return $this->hasMany(AuctionDetials::class);
     }
+
+    public function city(){
+        return $this->belongsTo(City::class,'city_id');
+    }
 }

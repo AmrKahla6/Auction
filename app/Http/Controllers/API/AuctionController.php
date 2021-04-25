@@ -21,6 +21,34 @@ use App\Http\Controllers\API\BaseController as BaseController;
 
 class AuctionController extends BaseController
 {
+
+    /**
+     * Search function
+     */
+    public function search(Request $request){
+        $auctions = Auction::has('images')->when($request->price_opining, function ($q) use ($request) {
+
+            return $q->where('price_opining', '%' . $request->price_opining . '%');
+
+        })->when($request->city_id, function ($q) use ($request) {
+
+            return $q->where('city_id', $request->city_id);
+
+        })->when($request->category_id, function ($q) use ($request) {
+
+            return $q->where('city_id', $request->category_id);
+
+        })->get();
+        if($request->lang == "en"){
+            return $this->returnData('search',  AcutionResource_en::collection($auctions));
+        }else{
+            return $this->returnData('search',  AcutionResource_ar::collection($auctions));
+        }
+    }
+
+    /**
+     * Get Type
+     */
     public function auctionType(){
         $type = AuctionType::select("id","type_name_" .app()->getLocale() . ' as acution type')->get();
         if(count($type) > 0){
@@ -59,7 +87,7 @@ class AuctionController extends BaseController
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'address'            => 'required',
+                    'city_id'            => 'required',
                     'price_opining'      => 'required',
                     'price_closing'      => 'nullable',
                     'start_data'         => 'required',
@@ -71,7 +99,7 @@ class AuctionController extends BaseController
                     'type_id'            => 'required',
                 ],
                 [
-                    'address.required'             => __("user.address"),
+                    'city_id.required'             => __("user.address"),
                     'price_opining.required'       => __("user.price_opining"),
                     'start_data.required'          => __("user.start_data"),
                     'end_data.required'            => __("user.end_data"),
@@ -88,7 +116,7 @@ class AuctionController extends BaseController
             }
             $newauction                     = new Auction;
             $newauction->member_id          = $request['member_id'];
-            $newauction->address            = $request['address'];
+            $newauction->city_id            = $request['city_id'];
             $newauction->price              = 0;
             $newauction->price_opining      = $request['price_opining'];
             $newauction->price_closing      = $request['price_closing'];
