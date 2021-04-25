@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
+use App\Models\Country;
 use App\Models\AuctionType;
 use App\Models\Governorate;
 use App\Models\AuctionImage;
@@ -26,9 +27,9 @@ class AuctionController extends BaseController
      * Search function
      */
     public function search(Request $request){
-        $auctions = Auction::has('images')->when($request->price_opining, function ($q) use ($request) {
+        $auctions = Auction::has('images')->when($request->auction_title, function ($q) use ($request) {
 
-            return $q->where('price_opining', '%' . $request->price_opining . '%');
+            return $q->where('auction_title', '%' . $request->auction_title . '%');
 
         })->when($request->city_id, function ($q) use ($request) {
 
@@ -56,12 +57,24 @@ class AuctionController extends BaseController
         }
     }
 
+     /**
+      * country
+      */
+
+      public function country(){
+        $country = Country::select("id","country_name_" .app()->getLocale() . ' as country name')->get();
+        if(count($country) > 0 ){
+            return $this->returnData('country', $country);
+        }
+    }
+
+
     /**
      * Get Governorate
      */
 
-     public function governorate(){
-        $governorate = Governorate::select("id","governorate_name_" .app()->getLocale() . ' as governorate name')->get();
+     public function governorate(Request $request){
+        $governorate = Governorate::select("id","governorate_name_" .app()->getLocale() . ' as governorate name')->where('country_id',$request->country_id)->get();
             if(count($governorate) > 0 ){
                 return $this->returnData('Governorate', $governorate);
             }
@@ -87,6 +100,7 @@ class AuctionController extends BaseController
             $validator = Validator::make(
                 $request->all(),
                 [
+                    'auction_title'      => 'required',
                     'city_id'            => 'required',
                     'price_opining'      => 'required',
                     'price_closing'      => 'nullable',
@@ -99,6 +113,7 @@ class AuctionController extends BaseController
                     'type_id'            => 'required',
                 ],
                 [
+                    'auction_title.required'       => __("user.auction_title"),
                     'city_id.required'             => __("user.address"),
                     'price_opining.required'       => __("user.price_opining"),
                     'start_data.required'          => __("user.start_data"),
@@ -115,6 +130,7 @@ class AuctionController extends BaseController
                 return $this->returnValidationError($code, $validator);
             }
             $newauction                     = new Auction;
+            $newauction->auction_title      = $request['auction_title'];
             $newauction->member_id          = $request['member_id'];
             $newauction->city_id            = $request['city_id'];
             $newauction->price              = 0;

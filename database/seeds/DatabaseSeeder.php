@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
          $this->call(CategoryParamSeeder::class);
          $this->call(AuctionTypesSeeder::class);
          $this->call(SelectParamsSeeder::class);
+         $this->call(CountrySeeder::class);
          $this->call(GovernorateSeeder::class);
          $this->call(CitySeeder::class);
     }

@@ -15,6 +15,7 @@ class CreateAuctionsTable extends Migration
     {
         Schema::create('auctions', function (Blueprint $table) {
             $table->id();
+            $table->string('auction_title')->nullable();
             $table->unsignedBigInteger('member_id')->nullable();
             $table->decimal('price',8,2)->nullable();
             $table->decimal('price_opining',8,2)->nullable();

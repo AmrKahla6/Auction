@@ -59,5 +59,6 @@
         'delete_favourit'   => 'Delete from favourit',
         'no_favourit'       => 'No Favourit auctions',
         'no_cities'         => 'No Cities',
+        'auction_title'     => 'Auction title is required'
     ];
 ?>
