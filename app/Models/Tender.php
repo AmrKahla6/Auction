@@ -9,4 +9,8 @@ class Tender extends Model
     public function member(){
         return $this->belongsTo(Member::class);
     }
+
+    public function auction(){
+        return $this->belongsTo(Auction::class,'auction_id');
+    }
 }

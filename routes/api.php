@@ -99,6 +99,10 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //my ended auctions
                 Route::post('my-ended-acutions', 'AuctionController@myEndedAuction');
+
+                //my wining auctions
+                Route::post('my-wining-auction', 'AuctionController@myWiningAuctions');
+
             });
         });
 

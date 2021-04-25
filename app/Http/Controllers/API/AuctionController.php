@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\Tender\TenderResource;
 use App\Http\Resources\Acution\AcutionResource_ar;
 use App\Http\Resources\Acution\AcutionResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -447,6 +448,25 @@ class AuctionController extends BaseController
                  return $this->returnData('success', $auction);
             }else{
                 return $this->sendError('success', __("user.notendedacutions"));
+            }
+        }else{
+            return $this->sendError('success', __("user.usernotexist"));
+        }
+     }
+
+     /**
+      * My wining Auctions
+      */
+
+     public function myWiningAuctions(Request $request){
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $tenders = Tender::get();
+            if(count($tenders) > 0){
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',1)->get());
+                return $this->returnData('success', $tender);
+            }else{
+                return $this->sendError('success', __("user.notwinnercutions"));
             }
         }else{
             return $this->sendError('success', __("user.usernotexist"));

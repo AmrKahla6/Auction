@@ -63,5 +63,6 @@
         'notendedacutions'  => 'Not ended acutions yet',
         'date_ended'        => "Auction date is ended",
         'endedacutions'     => "We have winner",
+        'notwinnercutions'  => 'No winner auctions',
     ];
 ?>
