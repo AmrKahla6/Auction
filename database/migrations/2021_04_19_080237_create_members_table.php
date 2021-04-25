@@ -22,11 +22,13 @@ class CreateMembersTable extends Migration
             $table->string('date_of_birth')->nullable();
             $table->string('commercial_record')->nullable();
             $table->string('id_number')->nullable();
-            $table->string('nationality')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('forgetcode')->nullable();
             $table->string('activation_code')->nullable();
             $table->rememberToken()->nullable();
+
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->timestamps();
         });
     }

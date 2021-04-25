@@ -42,6 +42,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('get-country','AuctionController@country');
 
 
+            //Country
+            Route::post('ended-auction','AuctionController@endedAuction');
+
             //Governorate
             Route::post('get-governorate','AuctionController@governorate');
 
@@ -93,6 +96,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //store tender
                 Route::post('store-tender', 'AuctionController@tender');
+
+                //my ended auctions
+                Route::post('my-ended-acutions', 'AuctionController@myEndedAuction');
             });
         });
 

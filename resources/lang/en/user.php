@@ -59,6 +59,9 @@
         'delete_favourit'   => 'Delete from favourit',
         'no_favourit'       => 'No Favourit auctions',
         'no_cities'         => 'No Cities',
-        'auction_title'     => 'Auction title is required'
+        'auction_title'     => 'Auction title is required',
+        'notendedacutions'  => 'Not ended acutions yet',
+        'date_ended'        => "Auction date is ended",
+        'endedacutions'     => "We have winner",
     ];
 ?>

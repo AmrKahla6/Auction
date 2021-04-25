@@ -26,6 +26,7 @@ class CreateAuctionsTable extends Migration
             $table->string('end_time')->nullable();
             $table->text('detials',8,2)->nullable();
             $table->string('status')->nullable()->default(0);
+            $table->boolean('is_finished')->nullable()->default(0);
             $table->unsignedBigInteger('city_id')->nullable();
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();

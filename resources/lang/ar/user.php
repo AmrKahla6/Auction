@@ -58,6 +58,9 @@
         'delete_favourit'   => 'تم الحذف من المفضله',
         'no_favourit'       => 'لا يوجد مزادات مفضله',
         'no_cities'         => 'لا يوجد مدن',
-        'auction_title'     => "عنوان المزاد مطلوب"
+        'auction_title'     => "عنوان المزاد مطلوب",
+        'notendedacutions'  => 'لا يوجد مزادات منتهيه',
+        'date_ended'        => "تاريخ انتهاء المزاد انتهي",
+        'endedacutions'     => 'هناك فائز بالمزاد',
     ];
 ?>

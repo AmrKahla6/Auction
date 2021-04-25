@@ -83,7 +83,7 @@ class UserController extends BaseController
                     'username'            => 'required',
                     'phone'               => 'required|unique:members',
                     'date_of_birth'       => 'required',
-                    'nationality'         => 'required',
+                    'country_id'          => 'required',
                     'email'               => 'required|unique:members',
                     'password'            => 'required|min:6',
                 ],
@@ -92,7 +92,7 @@ class UserController extends BaseController
                     'phone.required'               => __("user.phone"),
                     'phone.unique'                 => __("user.unique_phone"),
                     'date_of_birth.required'       => __("user.date_of_birth"),
-                    'nationality.required'         => __("user.nationality"),
+                    'country_id.required'          => __("user.nationality"),
                     'email.required'               => __("user.email"),
                     'email.unique'                 => __("user.unique_email"),
                     'password.required'            => __("user.password"),
@@ -109,7 +109,7 @@ class UserController extends BaseController
             $newmember->username           = $request['username'];
             $newmember->phone              = $request['phone'];
             $newmember->date_of_birth      = $request['date_of_birth'];
-            $newmember->nationality        = $request['nationality'];
+            $newmember->country_id         = $request['country_id'];
             $newmember->email              = $request['email'];
             $newmember->password           = Hash::make($request['password']);
             $newmember->save();

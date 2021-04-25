@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Validator;
+use Carbon\Carbon;
 use App\Models\City;
 use App\Models\Member;
 use App\Models\Tender;
@@ -362,17 +363,38 @@ class AuctionController extends BaseController
         $member = Member::where('id',$request->member_id)->first();
         if($member){
             $auction = Auction::where('id',$request->auction_id)->first();
+            $newStartDate = Carbon::now();
+            if (Carbon::now()->isSameDay($newStartDate) > $auction->end_data) {
+                $auction->is_finished = 1;
+                $auction->save();
+                $successMeg = __('user.date_ended');
+                return $this->returnData('success', $successMeg);
+            }
             if($request->member_id == $auction->member_id){
                 return $this -> returnError('',__('user.can_not_tender'));
             }
             if($request->price < $auction->price_opining){
                 return $this -> returnError('',__('user.low_price'));
             }
+            if($request->price >= $auction->price_closing){
+                $auction->is_finished = 1;
+                $auction->save();
+            }
             if($auction){
+                $tender = Tender::where('auction_id',$request->auction_id)->get();
+                for ($i=0; $i <count($tender) ; $i++) {
+                    if($tender[$i]->is_winner == 1){
+                        return $this -> returnError('',__('user.endedacutions'));
+                    }
+                }
                 $newtender = new Tender;
                 $newtender->member_id   = $request['member_id'];
                 $newtender->auction_id  = $request['auction_id'];
                 $newtender->price       = $request['price'];
+                if($request->price >= $auction->price_closing){
+                    $newtender->is_winner = 1;
+                    $message = __('user_winner');
+                }
                 $newtender->save();
 
                 if($request['price'] > $auction->price){
@@ -389,4 +411,45 @@ class AuctionController extends BaseController
         }
     }
 
+    /**
+     * Ended Acutions
+     */
+
+     public function endedAuction(Request $request){
+         $auctions = Auction::where('is_finished',1)->get();
+         if(count($auctions) > 0){
+             if($request->lang == "en"){
+                $auction = AcutionResource_en::collection(Auction::where('is_finished',1)->get());
+             }else{
+                $auction = AcutionResource_ar::collection(Auction::where('is_finished',1)->get());
+             }
+
+             return $this->returnData('success', $auction);
+         }else{
+            return $this->sendError('success', __("user.notendedacutions"));
+         }
+     }
+
+     /**
+      * Member ended Acutions
+      */
+
+     public function myEndedAuction(Request $request){
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $auctions = Auction::where('member_id',$request->member_id)->where('is_finished',1)->get();
+            if(count($auctions) > 0){
+                if($request->lang == "en"){
+                    $auction = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->get());
+                 }else{
+                    $auction = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->get());
+                 }
+                 return $this->returnData('success', $auction);
+            }else{
+                return $this->sendError('success', __("user.notendedacutions"));
+            }
+        }else{
+            return $this->sendError('success', __("user.usernotexist"));
+        }
+     }
 }
