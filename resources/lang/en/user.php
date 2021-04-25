@@ -56,5 +56,6 @@
         'notender'          => 'No tender',
         'impossible'        => 'You can not favorite auction',
         'add_favourit'      => 'Add to favourit',
+        'delete_favourit'   => 'Delete from favourit',
     ];
 ?>
