@@ -58,5 +58,6 @@
         'add_favourit'      => 'Add to favourit',
         'delete_favourit'   => 'Delete from favourit',
         'no_favourit'       => 'No Favourit auctions',
+        'no_cities'         => 'No Cities',
     ];
 ?>

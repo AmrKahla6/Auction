@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Validator;
+use App\Models\City;
 use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
@@ -31,12 +32,26 @@ class AuctionController extends BaseController
      * Get Governorate
      */
 
-     public function Governorate(){
+     public function governorate(){
         $governorate = Governorate::select("id","governorate_name_" .app()->getLocale() . ' as governorate name')->get();
             if(count($governorate) > 0 ){
                 return $this->returnData('Governorate', $governorate);
             }
      }
+
+     /**
+      * Get Cities
+     */
+
+     public function cities(Request $request){
+        $cities = City::select('id','governorate_id',"city_name_" .app()->getLocale() . ' as city name')->where('governorate_id',$request->governorate_id)->get();
+        if(count($cities) > 0){
+            return $this->returnData('city', $cities);
+        }else{
+            return $this -> returnError('',__('user.no_cities'));
+        }
+     }
+
 
     public function storeAcution(Request $request){
         $user = Member::where('id', $request->member_id)->first();

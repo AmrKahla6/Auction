@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
          $this->call(AuctionTypesSeeder::class);
          $this->call(SelectParamsSeeder::class);
          $this->call(GovernorateSeeder::class);
+         $this->call(CitySeeder::class);
     }
 }
