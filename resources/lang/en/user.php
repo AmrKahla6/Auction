@@ -57,5 +57,6 @@
         'impossible'        => 'You can not favorite auction',
         'add_favourit'      => 'Add to favourit',
         'delete_favourit'   => 'Delete from favourit',
+        'no_favourit'       => 'No Favourit auctions',
     ];
 ?>
