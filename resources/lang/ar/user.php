@@ -63,5 +63,6 @@
         'date_ended'        => "تاريخ انتهاء المزاد انتهي",
         'endedacutions'     => 'هناك فائز بالمزاد',
         'notwinnercutions'  => "لا يوجد مزادات رابحه",
+        'notwattingcutions' => 'لا يوجد مزادات ف الانتظار',
     ];
 ?>

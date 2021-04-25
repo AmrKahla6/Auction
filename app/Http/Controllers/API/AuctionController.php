@@ -472,4 +472,23 @@ class AuctionController extends BaseController
             return $this->sendError('success', __("user.usernotexist"));
         }
      }
+
+     /**
+      * My Watting Auctions
+      */
+
+     public function myWattingAuctions(Request $request){
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $tenders = Tender::get();
+            if(count($tenders) > 0){
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->get());
+                return $this->returnData('success', $tender);
+            }else{
+                return $this->sendError('success', __("user.notwattingcutions"));
+            }
+        }else{
+            return $this->sendError('success', __("user.usernotexist"));
+        }
+     }
 }

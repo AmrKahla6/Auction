@@ -103,6 +103,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
                 //my wining auctions
                 Route::post('my-wining-auction', 'AuctionController@myWiningAuctions');
 
+                //my watting auctions
+                Route::post('my-watting-auction', 'AuctionController@myWattingAuctions');
+
             });
         });
 
