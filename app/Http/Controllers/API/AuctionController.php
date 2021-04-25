@@ -7,6 +7,7 @@ use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
 use App\Models\AuctionType;
+use App\Models\Governorate;
 use App\Models\AuctionImage;
 use App\Models\catParameter;
 use Illuminate\Http\Request;
@@ -20,11 +21,22 @@ use App\Http\Controllers\API\BaseController as BaseController;
 class AuctionController extends BaseController
 {
     public function auctionType(){
-        $type = AuctionType::select("id","type_name_" .app()->getLocale() . ' as Acution Type')->get();
-        if($type){
+        $type = AuctionType::select("id","type_name_" .app()->getLocale() . ' as acution type')->get();
+        if(count($type) > 0){
             return $this->returnData('Acution Type', $type);
         }
     }
+
+    /**
+     * Get Governorate
+     */
+
+     public function Governorate(){
+        $governorate = Governorate::select("id","governorate_name_" .app()->getLocale() . ' as governorate name')->get();
+            if(count($governorate) > 0 ){
+                return $this->returnData('Governorate', $governorate);
+            }
+     }
 
     public function storeAcution(Request $request){
         $user = Member::where('id', $request->member_id)->first();

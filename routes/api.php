@@ -38,6 +38,8 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Auction Type
             Route::post('auction-type','AuctionController@auctionType');
 
+            //Governorate
+            Route::post('get-governorate','AuctionController@Governorate');
 
             //App Setting
             Route::post('terms','AppsettingController@terms');
