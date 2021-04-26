@@ -15,7 +15,7 @@ class Auction extends Model
     }
 
     public function images(){
-        return $this->hasMany(AuctionImage::class);
+        return $this->hasMany(AuctionImage::class,'auction_id');
     }
 
     public function more_detials(){

@@ -29,23 +29,32 @@ class AuctionController extends BaseController
      * Search function
      */
     public function search(Request $request){
-        $auctions = Auction::has('images')->when($request->auction_title, function ($q) use ($request) {
+        // return Auction::find(1)->load('images');
+        $res = Auction::with('images');
+        if ($request->auction_title) {
+            // return 1;
 
-            return $q->where('auction_title', '%' . $request->auction_title . '%');
+            $res= $res->where('auction_title','like', '%' . $request->auction_title . '%');
+        }
+        if ($request->city_id) {
+            $res= $res->where('city_id', $request->city_id);
+        }
+        if ($request->cat_id) {
+            $res= $res->where('cat_id', $request->cat_id);
+        }
+        return $res = $res->get();
+        // $auctions = Auction::has('images')->when($request->auction_title, function ($q) use ($request) {
+        //     return $q->where('auction_title', '%' . $request->auction_title . '%');
+        // })->when($request->city_id, function ($q) use ($request) {
+        //     return $q->where('city_id', $request->city_id);
+        // })->when($request->category_id, function ($q) use ($request) {
+        //     return $q->where('cat_id', $request->category_id);
+        // })->get();
 
-        })->when($request->city_id, function ($q) use ($request) {
-
-            return $q->where('city_id', $request->city_id);
-
-        })->when($request->category_id, function ($q) use ($request) {
-
-            return $q->where('city_id', $request->category_id);
-
-        })->get();
         if($request->lang == "en"){
-            return $this->returnData('search',  AcutionResource_en::collection($auctions));
+            return $this->returnData('search',  AcutionResource_en::collection($res));
         }else{
-            return $this->returnData('search',  AcutionResource_ar::collection($auctions));
+            return $this->returnData('search',  AcutionResource_ar::collection($res));
         }
     }
 
