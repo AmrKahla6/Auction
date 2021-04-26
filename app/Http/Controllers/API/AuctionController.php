@@ -373,13 +373,13 @@ class AuctionController extends BaseController
         $member = Member::where('id',$request->member_id)->first();
         if($member){
             $auction = Auction::where('id',$request->auction_id)->first();
-            $newStartDate = Carbon::now();
-            if (Carbon::now()->isSameDay($newStartDate) > $auction->end_data) {
-                $auction->is_finished = 1;
-                $auction->save();
-                $successMeg = __('user.date_ended');
-                return $this->returnData('success', $successMeg);
-            }
+            // $newStartDate = Carbon::now();
+            // if (Carbon::now()->isSameDay($newStartDate) > $auction->end_data) {
+            //     $auction->is_finished = 1;
+            //     $auction->save();
+            //     $successMeg = __('user.date_ended');
+            //     return $this->returnData('success', $successMeg);
+            // }
             if($request->member_id == $auction->member_id){
                 return $this -> returnError('',__('user.can_not_tender'));
             }
@@ -401,9 +401,9 @@ class AuctionController extends BaseController
                 $newtender->member_id   = $request['member_id'];
                 $newtender->auction_id  = $request['auction_id'];
                 $newtender->price       = $request['price'];
+                $newtender->endData     = $auction->end_data;
                 if($request->price >= $auction->price_closing){
                     $newtender->is_winner = 1;
-                    $message = __('user_winner');
                 }
                 $newtender->save();
 
@@ -411,7 +411,13 @@ class AuctionController extends BaseController
                     $auction->price = $request['price'];
                     $auction->save();
                 }
-                $successMeg = __('user.tendersucc');
+
+                //Show message
+                if($newtender->is_winner == 1){
+                    $successMeg = __('user.winner');
+                }else{
+                    $successMeg = __('user.tendersucc');
+                }
                 return $this->returnData('success', $successMeg);
             }else{
                 return $this -> returnError('',__('user.acutionnitexists'));

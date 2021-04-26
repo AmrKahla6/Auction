@@ -65,5 +65,6 @@
         'endedacutions'     => "We have winner",
         'notwinnercutions'  => 'No winner auctions',
         'notwattingcutions' => 'No watting auctions',
+        'winner'            => 'You win acution',
     ];
 ?>

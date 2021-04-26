@@ -64,5 +64,6 @@
         'endedacutions'     => 'هناك فائز بالمزاد',
         'notwinnercutions'  => "لا يوجد مزادات رابحه",
         'notwattingcutions' => 'لا يوجد مزادات ف الانتظار',
+        'winner'            => 'لقد ربحت المزاد',
     ];
 ?>
