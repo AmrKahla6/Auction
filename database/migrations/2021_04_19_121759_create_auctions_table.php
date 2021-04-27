@@ -20,10 +20,8 @@ class CreateAuctionsTable extends Migration
             $table->decimal('price',8,2)->nullable();
             $table->decimal('price_opining',8,2)->nullable();
             $table->decimal('price_closing',8,2)->nullable();
-            $table->string('start_data')->nullable();
-            $table->string('end_data')->nullable();
-            $table->string('start_time')->nullable();
-            $table->string('end_time')->nullable();
+            $table->date('start_data')->nullable();
+            $table->date('end_data')->nullable();
             $table->text('detials',8,2)->nullable();
             $table->string('status')->nullable()->default(0);
             $table->boolean('is_finished')->nullable()->default(0);

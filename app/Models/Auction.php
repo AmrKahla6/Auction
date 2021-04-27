@@ -30,4 +30,8 @@ class Auction extends Model
     public function city(){
         return $this->belongsTo(City::class,'city_id');
     }
+
+    // public function setDateAttribute( $value ) {
+    //     $this->attributes['date'] = (new Carbon($value))->format('y/m/d/h-i-s');
+    //   }
 }

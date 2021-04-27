@@ -117,8 +117,6 @@ class AuctionController extends BaseController
                     'price_closing'      => 'nullable',
                     'start_data'         => 'required',
                     'end_data'           => 'required',
-                    'start_time'         => 'required',
-                    'end_time'           => 'required',
                     'detials'            => 'required',
                     'cat_id'             => 'required',
                     'type_id'            => 'required',
@@ -129,8 +127,6 @@ class AuctionController extends BaseController
                     'price_opining.required'       => __("user.price_opining"),
                     'start_data.required'          => __("user.start_data"),
                     'end_data.required'            => __("user.end_data"),
-                    'start_time.required'          => __("user.start_time"),
-                    'end_time.required'            => __("user.end_time"),
                     'cat_id.required'              => __("user.cat_id"),
                     'type_id.required'             => __("user.type_id"),
                 ]
@@ -147,10 +143,15 @@ class AuctionController extends BaseController
             $newauction->price              = 0;
             $newauction->price_opining      = $request['price_opining'];
             $newauction->price_closing      = $request['price_closing'];
-            $newauction->start_data         = $request['start_data'];
-            $newauction->end_data           = $request['end_data'];
-            $newauction->start_time         = $request['start_time'];
-            $newauction->end_time           = $request['end_time'];
+
+            $startDateTime             = $request['start_data'];
+            $startdate                 = date('y/m/d/h-i-s', strtotime($startDateTime));
+            $newauction->start_data    = $startdate;
+
+            $endDateTime               = $request['end_data'];
+            $enddate                   = date('y/m/d/h-i-s', strtotime($endDateTime));
+            $newauction->end_data      = $enddate;
+
             $newauction->detials            = $request['detials'];
             $newauction->cat_id             = $request['cat_id'];
             $newauction->type_id            = $request['type_id'];
