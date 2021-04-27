@@ -42,7 +42,7 @@ class AuctionController extends BaseController
         if ($request->cat_id) {
             $res= $res->where('cat_id', $request->cat_id);
         }
-        return $res = $res->get();
+        return $res = $res->paginate(10);
         // $auctions = Auction::has('images')->when($request->auction_title, function ($q) use ($request) {
         //     return $q->where('auction_title', '%' . $request->auction_title . '%');
         // })->when($request->city_id, function ($q) use ($request) {
@@ -144,10 +144,10 @@ class AuctionController extends BaseController
             $newauction->price_opining      = $request['price_opining'];
             $newauction->price_closing      = $request['price_closing'];
 
+            //Start & end date time
             $startDateTime             = $request['start_data'];
             $startdate                 = date('y/m/d/h-i-s', strtotime($startDateTime));
             $newauction->start_data    = $startdate;
-
             $endDateTime               = $request['end_data'];
             $enddate                   = date('y/m/d/h-i-s', strtotime($endDateTime));
             $newauction->end_data      = $enddate;
@@ -402,7 +402,6 @@ class AuctionController extends BaseController
                 $newtender->member_id   = $request['member_id'];
                 $newtender->auction_id  = $request['auction_id'];
                 $newtender->price       = $request['price'];
-                $newtender->endData     = $auction->end_data;
                 if($request->price >= $auction->price_closing){
                     $newtender->is_winner = 1;
                 }

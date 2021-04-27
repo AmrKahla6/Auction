@@ -22,7 +22,6 @@ class TenderResource extends JsonResource
             'price'             => $this->price,
             'auction_id'        => $this->auction_id,
             'auction_title'     => $this->auction->auction_title,
-            'auction_ending'    => $this->auction->end_data,
             'created_at'        => $this->created_at,
         ];
     }
