@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tender;
 use Illuminate\Database\Eloquent\Model;
 
 class Auction extends Model
@@ -20,6 +21,10 @@ class Auction extends Model
 
     public function more_detials(){
         return $this->hasMany(AuctionDetials::class);
+    }
+
+    public function tenders(){
+        return $this->hasMany(Tender::class,'auction_id');
     }
 
     public function city(){

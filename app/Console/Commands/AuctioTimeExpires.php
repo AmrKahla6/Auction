@@ -13,7 +13,7 @@ class AuctioTimeExpires extends Command
      *
      * @var string
      */
-    protected $signature = 'auctio:expires';
+    protected $signature = 'user:expire';
 
     /**
      * The console command description.
@@ -39,11 +39,16 @@ class AuctioTimeExpires extends Command
      */
     public function handle()
     {
-        $tenders = Tender::where('is_winner',0)->get();
-        foreach($tenders as $tender){
-            $tender->update([
-                'is_winner' => 1,
-            ]);
+        $date = new Carbon;
+        $auctions = Auction::with(['tenders'=> function($qu){
+            $qu->orderBy('price','desc');
+        }])->where('end_data','<',  Carbon::now()->format('Y-m-d'))->where('is_finished',0)->get();
+
+        foreach ($auctions as $auction) {
+             $tender = $auction->tenders->first();
+
+
+            $tender->update(['is_winner' => 1]);
         }
     }
 }

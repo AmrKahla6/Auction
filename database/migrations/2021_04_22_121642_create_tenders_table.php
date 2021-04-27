@@ -19,6 +19,7 @@ class CreateTendersTable extends Migration
             $table->unsignedBigInteger('auction_id')->nullable();
             $table->decimal('price',8,2)->nullable();
             $table->boolean('is_winner')->nullable()->default(0);
+            $table->boolean('is_finished')->nullable()->default(0);
             $table->string('endData')->nullable();
 
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
