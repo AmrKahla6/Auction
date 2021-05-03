@@ -8,6 +8,8 @@ use App\Models\selectParams;
 use Illuminate\Http\Request;
 use App\Models\CommonQuestion;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Category\MainCategoryResource_ar;
+use App\Http\Resources\Category\MainCategoryResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class CategoyController extends BaseController
@@ -15,10 +17,15 @@ class CategoyController extends BaseController
     /**
      * Get Main Category
      */
-    public function mainCategory()
+    public function mainCategory(Request $request)
     {
-        $parentCategories = Category::select("id","category_name_" .app()->getLocale() . ' as category_name','img')->where('parent_id',0)->get();
-        if($parentCategories){
+        $main = Category::where('parent_id',0)->get();
+        if($main){
+            if($request->lang == 'en'){
+                $parentCategories = MainCategoryResource_en::collection(Category::where('parent_id',0)->get());
+            }else{
+                $parentCategories = MainCategoryResource_ar::collection(Category::where('parent_id',0)->get());
+            }
             return $this->returnData('categories', $parentCategories);
         }else{
             $errormessage = __('user.no_categories');
