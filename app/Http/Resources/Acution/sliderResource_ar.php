@@ -4,7 +4,7 @@ namespace App\Http\Resources\Acution;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AcutionResource_ar extends JsonResource
+class sliderResource_ar extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,20 +16,12 @@ class AcutionResource_ar extends JsonResource
     {
         return [
             'id'              => $this->id,
-            'member_id'       => $this->member_id,
-            'member_name'     => $this->member->username,
-            'city_id'         => $this->city_id,
-            'address'         => $this->city->city_name_ar,
-            'price'           => $this->price,
+            'description'     => $this->desc_ar,
             'price_opining'   => $this->price_opining,
             'price_closing'   => $this->price_closing,
             'start_data'      => $this->start_data,
             'end_data'        => $this->end_data,
-            'detials'         => $this->detials,
-            'cat_id'          => $this->cat_id,
-            'cat_name'        => $this->category->category_name_ar,
             'created_at'      => $this->created_at,
-            'more_detials'    => $this->more_detials,
             'images'          => ImageResource::collection($this->images),
         ];
     }

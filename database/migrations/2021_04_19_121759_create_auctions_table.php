@@ -24,6 +24,9 @@ class CreateAuctionsTable extends Migration
             $table->date('end_data')->nullable();
             $table->text('detials',8,2)->nullable();
             $table->string('status')->nullable()->default(0);
+            $table->boolean('is_slider')->nullable()->default(0);
+            $table->text('desc_ar')->nullable();
+            $table->text('desc_en')->nullable();
             $table->boolean('is_finished')->nullable()->default(0);
             $table->unsignedBigInteger('city_id')->nullable();
             $table->unsignedBigInteger('cat_id')->nullable();

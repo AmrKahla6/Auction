@@ -18,6 +18,8 @@ use App\Models\AuctionDetials;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Tender\TenderResource;
+use App\Http\Resources\Acution\sliderResource_ar;
+use App\Http\Resources\Acution\sliderResource_en;
 use App\Http\Resources\Acution\AcutionResource_ar;
 use App\Http\Resources\Acution\AcutionResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -504,5 +506,22 @@ class AuctionController extends BaseController
         }else{
             return $this->sendError('success', __("user.usernotexist"));
         }
+     }
+
+
+     /**
+      * Acution Slider
+      */
+
+     public function acutionSlider(Request $request){
+        $auctions = Auction::where('is_finished',0)->where('is_slider',1)->get();
+        if($auctions){
+            if($request->lang == 'en'){
+                $auctions = sliderResource_en::collection(Auction::where('is_finished',0)->where('is_slider',1)->get());
+            }else{
+                $auctions = sliderResource_ar::collection(Auction::where('is_finished',0)->where('is_slider',1)->get());
+            }
+         }
+         return $this->returnData('success', $auctions);
      }
 }

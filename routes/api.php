@@ -70,7 +70,8 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Search
             Route::get('search','AuctionController@search');
 
-
+            //Get slider  Auctions
+            Route::post('slider-acutions', 'AuctionController@acutionSlider');
 
 
             //Auth guard Member
@@ -97,6 +98,8 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //Get All  Auctions
                 Route::post('get-all-auction', 'AuctionController@getAll');
+
+
 
                 //get Auction
                 Route::post('get-auction', 'AuctionController@getAcution');
