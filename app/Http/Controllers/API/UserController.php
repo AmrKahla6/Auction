@@ -129,10 +129,10 @@ class UserController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email'          => 'required',
+                'phone'          => 'required',
                 'password'       => 'required',
             ], [
-                'email.required'        => __("user.email"),
+                'phone.required'        => __("user.phone"),
                 'password.required'     => __("user.password"),
             ]);
 
@@ -142,7 +142,7 @@ class UserController extends BaseController
                 }
                 //login
 
-                $credentials = $request->only(['email', 'password']);
+                $credentials = $request->only(['phone', 'password']);
                 $token = Auth::guard('member-api')->attempt($credentials);  //generate token
 
                 if (!$token)

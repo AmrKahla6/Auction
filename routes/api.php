@@ -58,12 +58,19 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Contact Us
             Route::post('contact-us', 'AppsettingController@contactus');
 
+            //slider
+            Route::post('slider','AppsettingController@slider');
+
+            //advertisement
+            Route::post('advertisement','AppsettingController@advertisement');
 
             //Get common Questions
             Route::post('common-quetions','CategoyController@commonQuetions');
 
             //Search
             Route::get('search','AuctionController@search');
+
+
 
 
             //Auth guard Member

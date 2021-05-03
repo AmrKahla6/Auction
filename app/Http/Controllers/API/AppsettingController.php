@@ -6,9 +6,14 @@ use Validator;
 use App\Models\Term;
 use App\Models\About;
 use App\Models\Member;
+use App\Models\Slider;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Models\Advertisement;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AppSetting\SliderResource_ar;
+use App\Http\Resources\AppSetting\SliderResource_en;
+use App\Http\Resources\AppSetting\AdvertisementResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class AppsettingController extends BaseController
@@ -63,5 +68,22 @@ class AppsettingController extends BaseController
              $errormessage =  __('user.usernotexist');
               return $this -> returnError('error',$errormessage);
           }
+      }
+
+
+      public function slider(Request $request){
+        if($request->lang == 'en'){
+            $slider = SliderResource_en::collection(Slider::get());
+        }else{
+            $slider = SliderResource_ar::collection(Slider::get());
+        }
+
+        return $this->returnData('success', $slider);
+      }
+
+
+      public function advertisement(Request $request){
+        $ads = AdvertisementResource::collection(Advertisement::get());
+        return $this->returnData('success', $ads);
       }
 }
