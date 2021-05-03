@@ -32,7 +32,7 @@ class AcutionResource_en extends JsonResource
             'cat_name'        => $this->category->category_name_en,
             'created_at'      => $this->created_at,
             'more_detials'    => $this->more_detials,
-            'images'          => asset('uploads/acution/' .$this->images),
+            'images'          => ImageResource::collection($this->images),
         ];
     }
 }

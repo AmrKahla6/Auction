@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\AppSetting;
+namespace App\Http\Resources\Acution;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AdvertisementResource extends JsonResource
+class ImageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,8 @@ class AdvertisementResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'   => $this->id,
-            'link' => $this->link,
-            'img'  => asset('uploads/advertisement/'.$this->img),
+            'id'    => $this->id,
+            'image' => asset('uploads/acution/' .$this->img)
         ];
     }
 }

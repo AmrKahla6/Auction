@@ -325,7 +325,6 @@ class AuctionController extends BaseController
 
     public function getAll(Request $request){
         $aucs = Auction::where('status',0)->get();
-
         if($aucs){
             if($request->lang == "en"){
                 $auctions = AcutionResource_en::collection(Auction::where('status',0)->get());

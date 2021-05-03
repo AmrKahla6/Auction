@@ -15,6 +15,7 @@ class SliderResource_ar extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'    => $this->id,
             'title' => $this->title_ar,
             'body'  => $this->body_ar,
             'img'   => asset('uploads/slider/'.$this->img),
