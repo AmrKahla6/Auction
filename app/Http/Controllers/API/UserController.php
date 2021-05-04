@@ -15,6 +15,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Tender\TenderResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
@@ -62,6 +63,7 @@ class UserController extends BaseController
             $newmember->id_number          = $request['id_number'];
             $newmember->email              = $request['email'];
             $newmember->password           = Hash::make($request['password']);
+            $newmember->type               = 0; //Business
             $newmember->save();
             $message = __("user.regist_success");
             return $this->returnData('user', $message);
@@ -112,6 +114,7 @@ class UserController extends BaseController
             $newmember->country_id         = $request['country_id'];
             $newmember->email              = $request['email'];
             $newmember->password           = Hash::make($request['password']);
+            $newmember->type               = 1; //not Business
             $newmember->save();
             $message = __("user.regist_success");
             return $this->returnData('user', $message);
@@ -253,9 +256,8 @@ class UserController extends BaseController
 
     public function updateCommercialProfile(Request $request)
     {
-        $upmember = Member::where('id', $request->member_id)->first();
+        $upmember = Member::where('id', $request->member_id)->where('type',0)->first();
         if ($upmember) {
-            if($upmember->commercial_record){
                 $validator = Validator::make($request->all(), [
                     'commercial_record'   => 'required|unique:members,commercial_record,' . $upmember->id,
                     'phone'               => 'required|unique:members,phone,' . $upmember->id,
@@ -287,14 +289,21 @@ class UserController extends BaseController
                 $upmember->id_number          = $request['id_number'];
                 $upmember->email              = $request['email'];
                 $upmember->password           = $request['password'] ? Hash::make($request['password']) : $upmember->password;
+                //Update image
+                $old_image = Member::find($upmember->id)->img;
+                if($request->hasFile('img')){
+                    Storage::disk('uploads')->delete('members/' . $old_image);
+                    $image    = $request['img'];
+                    $filename = rand(0, 9999) . '.' . $image->getClientOriginalExtension();
+                    $image->move(base_path('/public/uploads/members/'), $filename);
+                    $upmember->img = $filename;
+                }
+                else{
+                    $upmember->img  = $old_image;
+                }
                 $upmember->save();
                 $successmessage = __("user.infoupdate");
                 return $this-> returnData('success',$successmessage);
-
-            } else {
-                $errormessage = __("user.usernotexist");
-                return $this->returnError('E001', $errormessage);
-            }
         }else{
             $errormessage = __("user.usernotexist");
             return $this->returnError('E001', $errormessage);
@@ -309,14 +318,14 @@ class UserController extends BaseController
 
     public function updateProfile(Request $request)
     {
-        $upmember = Member::where('id', $request->member_id)->first();
+        $upmember = Member::where('id', $request->member_id)->where('type',1)->first();
         if ($upmember) {
             if($upmember->username){
                 $validator = Validator::make($request->all(), [
                     'username'            => 'required',
                     'phone'               => 'required|unique:members,phone,' . $upmember->id,
                     'date_of_birth'       => 'required',
-                    'nationality'         => 'required',
+                    'country_id'          => 'required',
                     'email'               => 'required|unique:members,email,' . $upmember->id,
                     'password'            => 'required|min:6',
                 ],
@@ -325,7 +334,7 @@ class UserController extends BaseController
                     'phone.required'               => __("user.phone"),
                     'phone.unique'                 => __("user.unique_phone"),
                     'date_of_birth.required'       => __("user.date_of_birth"),
-                    'nationality.required'         => __("user.nationality"),
+                    'country_id.required'          => __("user.nationality"),
                     'email.required'               => __("user.email"),
                     'email.unique'                 => __("user.unique_email"),
                     'password.required'            => __("user.password"),
@@ -338,9 +347,22 @@ class UserController extends BaseController
                 $upmember->username        = $request['username'];
                 $upmember->phone           = $request['phone'];
                 $upmember->date_of_birth   = $request['date_of_birth'];
-                $upmember->nationality     = $request['nationality'];
+                $upmember->country_id      = $request['country_id'];
                 $upmember->email           = $request['email'];
                 $upmember->password        = $request['password'] ? Hash::make($request['password']) : $upmember->password;
+
+                //Update image
+                $old_image = Member::find($upmember->id)->img;
+                if($request->hasFile('img')){
+                    Storage::disk('uploads')->delete('members/' . $old_image);
+                    $image    = $request['img'];
+                    $filename = rand(0, 9999) . '.' . $image->getClientOriginalExtension();
+                    $image->move(base_path('/public/uploads/members/'), $filename);
+                    $upmember->img = $filename;
+                }
+                else{
+                    $upmember->img  = $old_image;
+                }
                 $upmember->save();
                 $successmessage = __("user.infoupdate");
                 return $this-> returnData('success',$successmessage);
@@ -432,6 +454,10 @@ class UserController extends BaseController
           }
       }
 
+      /**
+       * User Favorite
+       */
+
       public function myFavorite(Request $request){
         $member = Member::where('id',$request->member_id)->first();
         if($member){
@@ -445,4 +471,35 @@ class UserController extends BaseController
             return $this->returnError('success', __("user.usernotexist"));
         }
       }
+
+      /**
+       * User Profile
+       */
+
+       public function profile(Request $request){
+            $member = Member::where('id',$request->member_id)->first();
+            if($member){
+                $member        = Member::select('id','username','email','img')->where('id',$request->member_id)->first();
+                $tender        = Tender::where('member_id',$request->member_id)->count();
+                $cuurntauction = Auction::where('member_id',$request->member_id)->where('is_finished',0)->count();
+                $finishauction = Auction::where('member_id',$request->member_id)->where('is_finished',1)->count();
+                if($member->img){
+                    $img = asset('uploads/acution/' .$member->img);
+                }else{
+                    $img = null;
+                }
+
+                $response = [
+                    'username'       => $member->username,
+                    'email'          => $member->email,
+                    'image'          => $img,
+                    'tender'         => $tender,
+                    'cuurntauction'  => $cuurntauction,
+                    'finishauction'  => $finishauction,
+                ];
+                return $this->returnData('success', $response);
+            }else{
+                return $this->returnError('success', __("user.usernotexist"));
+            }
+       }
 }
