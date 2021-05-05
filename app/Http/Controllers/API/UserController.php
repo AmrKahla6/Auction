@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Tender\TenderResource;
+use App\Http\Resources\Acution\FavoriteResource;
 use App\Http\Resources\Acution\AcutionResource_ar;
 use App\Http\Resources\Acution\AcutionResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -456,7 +457,7 @@ class UserController extends BaseController
       public function myFavorite(Request $request){
         $member = Member::where('id',$request->member_id)->first();
         if($member){
-            $fav = Favorite::where('member_id',$request->member_id)->get();
+            $fav = FavoriteResource::collection(Favorite::where('member_id',$request->member_id)->get());
             return $this->returnData('success', $fav);
         }else{
             return $this->returnError('success', __("user.usernotexist"));
