@@ -457,11 +457,7 @@ class UserController extends BaseController
         $member = Member::where('id',$request->member_id)->first();
         if($member){
             $fav = Favorite::where('member_id',$request->member_id)->get();
-            if(count($fav) > 0){
-                return $this->returnData('success', $fav);
-            }else{
-                return $this->returnData('success', __("user.no_favourit"));
-            }
+            return $this->returnData('success', $fav);
         }else{
             return $this->returnError('success', __("user.usernotexist"));
         }
