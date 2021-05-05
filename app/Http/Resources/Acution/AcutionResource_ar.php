@@ -14,6 +14,11 @@ class AcutionResource_ar extends JsonResource
      */
     public function toArray($request)
     {
+        if($this->is_finished == 1){
+            $finish = true;
+        }else{
+            $finish = false;
+        }
         return [
             'id'              => $this->id,
             'member_id'       => $this->member_id,
@@ -25,11 +30,12 @@ class AcutionResource_ar extends JsonResource
             'price_closing'   => $this->price_closing,
             'start_data'      => $this->start_data,
             'end_data'        => $this->end_data,
+            'is_finished'     => $finish,
             'detials'         => $this->detials,
             'cat_id'          => $this->cat_id,
             'cat_name'        => $this->category->category_name_ar,
             'created_at'      => $this->created_at,
-            'more_detials'    => $this->more_detials,
+            'cat_detidals'    => DetialsResource::collection($this->more_detials),
             'images'          => ImageResource::collection($this->images),
         ];
     }

@@ -66,5 +66,9 @@
         'notwinnercutions'  => 'No winner auctions',
         'notwattingcutions' => 'No watting auctions',
         'winner'            => 'You win acution',
+        'commercial_type'   => 'Business Account',
+        'user_type'         => 'User Account',
+        'nowinner'          => 'Pending',
+        'is_winner'         => 'Winner',
     ];
 ?>

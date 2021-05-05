@@ -65,5 +65,9 @@
         'notwinnercutions'  => "لا يوجد مزادات رابحه",
         'notwattingcutions' => 'لا يوجد مزادات ف الانتظار',
         'winner'            => 'لقد ربحت المزاد',
+        'commercial_type'   => 'حساب تجاري',
+        'user_type'         => 'حساب عادي',
+        'nowinner'          => 'معلق',
+        'is_winner'         => 'الفائز',
     ];
 ?>

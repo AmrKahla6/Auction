@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Tender\TenderResource;
+use App\Http\Resources\Acution\AcutionResource_ar;
+use App\Http\Resources\Acution\AcutionResource_en;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class UserController extends BaseController
@@ -386,18 +388,12 @@ class UserController extends BaseController
         if($member){
             $auction = Auction::where('member_id',$request->member_id)->get();
             if($auction){
-                for ($i=0; $i <count($auction) ; $i++) {
-                    $acutdetials = AuctionDetials::where('auction_id',$auction[$i]->id)->get();
-                    $acutimg     = AuctionImage::where('auction_id',$auction[$i]->id)->get();
-
-                    $response = [
-                        'acutions'    => $auction,
-                        'acutdetials' => $acutdetials,
-                        'images'      => $acutimg,
-                    ];
-
-                    return $this->returnData('success', $response);
+                if($request->lang == "en"){
+                    $auctions = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->get());
+                }else{
+                    $auctions = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->get());
                 }
+                return $this->returnData('success', $auctions);
             }else{
                 return $this->sendError('success', __("user.usernoauctions"));
             }
@@ -412,10 +408,9 @@ class UserController extends BaseController
      public function myTender(Request $request){
         $member = Member::where('id',$request->member_id)->first();
         if($member){
-            $tender = Tender::where('member_id',$request->member_id)->get();
+            $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->get());
             if(count($tender) != 0){
-                $tend = TenderResource::collection(Tender::where('member_id',$request->member_id)->get());
-                return $this->returnData('success', $tend);
+                return $this->returnData('success', $tender);
             }else{
                 return $this->returnError('success', __("user.notender"));
             }
@@ -479,7 +474,7 @@ class UserController extends BaseController
        public function profile(Request $request){
             $member = Member::where('id',$request->member_id)->first();
             if($member){
-                $member        = Member::select('id','username','email','img')->where('id',$request->member_id)->first();
+                $member        = Member::select('id','username','email','img','type')->where('id',$request->member_id)->first();
                 $tender        = Tender::where('member_id',$request->member_id)->count();
                 $cuurntauction = Auction::where('member_id',$request->member_id)->where('is_finished',0)->count();
                 $finishauction = Auction::where('member_id',$request->member_id)->where('is_finished',1)->count();
@@ -489,9 +484,18 @@ class UserController extends BaseController
                     $img = null;
                 }
 
+                if($member->type == 0){
+
+                    $type = __('user.commercial_type');
+                }else{
+
+                    $type = __('user.user_type');
+                }
+
                 $response = [
                     'username'       => $member->username,
                     'email'          => $member->email,
+                    'profile_type'   => $type,
                     'image'          => $img,
                     'tender'         => $tender,
                     'cuurntauction'  => $cuurntauction,
