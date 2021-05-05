@@ -54,6 +54,7 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //App Setting
             Route::post('terms','AppsettingController@terms');
             Route::post('about-as','AppsettingController@about_as');
+            Route::post('privacy-policy','AppsettingController@privacy');
 
             //Contact Us
             Route::post('contact-us', 'AppsettingController@contactus');

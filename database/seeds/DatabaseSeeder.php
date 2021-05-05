@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
          $this->call(CitySeeder::class);
          $this->call(SliderSeeder::class);
          $this->call(AdvertisementSeeder::class);
+         $this->call(PrivcySeeder::class);
     }
 }

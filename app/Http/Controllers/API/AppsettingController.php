@@ -8,6 +8,7 @@ use App\Models\About;
 use App\Models\Member;
 use App\Models\Slider;
 use App\Models\Contact;
+use App\Models\Privicy;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,15 @@ class AppsettingController extends BaseController
             return $this -> returnError('',$errormessage);
         }
     }
+
+    /**
+     * privacy policy
+     */
+
+     public function privacy(){
+        $privacy = Privicy::select("privcy_" .app()->getLocale() . ' as privacy policy')->first();
+        return $this->returnData('privacy policy', $privacy);
+     }
 
       //Contact Us From
       public function contactus(Request $request)
