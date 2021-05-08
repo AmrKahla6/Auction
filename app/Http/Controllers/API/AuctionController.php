@@ -60,6 +60,27 @@ class AuctionController extends BaseController
         }
     }
 
+    public function filter(Request $request){
+
+        $auction_details = AuctionDetials::when(count($request->params) > 0 , function($q) use ($request){
+            return $q->whereIn('param_value_id',array_keys($request->params));
+        })->when(count($request->params) > 0 , function($q) use ($request){
+            return $q->whereIn('type_id',$request->params);
+        })->where('cat_id',$request->category_id)->get();
+
+        //return $auction_details;
+
+        $auctions = [];
+
+        foreach ($auction_details as $key => $auction_detail) {
+            $auctions[$auction_detail->auction->id] = $auction_detail->auction;
+        }
+
+        return $auctions;
+        //price
+        //name
+    }
+
     /**
      * Get Type
      */
@@ -108,6 +129,8 @@ class AuctionController extends BaseController
 
 
     public function storeAcution(Request $request){
+
+        // return $request->all();
         $user = Member::where('id', $request->member_id)->first();
         if ($user) {
             $validator = Validator::make(
@@ -172,19 +195,39 @@ class AuctionController extends BaseController
                 }
             }
             if ($request->paramsarr) {
-                $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
-                if($catParams){
-                    $p_value = $request->paramsarr;
-                    for ($i=0; $i <count($catParams) ; $i++) {
+                foreach ($request->paramsarr as $key => $value) {
+                    //TODO:: cjeck if key exist in cat_params
+                    $cat_param = catParameter::find($key);
+                    if($cat_param){
                         $newdetials = new AuctionDetials;
-                        $newdetials->auction_id     = $newauction->id;
-                        $newdetials->cat_id         = $request['cat_id'];
-                        $newdetials->param_name_ar  = $catParams[$i]['param_name_ar'];
-                        $newdetials->param_name_en  = $catParams[$i]['param_name_en'];
-                        $newdetials->param_value    = $p_value[$i];
+                        $newdetials->auction_id      = $newauction->id;
+                        $newdetials->cat_id          = $request['cat_id'];
+                        $newdetials->param_value_id  = $key;
+                        if($cat_param->type == 1){
+                            $newdetials->param_value     = $value;
+                        }else{
+                            $newdetials->type_id = $value;
+                        }
                         $newdetials->save();
+                    }else{
+                        return 'param not found';
                     }
+
+
                 }
+                // $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
+                // if($catParams){
+                //     $p_value = $request->paramsarr;
+                //     for ($i=0; $i <count($catParams) ; $i++) {
+                //         $newdetials = new AuctionDetials;
+                //         $newdetials->auction_id     = $newauction->id;
+                //         $newdetials->cat_id         = $request['cat_id'];
+                //         $newdetials->param_name_ar  = $catParams[$i]['param_name_ar'];
+                //         $newdetials->param_name_en  = $catParams[$i]['param_name_en'];
+                //         $newdetials->param_value    = $p_value[$i];
+                //         $newdetials->save();
+                //     }
+                // }
             }
 
             $message = __("user.auction_success");

@@ -71,6 +71,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Search
             Route::get('search','AuctionController@search');
 
+            //Search
+            Route::post('filter','AuctionController@filter');
+
             //Get slider  Auctions
             Route::post('slider-acutions', 'AuctionController@acutionSlider');
 
