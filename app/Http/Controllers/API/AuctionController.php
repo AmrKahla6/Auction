@@ -332,6 +332,7 @@ class AuctionController extends BaseController
             return $this -> returnError('',__('user.usernotexist'));
         }
      }
+    }
 
     /**
     * Cancle Auction
@@ -573,4 +574,27 @@ class AuctionController extends BaseController
          }
          return $this->returnData('success', $auctions);
      }
+
+     /**
+      * Latest Acutions
+      */
+
+      public function latestAcutions(Request $request){
+        if($request->lang == 'en'){
+            $auctions = AcutionResource_en::collection(Auction::where('is_finished',0)->orderBy('created_at', 'DESC')->take(3)->get());
+        }else{
+            $auctions = AcutionResource_ar::collection(Auction::where('is_finished',0)->orderBy('created_at', 'DESC')->take(3)->get());
+        }
+
+        return $this->returnData('success', $auctions);
+      }
+
+        /**
+      * Latest Tenders
+      */
+
+      public function latestTenders(){
+        $tenders = TenderResource::collection(Tender::orderBy('created_at', 'DESC')->take(3)->get());
+        return $this->returnData('success', $tenders);
+      }
 }

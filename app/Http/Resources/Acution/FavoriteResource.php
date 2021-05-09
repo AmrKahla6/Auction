@@ -34,7 +34,7 @@ class FavoriteResource extends JsonResource
             'is_like'          => $this->is_like,
             'auction_id'       => $this->auction_id,
             'acution_owner'    => $username,
-            'auction_title'    => $this->auction->auction_title ,
+            'title'            => $this->auction->auction_title ,
             'price'            => $this->auction->price ,
             'price_closing'    => $this->auction->price_closing ,
             'start_data'       => $this->auction->start_data ,

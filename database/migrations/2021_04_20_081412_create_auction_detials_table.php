@@ -15,8 +15,6 @@ class CreateAuctionDetialsTable extends Migration
     {
         Schema::create('auction_detials', function (Blueprint $table) {
             $table->id();
-            $table->string('param_name_ar')->nullable();
-            $table->string('param_name_en')->nullable();
             $table->string('param_value')->nullable();
             $table->unsignedBigInteger('param_value_id')->nullable();
             $table->unsignedBigInteger('auction_id')->nullable();

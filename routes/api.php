@@ -78,6 +78,13 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('slider-acutions', 'AuctionController@acutionSlider');
 
 
+            //Latest Acutions
+            Route::post('latest-acutions', 'AuctionController@latestAcutions');
+
+             //Latest Tenders
+             Route::post('latest-tenders', 'AuctionController@latestTenders');
+
+
             //Auth guard Member
             Route::group(['middleware' => ['auth.guard:member-api'],], function () {
                 Route::post('logout', 'UserController@logout');
