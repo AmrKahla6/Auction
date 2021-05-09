@@ -489,17 +489,19 @@ class UserController extends BaseController
                     $type = __('user.user_type');
                 }
 
-                if($request->lang == "en"){
-                    $country = $member->country->country_name_en;
-                }else{
-                    $country = $member->country->country_name_ar;
+                if($member->country){
+                    if($request->lang == "en"){
+                        $country = $member->country->country_name_en;
+                    }else{
+                        $country = $member->country->country_name_ar;
+                    }
                 }
 
                 $response = [
                     'username'       => $member->username,
                     'email'          => $member->email,
                     'phone'          => $member->phone,
-                    'adderss'        => $country,
+                    'adderss'        => isset($country) ? $country : null,
                     'profile_type'   => $type,
                     'image'          => $img,
                     'tender'         => $tender,
