@@ -471,7 +471,7 @@ class UserController extends BaseController
        public function profile(Request $request){
             $member = Member::where('id',$request->member_id)->first();
             if($member){
-                $member        = Member::select('id','username','email','img','type')->where('id',$request->member_id)->first();
+                $member        = Member::select('id','username','email','img','type','country_id','phone')->where('id',$request->member_id)->first();
                 $tender        = Tender::where('member_id',$request->member_id)->count();
                 $cuurntauction = Auction::where('member_id',$request->member_id)->where('is_finished',0)->count();
                 $finishauction = Auction::where('member_id',$request->member_id)->where('is_finished',1)->count();
@@ -489,9 +489,17 @@ class UserController extends BaseController
                     $type = __('user.user_type');
                 }
 
+                if($request->lang == "en"){
+                    $country = $member->country->country_name_en;
+                }else{
+                    $country = $member->country->country_name_ar;
+                }
+
                 $response = [
                     'username'       => $member->username,
                     'email'          => $member->email,
+                    'phone'          => $member->phone,
+                    'adderss'        => $country,
                     'profile_type'   => $type,
                     'image'          => $img,
                     'tender'         => $tender,
