@@ -597,4 +597,19 @@ class AuctionController extends BaseController
         $tenders = TenderResource::collection(Tender::orderBy('created_at', 'DESC')->take(3)->get());
         return $this->returnData('success', $tenders);
       }
+
+      /**
+       * Get Add Acution From Request Category_id
+       */
+
+       public function acutionCategory(Request $request){
+        $auctions = Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get();
+        if($request->lang == 'en'){
+            $auctions = AcutionResource_en::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get());
+        }else{
+            $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get());
+        }
+
+        return $this->returnData('success', $auctions);
+       }
 }

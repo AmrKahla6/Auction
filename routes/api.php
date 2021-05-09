@@ -84,6 +84,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
              //Latest Tenders
              Route::post('latest-tenders', 'AuctionController@latestTenders');
 
+             //Acutions By Category
+             Route::post('acutions-category', 'AuctionController@acutionCategory');
+
 
             //Auth guard Member
             Route::group(['middleware' => ['auth.guard:member-api'],], function () {
