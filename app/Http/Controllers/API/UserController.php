@@ -473,8 +473,14 @@ class UserController extends BaseController
             if($member){
                 $member        = Member::select('id','username','email','img','type','country_id','phone')->where('id',$request->member_id)->first();
                 $tender        = Tender::where('member_id',$request->member_id)->count();
+
+
                 $cuurntauction = Auction::where('member_id',$request->member_id)->where('is_finished',0)->count();
                 $finishauction = Auction::where('member_id',$request->member_id)->where('is_finished',1)->count();
+
+                $cuurnttender = Tender::where('member_id',$request->member_id)->where('is_winner',0)->count();
+                $finishtender = Tender::where('member_id',$request->member_id)->where('is_winner',1)->count();
+
                 if($member->img){
                     $img = asset('uploads/acution/' .$member->img);
                 }else{
@@ -507,6 +513,8 @@ class UserController extends BaseController
                     'tender'         => $tender,
                     'cuurntauction'  => $cuurntauction,
                     'finishauction'  => $finishauction,
+                    'cuurnttender'   => $cuurnttender,
+                    'finishtender'   => $finishtender,
                 ];
                 return $this->returnData('success', $response);
             }else{
