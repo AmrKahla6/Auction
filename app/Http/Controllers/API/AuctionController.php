@@ -61,7 +61,6 @@ class AuctionController extends BaseController
     }
 
     public function filter(Request $request){
-
         $auction_details = AuctionDetials::when(count($request->params) > 0 , function($q) use ($request){
             return $q->whereIn('param_value_id',array_keys($request->params));
         })->when(count($request->params) > 0 , function($q) use ($request){
@@ -128,6 +127,10 @@ class AuctionController extends BaseController
      }
 
 
+
+    /**
+     * Store new Acution
+     */
     public function storeAcution(Request $request){
 
         // return $request->all();
@@ -196,7 +199,7 @@ class AuctionController extends BaseController
             }
             if ($request->paramsarr) {
                 foreach ($request->paramsarr as $key => $value) {
-                    //TODO:: cjeck if key exist in cat_params
+                    //TODO:: check if key exist in cat_params
                     $cat_param = catParameter::find($key);
                     if($cat_param){
                         $newdetials = new AuctionDetials;
@@ -210,10 +213,8 @@ class AuctionController extends BaseController
                         }
                         $newdetials->save();
                     }else{
-                        return 'param not found';
+                        return $this -> returnError('',__('user.notexist'));
                     }
-
-
                 }
                 // $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
                 // if($catParams){
@@ -305,19 +306,24 @@ class AuctionController extends BaseController
                     }
                 }
                 if ($request->paramsarr) {
-                    $catParams = catParameter::select('id',"param_name_ar","param_name_en")->where('cat_id',$request->cat_id)->get();
-                    if($catParams){
-                        $p_value = $request->paramsarr;
-                        $updetials = AuctionDetials::where('auction_id',$request->auction_id)->get();
-                        for ($i=0; $i <count($catParams) ; $i++) {
-                            $updetials[$i]->param_name_ar  = $catParams[$i]['param_name_ar'];
-                            $updetials[$i]->param_name_en  = $catParams[$i]['param_name_en'];
-                            $updetials[$i]->param_value    = $p_value[$i];
-                            $updetials[$i]->save();
+                    foreach ($request->paramsarr as $key => $value) {
+                        //TODO:: check if key exist in cat_params
+                        $cat_param = catParameter::find($key);
+                        if($cat_param){
+                            $newdetials = new AuctionDetials;
+                            $newdetials->auction_id      = $newauction->id;
+                            $newdetials->cat_id          = $request['cat_id'];
+                            $newdetials->param_value_id  = $key;
+                            if($cat_param->type == 1){
+                                $newdetials->param_value     = $value;
+                            }else{
+                                $newdetials->type_id = $value;
+                            }
+                            $newdetials->save();
+                        }else{
+                            return $this -> returnError('',__('user.notexist'));
                         }
                     }
-                }
-
                 return $this->returnData('success', __("user.upAcution"));
             }else{
                 return $this -> returnError('',__('user.acutionnitexists'));

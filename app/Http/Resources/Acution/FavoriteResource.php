@@ -41,7 +41,7 @@ class FavoriteResource extends JsonResource
             'end_data'         => $this->auction->end_data ,
             'detials'          => $this->auction->detials,
             'is_finished'      => $finish,
-            "acution_images"   => $image,
+            "images"           => $image,
         ];
     }
 }

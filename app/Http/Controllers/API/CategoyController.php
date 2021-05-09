@@ -67,7 +67,7 @@ class CategoyController extends BaseController
      */
 
     public function selectParams(Request $request){
-        $select = selectParams::select("id","param_name_" .app()->getLocale() . ' as param_name')->where('param_id',$request->param_id)->get();
+        $select = selectParams::select("id","param_name_" .app()->getLocale() . ' as param_name')->where('cat_id',$request->cat_id)->where('param_id',$request->param_id)->get();
         if($select){
             return $this->returnData('Parameters', $select);
         }else{

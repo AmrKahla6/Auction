@@ -70,5 +70,6 @@
         'user_type'         => 'User Account',
         'nowinner'          => 'Pending',
         'is_winner'         => 'Winner',
+        'notexist'          => 'Not exist',
     ];
 ?>

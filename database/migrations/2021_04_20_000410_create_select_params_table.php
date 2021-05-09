@@ -18,7 +18,9 @@ class CreateSelectParamsTable extends Migration
             $table->string('param_name_ar')->nullable();
             $table->string('param_name_en')->nullable();
             $table->unsignedBigInteger('param_id')->nullable();
+            $table->unsignedBigInteger('cat_id')->nullable();
 
+            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('param_id')->references('id')->on('cat_parameters')->onDelete('cascade');
             $table->timestamps();
         });
