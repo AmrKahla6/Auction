@@ -61,7 +61,11 @@ class AuctionController extends BaseController
     }
 
     public function filter(Request $request){
-        $auction_details = AuctionDetials::when(count($request->params) > 0 , function($q) use ($request){
+        $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
+            $q->where('auction_title', 'like', '%'.$request->name.'%')->
+                    where('price_opining', 'like', '%'.$request->price.'%') ;
+        })->
+        when(count($request->params) > 0 , function($q) use ($request){
             return $q->whereIn('param_value_id',array_keys($request->params));
         })->when(count($request->params) > 0 , function($q) use ($request){
             return $q->whereIn('type_id',$request->params);
@@ -74,10 +78,7 @@ class AuctionController extends BaseController
         foreach ($auction_details as $key => $auction_detail) {
             $auctions[$auction_detail->auction->id] = $auction_detail->auction;
         }
-
-        return $auctions;
-        //price
-        //name
+        return $this->returnData('filters', $auctions);
     }
 
     /**
