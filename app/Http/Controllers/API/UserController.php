@@ -471,7 +471,8 @@ class UserController extends BaseController
        public function profile(Request $request){
             $member = Member::where('id',$request->member_id)->first();
             if($member){
-                $member        = Member::select('id','username','email','img','type','country_id','phone')->where('id',$request->member_id)->first();
+                $member        = Member::select('id','username','email','img','type','country_id','phone','created_at')->where('id',$request->member_id)->first();
+                $acutions      = Auction::where('member_id',$request->member_id)->count();
                 $tender        = Tender::where('member_id',$request->member_id)->count();
 
 
@@ -504,17 +505,20 @@ class UserController extends BaseController
                 }
 
                 $response = [
+                    'id'             => $member->id,
                     'username'       => $member->username,
                     'email'          => $member->email,
                     'phone'          => $member->phone,
                     'adderss'        => isset($country) ? $country : null,
                     'profile_type'   => $type,
                     'image'          => $img,
+                    'acutions'       => $acutions,
                     'tender'         => $tender,
                     'cuurntauction'  => $cuurntauction,
                     'finishauction'  => $finishauction,
                     'cuurnttender'   => $cuurnttender,
                     'finishtender'   => $finishtender,
+                    'created_at'     => $member->created_at,
                 ];
                 return $this->returnData('success', $response);
             }else{

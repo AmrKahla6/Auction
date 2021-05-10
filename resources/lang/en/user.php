@@ -31,7 +31,6 @@
         'no_detials'        => 'No Detials',
         'message'           => 'Message is required',
         'no_params'         => 'No Parameters',
-        'address'           => "Address is required",
         'price'             => 'Price is required',
         'price_opining'     => 'Price Opining is required',
         'start_data'        => 'Start Data is required',
@@ -71,5 +70,9 @@
         'nowinner'          => 'Pending',
         'is_winner'         => 'Winner',
         'notexist'          => 'Not exist',
+        'address'           => "Address is required",
+        'gover_id'          => 'Governorate is required',
+        'city_id'           => 'City is required',
+        'imagesarr'         => 'Images is required',
     ];
 ?>

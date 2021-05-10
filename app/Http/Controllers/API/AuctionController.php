@@ -140,6 +140,8 @@ class AuctionController extends BaseController
                 $request->all(),
                 [
                     'auction_title'      => 'required',
+                    'address'            => 'required',
+                    'gover_id'           => 'required',
                     'city_id'            => 'required',
                     'price_opining'      => 'required',
                     'price_closing'      => 'nullable',
@@ -148,15 +150,19 @@ class AuctionController extends BaseController
                     'detials'            => 'required',
                     'cat_id'             => 'required',
                     'type_id'            => 'required',
+                    'imagesarr'          => 'required',
                 ],
                 [
                     'auction_title.required'       => __("user.auction_title"),
-                    'city_id.required'             => __("user.address"),
+                    'address.required'             => __("user.address"),
+                    'gover_id.required'            => __("user.gover_id"),
+                    'city_id.required'             => __("user.city_id"),
                     'price_opining.required'       => __("user.price_opining"),
                     'start_data.required'          => __("user.start_data"),
                     'end_data.required'            => __("user.end_data"),
                     'cat_id.required'              => __("user.cat_id"),
                     'type_id.required'             => __("user.type_id"),
+                    'imagesarr.required'           => __("user.imagesarr"),
                 ]
             );
 
@@ -166,8 +172,10 @@ class AuctionController extends BaseController
             }
             $newauction                     = new Auction;
             $newauction->auction_title      = $request['auction_title'];
-            $newauction->member_id          = $request['member_id'];
+            $newauction->address            = $request['address'];
+            $newauction->gover_id           = $request['gover_id'];
             $newauction->city_id            = $request['city_id'];
+            $newauction->member_id          = $request['member_id'];
             $newauction->price              = 0;
             $newauction->price_opining      = $request['price_opining'];
             $newauction->price_closing      = $request['price_closing'];
@@ -246,7 +254,10 @@ class AuctionController extends BaseController
         $validator = Validator::make(
             $request->all(),
             [
+                'auction_title'      => 'required',
                 'address'            => 'required',
+                'gover_id'           => 'required',
+                'city_id'            => 'required',
                 'price_opining'      => 'required',
                 'price_closing'      => 'nullable',
                 'start_data'         => 'required',
@@ -258,7 +269,10 @@ class AuctionController extends BaseController
                 'type_id'            => 'required',
             ],
             [
+                'auction_title.required'       => __("user.auction_title"),
                 'address.required'             => __("user.address"),
+                'gover_id.required'            => __("user.gover_id"),
+                'city_id.required'             => __("user.city_id"),
                 'price_opining.required'       => __("user.price_opining"),
                 'start_data.required'          => __("user.start_data"),
                 'end_data.required'            => __("user.end_data"),
@@ -279,7 +293,10 @@ class AuctionController extends BaseController
             $upAcution = Auction::where('id', $request->auction_id)->where('member_id',$request->member_id)->first();
 
             if($upAcution){
+                $upAcution->auction_title = $request->auction_title;
                 $upAcution->address       = $request->address;
+                $upAcution->gover_id      = $request->gover_id;
+                $upAcution->city_id       = $request->city_id;
                 $upAcution->price         = $upAcution->price;
                 $upAcution->price_opining = $request->price_opining;
                 $upAcution->price_closing = $request->price_closing;
