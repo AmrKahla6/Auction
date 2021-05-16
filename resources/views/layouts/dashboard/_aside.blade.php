@@ -29,6 +29,12 @@
                     <a href="{{ route('dashboard.users.index') }}"><i class="fa fa-users"></i><span>المشروفين</span></a>
                 </li>
             @endif
+
+            @if(auth()->user()->hasPermission('read_governorates'))
+                <li class="nav-item {{is_active('governorates')}}">
+                    <a href="{{route('dashboard.governorates.index')}}"><i class="fa fa-flag"></i><span>المحافظات</span></a>
+                </li>
+            @endif
         </ul>
 
 

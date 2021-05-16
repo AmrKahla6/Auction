@@ -31,4 +31,9 @@ Route::get('/', function () {
     Route::put('profile','ProfileController@update')->name('profiles.update');
     Route::get('profile/change_password','ProfileController@change_password')->name('profiles.change_password');
     Route::put('profile/change_password','ProfileController@change_password_method')->name('profiles.change_password_method');
+
+    //governorates routes
+    Route::resource('/governorates', 'CityController');
+    //cities routes
+    Route::resource('governorates.cities','City\CityController');
   });

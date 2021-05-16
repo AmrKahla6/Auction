@@ -17,9 +17,6 @@ class CreateGovernoratesTable extends Migration
             $table->id();
             $table->string('governorate_name_ar')->nullable();
             $table->string('governorate_name_en')->nullable();
-
-            $table->unsignedBigInteger('country_id');
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->timestamps();
         });
     }

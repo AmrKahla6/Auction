@@ -56,6 +56,8 @@ return [
 
 
 
-    'main'  => 'الرئيسيه',
+    'main'              => 'الرئيسيه',
+    'districts'         => 'المدن',
+    'related_districts' => 'الاحياء',
 
 ];

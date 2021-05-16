@@ -14,19 +14,16 @@ class GovernorateSeeder extends Seeder
         DB::table('governorates')->insert([
             'governorate_name_ar' => "القاهره",
             'governorate_name_en' => "Cairo",
-            'country_id'          => 1,
         ]);
 
         DB::table('governorates')->insert([
             'governorate_name_ar' => "الاسكندريه",
             'governorate_name_en' => "Alex",
-            'country_id'          => 1,
         ]);
 
         DB::table('governorates')->insert([
             'governorate_name_ar' => "الدقهيليه",
             'governorate_name_en' => "Dakahlia",
-            'country_id'          => 1,
         ]);
     }
 }
