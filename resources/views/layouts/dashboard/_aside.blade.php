@@ -23,7 +23,14 @@
             <li class="nav-item {{is_active('index')}}">
                 <a href="{{ route('dashboard.index') }}"><i class="fa fa-th"></i><span>الرئيسيه</span></a>
             </li>
+
+            @if(auth()->user()->hasPermission('read_users'))
+                <li class="nav-item {{is_active('users')}}">
+                    <a href="{{ route('dashboard.users.index') }}"><i class="fa fa-users"></i><span>المشروفين</span></a>
+                </li>
+            @endif
         </ul>
+
 
     </section>
 

@@ -23,6 +23,9 @@ Route::get('/', function () {
   Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middleware('auth')->group(function(){
     Route::get('/index', 'DashboardController@index')->name('index');
 
+    // User Routes
+    Route::resource('users', 'UserController')->except(['show']);
+
     //Profile
     Route::get('profile','ProfileController@edit')->name('profiles.edit');
     Route::put('profile','ProfileController@update')->name('profiles.update');
