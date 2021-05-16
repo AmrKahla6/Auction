@@ -108,7 +108,7 @@ class AuctionController extends BaseController
      */
 
      public function governorate(Request $request){
-        $governorate = Governorate::select("id","governorate_name_" .app()->getLocale() . ' as governorate name')->where('country_id',$request->country_id)->get();
+        $governorate = Governorate::select("id","governorate_name_" .app()->getLocale() . ' as governorate name')->get();
             if(count($governorate) > 0 ){
                 return $this->returnData('Governorate', $governorate);
             }
@@ -627,7 +627,19 @@ class AuctionController extends BaseController
         }else{
             $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get());
         }
-
         return $this->returnData('success', $auctions);
        }
+
+       /**
+        * Latest Tenders in acution
+        */
+
+        public function latestTendersAcution(Request $request){
+            $tenders = Tender::where('auction_id',$request->auction_id)->get();
+            if($tenders){
+                $tender = TenderResource::collection(Tender::where('auction_id',$request->auction_id)->orderBy('created_at', 'DESC')->take(3)->get());
+                return $this->returnData('success', $tender);
+            }
+
+        }
 }
