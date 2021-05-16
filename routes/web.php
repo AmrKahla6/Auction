@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect('/dashboard/index');
+  });
+
+
+  Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middleware('auth')->group(function(){
+    Route::get('/index', 'DashboardController@index')->name('index');
+  });
