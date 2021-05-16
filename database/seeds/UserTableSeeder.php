@@ -3,7 +3,7 @@
 use App\User;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,5 +18,6 @@ class UserSeeder extends Seeder
             'password'   => bcrypt('123456'),
             'image'      => 'default.png',
         ]);
+        $user->attachRole('super_admin');
     }
 }

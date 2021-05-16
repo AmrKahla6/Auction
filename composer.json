@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "mcamara/laravel-localization": "^1.6",
+        "santigarcor/laratrust": "^6.3",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
