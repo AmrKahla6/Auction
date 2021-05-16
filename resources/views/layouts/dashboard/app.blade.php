@@ -60,8 +60,8 @@
         {{--<!-- Logo -->--}}
         <a href="{{ route('dashboard.index') }}" class="logo">
             {{--<!-- mini logo for sidebar mini 50x50 pixels -->--}}
-            <span class="logo-mini"><b></b>@lang('site.kbsh')</span>
-            <span class="logo-lg"><b></b></span>@lang('site.khabsh')
+            <span class="logo-mini"><b></b>s</span>مزاد
+            <span class="logo-lg"><b></b></span>مزاد
         </a>
 
         <nav class="navbar navbar-static-top">

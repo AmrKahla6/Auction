@@ -22,4 +22,10 @@ Route::get('/', function () {
 
   Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middleware('auth')->group(function(){
     Route::get('/index', 'DashboardController@index')->name('index');
+
+    //Profile
+    Route::get('profile','ProfileController@edit')->name('profiles.edit');
+    Route::put('profile','ProfileController@update')->name('profiles.update');
+    Route::get('profile/change_password','ProfileController@change_password')->name('profiles.change_password');
+    Route::put('profile/change_password','ProfileController@change_password_method')->name('profiles.change_password_method');
   });
