@@ -35,6 +35,12 @@
                     <a href="{{route('dashboard.governorates.index')}}"><i class="fa fa-flag"></i><span>المحافظات</span></a>
                 </li>
             @endif
+
+            @if(auth()->user()->hasPermission('read_governorates'))
+            <li class="nav-item {{is_active('cats')}}">
+                <a href="{{route('dashboard.cats.index')}}"><i class="fa fa-flag"></i><span>الاقسام</span></a>
+            </li>
+        @endif
         </ul>
 
 

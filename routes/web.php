@@ -36,4 +36,7 @@ Route::get('/', function () {
     Route::resource('/governorates', 'CityController');
     //cities routes
     Route::resource('governorates.cities','City\CityController');
+
+    //Categories routes
+    Route::resource('/cats', 'CategoryController')->except(['show']);
   });
