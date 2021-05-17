@@ -9,6 +9,6 @@ class Category extends Model
     protected $guarded = [];
 
     public function subcategory(){
-        return $this->hasMany('App\Category', 'parent_id');
+        return $this->hasMany('App\Models\Category', 'parent_id');
     }
 }

@@ -2,13 +2,13 @@
 
 @section('content')
 @section('title')
-    الاقسام الاساسيه
+    الاقسام الفرعيه
 @endsection
     <div class="content-wrapper">
 
         <section class="content-header">
 
-            <h1>الاقسام الاساسيه</h1>
+            <h1>الاقسام الفرعيه</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{route('dashboard.index')}}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a>
@@ -24,7 +24,7 @@
                     <h3 class="box-title" style="margin-bottom: 10px;">الاقسام
                         <small>{{ $cats->total() }}</small>
                     </h3>
-                    <form action="{{ route('dashboard.cats.index') }}" method="get">
+                    <form action="{{ route('dashboard.cats-child') }}" method="get">
                         <div class="row">
 
                             <div class="col-md-4">
@@ -49,16 +49,21 @@
                                 <th style="width: 10px">#</th>
                                 <th>الاسم بالعربيه</th>
                                 <th>الاسم بالانجليزيه</th>
+                                <th> القسم </th>
                                 <th>الصوره</th>
                                 <th>@lang('site.action')</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($cats as $index => $cat)
+                                @php
+                                    $category =\App\Models\Category::where('id',$cat->parent_id)->first();
+                                @endphp
                                 <tr>
                                     <td>{{ $index +1 }}</td>
                                     <td>{{ $cat->category_name_ar }}</td>
                                     <td>{{ $cat->category_name_en }}</td>
+                                    <td>{{ $category->category_name_ar }}</td>
                                     <td>
                                         <img src="{{ asset('uploads/category/'.$cat->img) }}" width="100" height="50" alt="" srcset="">
                                     </td>

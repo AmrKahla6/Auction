@@ -20,9 +20,25 @@ class CategoryController extends Controller
         $data['cats'] = Category::when($request->search , function ($q) use ($request){
             return $q->where('category_name_ar' , 'like' , '%'. $request->search. '%')
             ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%');
-        })->latest()->paginate(5);
+        })->where('parent_id',0)->latest()->paginate(5);
 
         return view('dashboard.categories.index')->with($data);
+    }
+
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function childCat(Request $request)
+    {
+        $data['cats'] = Category::when($request->search , function ($q) use ($request){
+            return $q->where('category_name_ar' , 'like' , '%'. $request->search. '%')
+            ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%');
+        })->where('parent_id' ,'!=', 0)->latest()->paginate(5);
+
+        return view('dashboard.categories.child')->with($data);
     }
 
     /**
@@ -71,7 +87,7 @@ class CategoryController extends Controller
 
         session()->flash('success', __('site.added_successfully'));
 
-        return redirect()->route('dashboard.cats.index');
+        return redirect()->back();
       }
 
 
@@ -132,7 +148,7 @@ class CategoryController extends Controller
 
         session()->flash('success', __('site.updated_successfully'));
 
-        return redirect()->route('dashboard.cats.index');
+        return redirect()->back();
     }
 
 

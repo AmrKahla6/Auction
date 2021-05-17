@@ -36,11 +36,14 @@
                 </li>
             @endif
 
-            @if(auth()->user()->hasPermission('read_governorates'))
-            <li class="nav-item {{is_active('cats')}}">
-                <a href="{{route('dashboard.cats.index')}}"><i class="fa fa-flag"></i><span>الاقسام</span></a>
+            <li class="treeview {{is_active('cats')}}">
+                <a href="#"><i class="fa fa-plane"></i> <span>الاقسام</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{route('dashboard.cats.create')}}">اضافه قسم</a></li>
+                    <li><a href="{{route('dashboard.cats.index')}}"> الاقسام الاساسيه </a></li>
+                    <li><a href="{{route('dashboard.cats-child')}}">الاقسام الفرعيه</a></li>
+                </ul>
             </li>
-        @endif
         </ul>
 
 

@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label>القسم</label>
                             <select name="parent_id" id="" class="form-control">
-                                <option value="" selected disabled>اختر القسم (قسم اساسي)</option>
+                                <option value="" selected>اختر القسم (قسم اساسي)</option>
                                 @foreach ($cats as $cat)
                                     <option value="{{$cat->id}}">{{$cat->category_name_ar}}</option>
                                 @endforeach
