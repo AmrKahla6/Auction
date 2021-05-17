@@ -32,12 +32,9 @@
                                        placeholder="@lang('site.search')">
                             </div>
 
-
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i
                                         lass="fa fa-search"></i>@lang('site.search')</button>
-                                <a href="{{ route('dashboard.cats.create') }}" class="btn btn-primary"><i
-                                    class="fa fa-plus"></i>@lang('site.add')</a>
                             </div>
                         </div>
 
@@ -53,7 +50,6 @@
                                 <th>الاسم بالعربيه</th>
                                 <th>الاسم بالانجليزيه</th>
                                 <th>الصوره</th>
-                                <th>الاقسام الفرعيه</th>
                                 <th>@lang('site.action')</th>
                             </tr>
                             </thead>
@@ -67,10 +63,6 @@
                                         <img src="{{ asset('uploads/category/'.$cat->img) }}" width="100" height="50" alt="" srcset="">
                                     </td>
                                     <td>
-                                        <a href="{{ route('dashboard.cats.child.index' ,  $cat->id) }}" class="btn btn-warning btn-sm">الاقسام الفرعيه</a>
-                                    </td>
-                                    <td>
-
                                         @if(auth()->user()->hasPermission('update_categories'))
                                             <a class="btn btn-info btn-sm" title="تعديل القسم !"
                                                 href="{{route('dashboard.cats.edit' , $cat->id)}}"><i

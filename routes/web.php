@@ -39,5 +39,6 @@ Route::get('/', function () {
 
     //Categories routes
     Route::resource('/cats', 'CategoryController')->except(['show']);
-    Route::get('/cats/child', 'CategoryController@childCat')->name('cats-child');
+    //Child routes
+    Route::resource('/cats.child','ChildCategory\ChildCategoryController');
   });

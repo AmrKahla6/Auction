@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Category;
+use App\Models\catParameter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
@@ -23,22 +24,6 @@ class CategoryController extends Controller
         })->where('parent_id',0)->latest()->paginate(5);
 
         return view('dashboard.categories.index')->with($data);
-    }
-
-
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function childCat(Request $request)
-    {
-        $data['cats'] = Category::when($request->search , function ($q) use ($request){
-            return $q->where('category_name_ar' , 'like' , '%'. $request->search. '%')
-            ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%');
-        })->where('parent_id' ,'!=', 0)->latest()->paginate(5);
-
-        return view('dashboard.categories.child')->with($data);
     }
 
     /**
@@ -168,4 +153,22 @@ class CategoryController extends Controller
 
         return redirect()->route('dashboard.cats.index');
     }
+
+    /**
+     * ===========================================================================================
+     * =============================== Category Parameters =======================================
+     * ===========================================================================================
+     */
+
+    //  public function indexParam(){
+    //     $data['params'] = catParameter::whereHas('category', function ($query) use ($request) {
+    //         $query->where('category_name_ar', 'like', "%{$request->search}%")
+    //         ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%')
+    //     })
+    //     ->orWhere('param_name_ar' , 'like' , '%'. $request->search. '%')
+    //     ->orWhere('	param_name_en' , 'like' , '%'. $request->search. '%')
+    //     ->latest()->paginate(5);;
+
+    //     return view('dashboard.categories.params.index')->with($data);
+    //  }
 }
