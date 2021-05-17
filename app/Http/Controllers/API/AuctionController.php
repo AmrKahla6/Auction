@@ -180,6 +180,7 @@ class AuctionController extends BaseController
             $newauction->price              = 0;
             $newauction->price_opining      = $request['price_opining'];
             $newauction->price_closing      = $request['price_closing'];
+            $newauction->share_location     = $request['share_location'];
 
             //Start & end date time
             $startDateTime             = $request['start_data'];

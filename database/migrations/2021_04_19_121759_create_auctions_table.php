@@ -21,14 +21,15 @@ class CreateAuctionsTable extends Migration
             $table->string('address')->nullable();
             $table->decimal('price_opining',8,2)->nullable();
             $table->decimal('price_closing',8,2)->nullable();
-            $table->date('start_data')->nullable();
-            $table->date('end_data')->nullable();
+            $table->timestamps('start_data')->nullable();
+            $table->timestamps('end_data')->nullable();
             $table->text('detials',8,2)->nullable();
             $table->string('status')->nullable()->default(0);
             $table->boolean('is_slider')->nullable()->default(0);
             $table->text('desc_ar')->nullable();
             $table->text('desc_en')->nullable();
             $table->boolean('is_finished')->nullable()->default(0);
+            $table->boolean('share_location')->nullable()->default(0);
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
             $table->unsignedBigInteger('gover_id')->nullable();
