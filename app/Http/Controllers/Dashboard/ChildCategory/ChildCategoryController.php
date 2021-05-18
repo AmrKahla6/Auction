@@ -52,14 +52,17 @@ class ChildCategoryController extends Controller
         $validatedData = $request->validate([
             'param_name_ar' => 'required|max:255',
             'param_name_en' => 'required|max:255',
+            'type'          => 'required',
         ],[
             'param_name_ar.required'  => 'يرجي ادخال اسم الخاصيه بالعربيه',
             'param_name_en.required'  => 'يرجي ادخال اسم الخاصيه بالانجليزيه',
+            'type.required'           => 'يرجي احتيار نوع الخاصيه',
         ]);
         catParameter::create([
             'param_name_ar'       => $request->param_name_ar,
             'param_name_en'       => $request->param_name_en,
             'cat_id'              => $request->cat_id,
+            'type'                => $request->type,
         ]);
 
         session()->flash('success', __('site.added_successfully'));
