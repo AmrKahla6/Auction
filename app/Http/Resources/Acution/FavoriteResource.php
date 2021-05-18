@@ -20,11 +20,7 @@ class FavoriteResource extends JsonResource
         $member   = Member::where('id',$this->auction->member_id)->first();
         $username = $member->username;
 
-        if($this->auction->is_finished == 1){
-            $finish = true;
-        }else{
-            $finish = false;
-        }
+
 
         $image = ImageResource::collection(AuctionImage::where('auction_id',$this->auction_id)->get());
         return [
@@ -40,7 +36,7 @@ class FavoriteResource extends JsonResource
             'start_data'       => $this->auction->start_data ,
             'end_data'         => $this->auction->end_data ,
             'detials'          => $this->auction->detials,
-            'is_finished'      => $finish,
+            'is_finished'      => $this->auction->is_finished,
             "images"           => $image,
         ];
     }

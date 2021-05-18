@@ -79,7 +79,7 @@ class AuctionController extends BaseController
         if($request->params){
             $auction_details = AuctionDetials::when(count($request->params) > 0 , function($q) use ($request){
                 return $q->whereIn('param_value_id',array_keys($request->params));
-            })->where('cat_id',$request->category_id)->get();
+            })->where('cat_id',$request->category_id)->where('status')->get();
         }elseif($request->params && $request->min_price){
             $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
                 $q->whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
@@ -95,15 +95,14 @@ class AuctionController extends BaseController
                 ->WhereBetween('price_opining', [$request->min_price, $request->max_price]) ;
             })->where('cat_id',$request->category_id)->get();
         }else{
-            $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
-                $q->where('cat_id', 'like', '%'.$request->category_id.'%');
-            })->get();
+            $auction_details = AuctionDetials::when($request->category_id , function ($q) use ($request){
+                return $q->where('cat_id' , 'like' , '%'. $request->category_id. '%');
+            })->where('cat_id',$request->category_id)->get();
         }
 
         //return $auction_details;
 
         $auctions = [];
-
 
         foreach ($auction_details as $key => $auction_detail) {
             array_push(
@@ -111,7 +110,7 @@ class AuctionController extends BaseController
                 $auction_detail = $auction_detail->auction
             );
         }
-
+        // $hasDuplicates = count($auctions) > count(array_unique($auctions))
         // foreach ($auction_details as $key => $auction_detail) {
         //     $auctions[$auction_detail->auction->id] = $auction_detail->auction;
         // }

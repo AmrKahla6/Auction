@@ -74,5 +74,10 @@
         'gover_id'          => 'Governorate is required',
         'city_id'           => 'City is required',
         'imagesarr'         => 'Images is required',
+        'success_pass'      => 'Password has changed successfuly',
+        'wrong_pass'        => 'wrong password',
+        'member_id'         => 'Member is required',
+        'old_password'      => 'Old password is required',
+        'password'          => 'New password is required',
     ];
 ?>

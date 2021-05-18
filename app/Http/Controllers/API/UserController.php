@@ -326,33 +326,22 @@ class UserController extends BaseController
             if($upmember->username){
                 $validator = Validator::make($request->all(), [
                     'username'            => 'required',
-                    'phone'               => 'required|unique:members,phone,' . $upmember->id,
-                    'date_of_birth'       => 'required',
                     'country_id'          => 'required',
                     'email'               => 'required|unique:members,email,' . $upmember->id,
-                    'password'            => 'required|min:6',
                 ],
                 [
                     'username.required'            => __("user.username"),
-                    'phone.required'               => __("user.phone"),
-                    'phone.unique'                 => __("user.unique_phone"),
                     'date_of_birth.required'       => __("user.date_of_birth"),
-                    'country_id.required'          => __("user.nationality"),
                     'email.required'               => __("user.email"),
                     'email.unique'                 => __("user.unique_email"),
-                    'password.required'            => __("user.password"),
-                    'password.min'                 => __("user.max_password"),
                 ]);
                 if ($validator->fails()) {
                     $code = $this->returnCodeAccordingToInput($validator);
                     return $this->returnValidationError($code, $validator);
                 }
                 $upmember->username        = $request['username'];
-                $upmember->phone           = $request['phone'];
-                $upmember->date_of_birth   = $request['date_of_birth'];
                 $upmember->country_id      = $request['country_id'];
                 $upmember->email           = $request['email'];
-                $upmember->password        = $request['password'] ? Hash::make($request['password']) : $upmember->password;
 
                 //Update image
                 $old_image = Member::find($upmember->id)->img;
@@ -525,4 +514,56 @@ class UserController extends BaseController
                 return $this->returnError('success', __("user.usernotexist"));
             }
        }
+
+
+
+
+
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function change_password_method(Request $request)
+    {
+        $member = Member::where('id',$request->member_id)->first();
+        if($member){
+            $validator = Validator::make(
+                $request->all(),
+            [
+                'member_id'    => 'required',
+                'old_password' => 'required',
+                'password'     => 'required',
+            ],[
+                'member_id.required'       => __("user.member_id"),
+                'old_password.required'    => __("user.old_password"),
+                'password.required'        => __("user.password"),
+            ]);
+
+            if ($validator->fails()) {
+                $code = $this->returnCodeAccordingToInput($validator);
+                return $this->returnValidationError($code, $validator);
+            }
+
+           // dd(Hash::check($request->old_password, $user->password));
+            if(Hash::check($request->old_password, $member->password))
+            {
+                $member->fill([
+                    'password' => Hash::make($request->password)
+                ])->save();
+
+                $message = __('user.success_pass');
+                return $this->returnData('success', $message);
+            }
+            else
+            {
+                $message = __('user.wrong_pass');
+                return $this->returnError('success',$message);
+            }
+        }else{
+            return $this->returnError('success', __("user.usernotexist"));
+        }
+    }
 }

@@ -102,6 +102,7 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
                 Route::post('store-favorite', 'UserController@storeFavorite');
                 Route::post('my-favorite', 'UserController@myFavorite');
                 Route::post('profile', 'UserController@profile');
+                Route::post('change_password','UserController@change_password_method');
                 //New Auction
                 Route::post('store-auction', 'AuctionController@storeAcution');
 
