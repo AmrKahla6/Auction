@@ -61,23 +61,55 @@ class AuctionController extends BaseController
     }
 
     public function filter(Request $request){
-        $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
-            $q->where('auction_title', 'like', '%'.$request->name.'%')->
-                    where('price_opining', 'like', '%'.$request->price.'%') ;
-        })->
-        when(count($request->params) > 0 , function($q) use ($request){
-            return $q->whereIn('param_value_id',array_keys($request->params));
-        })->when(count($request->params) > 0 , function($q) use ($request){
-            return $q->whereIn('type_id',$request->params);
-        })->where('cat_id',$request->category_id)->get();
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'category_id' => 'required',
+            ],
+            [
+                'category_id.required' => __("user.cat_id"),
+            ]
+        );
+
+        if ($validator->fails()) {
+            $code = $this->returnCodeAccordingToInput($validator);
+            return $this->returnValidationError($code, $validator);
+        }
+        if($request->params){
+            $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
+                $q->where('auction_title', 'like', '%'.$request->name.'%')->
+                        where('price_opining', 'like', '%'.$request->price.'%') ;
+            })->
+            when(count($request->params) > 0 , function($q) use ($request){
+                return $q->whereIn('param_value_id',array_keys($request->params));
+            })->when(count($request->params) > 0 , function($q) use ($request){
+                return $q->whereIn('type_id',$request->params);
+            })->where('cat_id',$request->category_id)->get();
+        }else{
+            $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
+                $q->where('auction_title', 'like', '%'.$request->name.'%')->
+                whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
+            })->get();
+        }
 
         //return $auction_details;
 
         $auctions = [];
 
+
         foreach ($auction_details as $key => $auction_detail) {
-            $auctions[$auction_detail->auction->id] = $auction_detail->auction;
+            array_push(
+                $auctions,
+                $auction_detail = $auction_detail->auction
+            );
         }
+
+        // foreach ($auction_details as $key => $auction_detail) {
+        //     $auctions[$auction_detail->auction->id] = $auction_detail->auction;
+        // }
+
+
         return $this->returnData('filters', $auctions);
     }
 
