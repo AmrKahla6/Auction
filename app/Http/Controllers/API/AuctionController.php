@@ -77,19 +77,26 @@ class AuctionController extends BaseController
             return $this->returnValidationError($code, $validator);
         }
         if($request->params){
+            $auction_details = AuctionDetials::when(count($request->params) > 0 , function($q) use ($request){
+                return $q->whereIn('param_value_id',array_keys($request->params));
+            })->where('cat_id',$request->category_id)->get();
+        }elseif($request->params && $request->min_price){
             $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
-                $q->where('auction_title', 'like', '%'.$request->name.'%')->
-                        where('price_opining', 'like', '%'.$request->price.'%') ;
+                $q->whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
             })->
             when(count($request->params) > 0 , function($q) use ($request){
                 return $q->whereIn('param_value_id',array_keys($request->params));
             })->when(count($request->params) > 0 , function($q) use ($request){
                 return $q->whereIn('type_id',$request->params);
             })->where('cat_id',$request->category_id)->get();
+        }elseif ($request->min_price) {
+            $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
+                $q->where('cat_id', 'like', '%'.$request->category_id.'%')
+                ->WhereBetween('price_opining', [$request->min_price, $request->max_price]) ;
+            })->where('cat_id',$request->category_id)->get();
         }else{
             $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
-                $q->where('auction_title', 'like', '%'.$request->name.'%')->
-                whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
+                $q->where('cat_id', 'like', '%'.$request->category_id.'%');
             })->get();
         }
 
