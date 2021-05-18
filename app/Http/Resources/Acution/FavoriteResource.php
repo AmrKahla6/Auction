@@ -26,7 +26,7 @@ class FavoriteResource extends JsonResource
             $finish = false;
         }
 
-        $image = ImageResource::collection(AuctionImage::where('id',$this->auction_id)->get());
+        $image = ImageResource::collection(AuctionImage::where('auction_id',$this->auction_id)->get());
         return [
             'id'               => $this->id,
             'member_id'        => $this->member_id,
