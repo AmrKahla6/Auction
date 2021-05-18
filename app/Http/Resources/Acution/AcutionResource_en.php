@@ -35,7 +35,7 @@ class AcutionResource_en extends JsonResource
             'price_closing'   => $this->price_closing,
             'start_data'      => $this->start_data,
             'end_data'        => $this->end_data,
-            'is_finished'     => $finish,
+            'is_finished'     => $this->is_finished,
             'detials'         => $this->detials,
             'cat_id'          => $this->cat_id,
             'cat_name'        => $this->category->category_name_en,

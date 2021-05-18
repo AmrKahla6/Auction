@@ -71,6 +71,11 @@
                                     </td>
                                     <td>
 
+                                        <a class="btn btn-primary btn-sm" title="خصائص القسم !"
+                                                href="{{route('dashboard.cats.params-index' , $cat->id)}}"><i
+                                                        class="fa fa-linode"></i>خصائص</a>
+
+
                                         @if(auth()->user()->hasPermission('update_categories'))
                                             <a class="btn btn-info btn-sm" title="تعديل القسم !"
                                                 href="{{route('dashboard.cats.edit' , $cat->id)}}"><i
@@ -79,7 +84,6 @@
                                             <a class="btn btn-info btn-sm" href="#" disabled><i
                                                     class="fa fa-edit"></i>تعديل</a>
                                         @endif
-
 
                                         @if(auth()->user()->hasPermission('delete_categories'))
                                             <form method="post"

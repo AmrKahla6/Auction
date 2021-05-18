@@ -154,21 +154,5 @@ class CategoryController extends Controller
         return redirect()->route('dashboard.cats.index');
     }
 
-    /**
-     * ===========================================================================================
-     * =============================== Category Parameters =======================================
-     * ===========================================================================================
-     */
 
-    //  public function indexParam(){
-    //     $data['params'] = catParameter::whereHas('category', function ($query) use ($request) {
-    //         $query->where('category_name_ar', 'like', "%{$request->search}%")
-    //         ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%')
-    //     })
-    //     ->orWhere('param_name_ar' , 'like' , '%'. $request->search. '%')
-    //     ->orWhere('	param_name_en' , 'like' , '%'. $request->search. '%')
-    //     ->latest()->paginate(5);;
-
-    //     return view('dashboard.categories.params.index')->with($data);
-    //  }
 }

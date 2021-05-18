@@ -41,4 +41,9 @@ Route::get('/', function () {
     Route::resource('/cats', 'CategoryController')->except(['show']);
     //Child routes
     Route::resource('/cats.child','ChildCategory\ChildCategoryController');
+
+    //Category Params routes
+    Route::get('/cats.params/{id}/index','ChildCategory\ChildCategoryController@indexParam')->name('cats.params-index');
+    Route::post('/cats.params/{id}/store','ChildCategory\ChildCategoryController@storeParam')->name('cats.params-store');
+    Route::delete('/cats.params/{category}/delete/{params}','ChildCategory\ChildCategoryController@destroyParam')->name('cats.params-destroy');
   });
