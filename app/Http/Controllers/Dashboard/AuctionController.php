@@ -110,4 +110,39 @@ class AuctionController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.auction.index');
     }
+
+
+    /**
+     * ================================================================================
+     * ========================= Slider ===============================================
+     * ================================================================================
+     */
+
+     public function storeSlider(Request $request){
+        $acution  = Auction::find($request->id);
+        $validatedData = $request->validate([
+            'desc_ar' => 'required',
+            'desc_en' => 'required',
+        ],[
+            'desc_ar.required'  => 'يرجي ادخال  الوصف بالعربيه',
+            'desc_en.required'  => 'يرجي ادخال  الوصف بالانجليزيه',
+        ]);
+
+        $acution->is_slider = 1;
+        $acution->desc_ar   = $request->desc_ar;
+        $acution->desc_en   = $request->desc_en;
+        $acution->save();
+        session()->flash('success', __('site.added_successfully'));
+        return redirect()->back();
+     }
+
+     public function deleteSlider($id){
+        $acution  = Auction::find($id);
+        $acution->is_slider = 0;
+        $acution->desc_ar   = null;
+        $acution->desc_en   = null;
+        $acution->save();
+        session()->flash('success', __('site.deleted_successfully'));
+        return redirect()->back();
+     }
 }

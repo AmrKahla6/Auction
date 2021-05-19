@@ -78,8 +78,23 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if ($acution->is_slider == 0)
+                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
+                                                data-id="{{ $acution->id }}" data-toggle="modal"
+                                                href="#exampleModal2" title="اضافه الي السلايدر"><i class="fa fa-sliders">سلايدر</i>
+                                            </a>
+                                        @else
+                                            <form method="post"
+                                                    action="{{route('dashboard.auction.slider-delete' , $acution->id)}}"
+                                                    style="display: inline-block">
+                                                @csrf()
+                                                <button type="submit" title="حذف من السلايدر" class="btn btn-danger btn-sm"><i
+                                                            class="fa fa-sliders"></i>سلايدر</button>
+                                            </form>
+                                        @endif
+
                                         <a class="btn btn-info btn-sm"
-                                            href="{{route('dashboard.users.edit' , $acution->id)}}"><i
+                                            href="{{route('dashboard.auction.edit' , $acution->id)}}"><i
                                                     class="fa fa-edit"></i>عرض</a>
 
                                             <form method="post"
@@ -103,9 +118,21 @@
 
                 </div>
             </div>
-
+            @include('dashboard.auctions.slider')
         </section><!-- end of content -->
 
     </div><!-- end of content wrapper -->
 
+@endsection
+
+@section('scripts')
+    <script>
+        $('#exampleModal2').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+        })
+
+    </script>
 @endsection

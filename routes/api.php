@@ -74,6 +74,12 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Search
             Route::post('filter','AuctionController@filter');
 
+            //Get All  Auctions
+            Route::post('get-all-auction', 'AuctionController@getAll');
+
+            //get Auction
+            Route::post('get-auction', 'AuctionController@getAcution');
+
             //Get slider  Auctions
             Route::post('slider-acutions', 'AuctionController@acutionSlider');
 
@@ -115,13 +121,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
                 //delete image
                 Route::post('delete-image-auction', 'AuctionController@delimage');
 
-                //Get All  Auctions
-                Route::post('get-all-auction', 'AuctionController@getAll');
 
 
 
-                //get Auction
-                Route::post('get-auction', 'AuctionController@getAcution');
 
                 //store tender
                 Route::post('store-tender', 'AuctionController@tender');

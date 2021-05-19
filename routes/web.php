@@ -62,5 +62,7 @@ Route::get('/', function () {
 
     //Acution
     Route::resource('/auction', 'AuctionController');
-
+    // Route::get('/auction/slider/{slider}/create', 'AuctionController@createSlider')->name('auction.slider-create');
+    Route::post('/auction/slider/store', 'AuctionController@storeSlider')->name('auction.slider-store');
+    Route::post('/auction/slider/{auction}/delete', 'AuctionController@deleteSlider')->name('auction.slider-delete');
   });
