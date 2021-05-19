@@ -60,4 +60,7 @@ Route::get('/', function () {
     Route::delete('/members-regular/{member}/delete', 'MemberController@regularDestroy')->name('members-regular-destroy');
 
 
+    //Acution
+    Route::resource('/auction', 'AuctionController');
+
   });

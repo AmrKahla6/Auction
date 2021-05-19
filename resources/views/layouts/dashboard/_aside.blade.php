@@ -52,7 +52,9 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="nav-item {{is_active('auction')}}">
+                    <a href="{{route('dashboard.auction.index')}}"><i class="fa fa-flag"></i><span>المزادات</span></a>
+                </li>
         </ul>
 
     </section>

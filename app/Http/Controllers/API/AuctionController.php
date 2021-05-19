@@ -248,10 +248,10 @@ class AuctionController extends BaseController
 
             //Start & end date time
             $startDateTime             = $request['start_data'];
-            $startdate                 = date('y/m/d/h-i-s', strtotime($startDateTime));
+            $startdate                 = date('y/m/d/H-i-s', strtotime($startDateTime));
             $newauction->start_data    = $startdate;
             $endDateTime               = $request['end_data'];
-            $enddate                   = date('y/m/d/h-i-s', strtotime($endDateTime));
+            $enddate                   = date('y/m/d/H-i-s', strtotime($endDateTime));
             $newauction->end_data      = $enddate;
 
             $newauction->detials            = $request['detials'];
