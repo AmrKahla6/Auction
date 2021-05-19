@@ -46,4 +46,11 @@ Route::get('/', function () {
     Route::get('/cats.params/{id}/index','ChildCategory\ChildCategoryController@indexParam')->name('cats.params-index');
     Route::post('/cats.params/{id}/store','ChildCategory\ChildCategoryController@storeParam')->name('cats.params-store');
     Route::delete('/cats.params/{category}/delete/{params}','ChildCategory\ChildCategoryController@destroyParam')->name('cats.params-destroy');
+
+    //Selected Params
+    Route::get('/cats.params/selected/{id}/index','ChildCategory\ChildCategoryController@indexSelected')->name('cats.params-selected-index');
+    Route::post('/cats.params/selected/{id}/store','ChildCategory\ChildCategoryController@storeSelected')->name('cats.params-selected-store');
+    Route::delete('/cats.params/selected/{params}/delete/{selected}','ChildCategory\ChildCategoryController@destroySelected')->name('cats.params-selected-destroy');
+
+
   });

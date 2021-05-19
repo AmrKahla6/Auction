@@ -11,4 +11,8 @@ class catParameter extends Model
     {
         return $this->belongsTo(Category::class,'cat_id');
     }
+
+    public function selected(){
+        return $this->hasMany(selectParams::class, 'param_id');
+    }
 }

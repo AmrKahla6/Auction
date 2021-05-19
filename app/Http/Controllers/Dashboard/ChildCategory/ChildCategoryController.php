@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Dashboard\ChildCategory;
 
 use App\Models\Category;
+use App\Models\catParameter;
+use App\Models\selectParams;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\catParameter;
 
 class ChildCategoryController extends Controller
 {
@@ -81,6 +82,71 @@ class ChildCategoryController extends Controller
         $category = Category::find($cat_id);
         $params   = catParameter::find($param_id);
         $params->delete();
+
+        session()->flash('success', __('site.deleted_successfully'));
+
+        return redirect()->back();
+    }
+
+
+
+
+     /**
+     * ===========================================================================================
+     * =============================== Selected Parameters =======================================
+     * ===========================================================================================
+     */
+
+    public function indexSelected($id){
+        $params = catParameter::find($id);
+        $selected   = selectParams::where('param_id',$params->id)->latest()->paginate(3);
+        return view('dashboard.categories.selectParams.index',compact('params','selected'));
+     }
+
+
+
+       /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSelected(Request $request,$id)
+    {
+        $params        = catParameter::find($id);
+        $category      = Category::where('id',$params->cat_id )->first();
+
+        $validatedData = $request->validate([
+            'param_name_ar' => 'required|max:255',
+            'param_name_en' => 'required|max:255',
+        ],[
+            'param_name_ar.required'  => 'يرجي ادخال اسم المدخل بالعربيه',
+            'param_name_en.required'  => 'يرجي ادخال اسم المدخل بالانجليزيه',
+        ]);
+        selectParams::create([
+            'param_name_ar'       => $request->param_name_ar,
+            'param_name_en'       => $request->param_name_en,
+            'cat_id'              => $category->id,
+            'param_id'            => $request->param_id,
+        ]);
+
+        session()->flash('success', __('site.added_successfully'));
+
+        return redirect()->back();
+    }
+
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroySelected($param_id,$selected_id)
+    {
+        $params     = catParameter::find($param_id);
+        $selected   = selectParams::find($selected_id);
+        $selected->delete();
 
         session()->flash('success', __('site.deleted_successfully'));
 
