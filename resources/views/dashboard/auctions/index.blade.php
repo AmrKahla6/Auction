@@ -94,7 +94,7 @@
                                         @endif
 
                                         <a class="btn btn-info btn-sm"
-                                            href="{{route('dashboard.auction.edit' , $acution->id)}}"><i
+                                            href="{{route('dashboard.auction.show' , $acution->id)}}"><i
                                                     class="fa fa-edit"></i>عرض</a>
 
                                             <form method="post"

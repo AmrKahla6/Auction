@@ -67,7 +67,10 @@ class AuctionController extends Controller
      */
     public function show($id)
     {
-        //
+        $acution  = Auction::find($id);
+        $images   = AuctionImage::where('auction_id',$acution->id)->get();
+        $detials  = AuctionDetials::where('auction_id',$acution->id)->get();
+        return view('dashboard.auctions.show',compact('acution','images','detials'));
     }
 
     /**
