@@ -39,8 +39,21 @@
             <li class="nav-item {{is_active('cats')}}">
                 <a href="{{route('dashboard.cats.index')}}"><i class="fa fa-flag"></i><span>الاقسام</span></a>
             </li>
-        </ul>
 
+                <li class="treeview {{is_active('members')}}">
+                    <a href="#"><i class="fa fa-car"></i> <span>العملاء</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li class="nav-item {{is_active('full-insurance')}}">
+                            <a href="{{route('dashboard.members.index')}}">عميل تجاري</a>
+                        </li>
+
+                        <li class="nav-item {{is_active('full-insurance')}}">
+                            <a href="{{route('dashboard.members-regular-index')}}"> عميل عادي</a>
+                        </li>
+                    </ul>
+                </li>
+
+        </ul>
 
     </section>
 

@@ -53,4 +53,11 @@ Route::get('/', function () {
     Route::delete('/cats.params/selected/{params}/delete/{selected}','ChildCategory\ChildCategoryController@destroySelected')->name('cats.params-selected-destroy');
 
 
+    //Members OR Clients
+    Route::resource('/members', 'MemberController');
+    Route::get('/members-regular', 'MemberController@regularIndex')->name('members-regular-index');
+    Route::get('/members-regular/{member}', 'MemberController@regularShow')->name('members-regular-show');
+    Route::delete('/members-regular/{member}/delete', 'MemberController@regularDestroy')->name('members-regular-destroy');
+
+
   });

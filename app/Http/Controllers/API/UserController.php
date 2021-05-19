@@ -472,7 +472,7 @@ class UserController extends BaseController
                 $finishtender = Tender::where('member_id',$request->member_id)->where('is_winner',1)->count();
 
                 if($member->img){
-                    $img = asset('uploads/acution/' .$member->img);
+                    $img = asset('uploads/members/' .$member->img);
                 }else{
                     $img = null;
                 }
@@ -498,6 +498,7 @@ class UserController extends BaseController
                     'username'       => $member->username,
                     'email'          => $member->email,
                     'phone'          => $member->phone,
+                    'country_id'     => $member->country_id,
                     'adderss'        => isset($country) ? $country : null,
                     'profile_type'   => $type,
                     'image'          => $img,
