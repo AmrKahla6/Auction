@@ -76,12 +76,9 @@ class AuctionController extends BaseController
             $code = $this->returnCodeAccordingToInput($validator);
             return $this->returnValidationError($code, $validator);
         }
-        if($request->params){
-            $auction_details = AuctionDetials::when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('param_value_id',array_keys($request->params));
-            })->where('cat_id',$request->category_id)->where('status')->get();
-        }elseif($request->params && $request->min_price){
-            $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
+
+        if($request->category_id && $request->params && $request->min_price){
+            $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
             })->
             when(count($request->params) > 0 , function($q) use ($request){
@@ -89,30 +86,59 @@ class AuctionController extends BaseController
             })->when(count($request->params) > 0 , function($q) use ($request){
                 return $q->whereIn('type_id',$request->params);
             })->where('cat_id',$request->category_id)->get();
-        }elseif ($request->min_price) {
-            $auction_details = AuctionDetials::whereHas('auction', function ($q) use ($request){
+
+        }
+
+        if($request->category_id && $request->params){
+            $auction_details = AuctionDetials::with('auctionWithImages')->when(count($request->params) > 0 , function($q) use ($request){
+                return $q->whereIn('param_value_id',array_keys($request->params));
+            })
+            ->whereHas('auction',function($qu)  {
+                $qu->where('is_finished',0);
+            })
+            ->where('cat_id',$request->category_id)->get();
+
+        }
+        if($request->category_id && $request->min_price){
+            $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->where('cat_id', 'like', '%'.$request->category_id.'%')
                 ->WhereBetween('price_opining', [$request->min_price, $request->max_price]) ;
-            })->where('cat_id',$request->category_id)->get();
-        }else{
-            $auction_details = AuctionDetials::when($request->category_id , function ($q) use ($request){
+            })
+            ->whereHas('auction',function($qu)  {
+                $qu->where('is_finished',0);
+            })
+            ->where('cat_id',$request->category_id)->get();
+
+        }
+
+        if($request->category_id){
+            $auction_details = AuctionDetials::with('auctionWithImages')->when($request->category_id , function ($q) use ($request){
                 return $q->where('cat_id' , 'like' , '%'. $request->category_id. '%');
-            })->where('cat_id',$request->category_id)->get();
+            })
+            ->whereHas('auction',function($qu)  {
+                $qu->where('is_finished',0);
+            })
+            ->where('cat_id',$request->category_id)->distinct('auction_id')->get();
         }
 
         //return $auction_details;
 
-        $auctions = [];
-
+      $auctions = [];
+        $ids =[];
         foreach ($auction_details as $key => $auction_detail) {
+            if(in_array($auction_detail->auction->id ,$ids) ) {
+                continue;
+            }
+
+            array_push($ids,$auction_detail->auction->id);
             array_push(
                 $auctions,
-                $auction_detail = $auction_detail->auction
+                $auction_detail = $auction_detail->auctionWithImages
             );
         }
         // $hasDuplicates = count($auctions) > count(array_unique($auctions))
         // foreach ($auction_details as $key => $auction_detail) {
-        //     $auctions[$auction_detail->auction->id] = $auction_detail->auction;
+        //    $auctions[$auction_detail->auction->id] = $auction_detail->auction;
         // }
 
 

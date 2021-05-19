@@ -12,6 +12,10 @@ class AuctionDetials extends Model
         return $this->belongsTo(Auction::class,'auction_id');
     }
 
+    public function auctionWithImages(){
+        return $this->belongsTo(Auction::class,'auction_id')->with('images');
+    }
+
     public function param(){
         return $this->belongsTo(selectParams::class,'param_value_id');
     }

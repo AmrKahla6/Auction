@@ -26,6 +26,9 @@
                             <td>{{ $param->param_name_ar }}</td>
                             <td>{{ $param->param_name_en }}</td>
                             <td>
+                                @if ($param->type == 2)
+                                   <a href="#">اضف خاصيه</a>
+                                @endif
                                 <form method="post"
                                     action="{{route('dashboard.cats.params-destroy' , ['category'=>$param->category->id,'params'=>$param->id])}}"
                                     style="display: inline-block">
