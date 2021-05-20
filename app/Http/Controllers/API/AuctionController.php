@@ -89,7 +89,7 @@ class AuctionController extends BaseController
 
         }
 
-        if($request->category_id && $request->params){
+        elseif($request->category_id && $request->params){
             $auction_details = AuctionDetials::with('auctionWithImages')->when(count($request->params) > 0 , function($q) use ($request){
                 return $q->whereIn('param_value_id',array_keys($request->params));
             })
@@ -99,19 +99,18 @@ class AuctionController extends BaseController
             ->where('cat_id',$request->category_id)->get();
 
         }
-        if($request->category_id && $request->min_price){
+        elseif($request->category_id && $request->min_price){
             $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
-                $q->where('cat_id', 'like', '%'.$request->category_id.'%')
-                ->WhereBetween('price_opining', [$request->min_price, $request->max_price]) ;
+                $q->WhereBetween('price_opining', [$request->min_price, $request->max_price])
+                ->where('cat_id',$request->category_id);
             })
             ->whereHas('auction',function($qu)  {
                 $qu->where('is_finished',0);
-            })
-            ->where('cat_id',$request->category_id)->get();
-
+            })->
+            get();
         }
 
-        if($request->category_id){
+        else{
             $auction_details = AuctionDetials::with('auctionWithImages')->when($request->category_id , function ($q) use ($request){
                 return $q->where('cat_id' , 'like' , '%'. $request->category_id. '%');
             })
