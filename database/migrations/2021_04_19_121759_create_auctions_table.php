@@ -21,7 +21,7 @@ class CreateAuctionsTable extends Migration
             $table->string('address')->nullable();
             $table->decimal('price_opining',8,2)->nullable();
             $table->decimal('price_closing',8,2)->nullable();
-            $table->date('start_data');
+            $table->date('start_data')->nullable();
             $table->date('end_data')->nullable();
             $table->text('detials',8,2)->nullable();
             $table->string('status')->nullable()->default(0);

@@ -92,6 +92,8 @@ class AuctionController extends BaseController
         elseif($request->category_id && $request->params){
             $auction_details = AuctionDetials::with('auctionWithImages')->when(count($request->params) > 0 , function($q) use ($request){
                 return $q->whereIn('param_value_id',array_keys($request->params));
+            })->when(count($request->params) > 0 , function($q) use ($request){
+                return $q->whereIn('type_id',$request->params);
             })
             ->whereHas('auction',function($qu)  {
                 $qu->where('is_finished',0);

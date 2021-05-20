@@ -17,7 +17,7 @@ class AcutionResource_ar extends JsonResource
         return [
             'id'              => $this->id,
             'member_id'       => $this->member_id,
-            'title'           => $this->auction_title,
+            'auction_title'   => $this->auction_title,
             'member_name'     => $this->member->username,
             'address'         => $this->address,
             'gover_id'        => $this->gover_id,
