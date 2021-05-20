@@ -18,7 +18,7 @@ class AuctionDetials extends Model
     }
 
     public function param(){
-        return $this->belongsTo(selectParams::class,'param_value_id');
+        return $this->belongsTo(catParameter::class,'param_value_id');
     }
 
     public function type(){

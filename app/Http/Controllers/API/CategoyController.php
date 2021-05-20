@@ -38,13 +38,12 @@ class CategoyController extends BaseController
      */
 
     public function subCategory(Request $request){
-        $subCategory = Category::select("id","category_name_" .app()->getLocale() . ' as category_name','img')->where('parent_id',$request->cat_id)->get();
-        if($subCategory){
-            return $this->returnData('categories', $subCategory);
+        if($request->lang == 'en'){
+             $subCategory = MainCategoryResource_en::collection(Category::where('parent_id',$request->cat_id)->get());
         }else{
-            $errormessage = __('user.no_categories');
-            return $this -> returnError('',$errormessage);
+            $subCategory = MainCategoryResource_ar::collection(Category::where('parent_id',$request->cat_id)->get());
         }
+            return $this->returnData('categories', $subCategory);
     }
 
     /**
