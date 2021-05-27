@@ -70,10 +70,12 @@
                                         <a href="{{ route('dashboard.cats.child.index' ,  $cat->id) }}" class="btn btn-warning btn-sm">الاقسام الفرعيه</a>
                                     </td>
                                     <td>
+                                        @if ($cat->parent_id != 0)
+                                            <a class="btn btn-primary btn-sm" title="خصائص القسم !"
+                                                    href="{{route('dashboard.cats.params-index' , $cat->id)}}"><i
+                                                            class="fa fa-linode"></i>خصائص</a>
+                                        @endif
 
-                                        <a class="btn btn-primary btn-sm" title="خصائص القسم !"
-                                                href="{{route('dashboard.cats.params-index' , $cat->id)}}"><i
-                                                        class="fa fa-linode"></i>خصائص</a>
 
 
                                         @if(auth()->user()->hasPermission('update_categories'))

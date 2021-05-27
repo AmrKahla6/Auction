@@ -14,7 +14,7 @@
                     <input type="text" name="param_name_ar" class="form-control" value="{{ old('param_name_ar') }}" >
                 </div>
                 <div class="form-group">
-                    <label>الخاصيه بالعربيه</label>
+                    <label>الخاصيه بالانجليزيه</label>
                     <input type="text" name="param_name_en" class="form-control" value="{{ old('param_name_en') }}" >
                 </div>
 

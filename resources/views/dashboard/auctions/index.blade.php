@@ -78,6 +78,13 @@
                                         @endif
                                     </td>
                                     <td>
+                                        <a class="btn btn-info btn-sm"
+                                            href="{{route('dashboard.auction.tenders-index' , $acution->id)}}">
+                                            <i class="fa fa-edit"></i>
+                                                    المزايدات
+                                        </a>
+
+
                                         @if ($acution->is_slider == 0)
                                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                                 data-id="{{ $acution->id }}" data-toggle="modal"

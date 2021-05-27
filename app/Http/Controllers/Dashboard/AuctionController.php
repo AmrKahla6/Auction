@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Tender;
 use App\Models\Auction;
 use App\Models\AuctionImage;
 use Illuminate\Http\Request;
@@ -148,4 +149,26 @@ class AuctionController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->back();
      }
+
+
+
+     /**
+      * =============================================================================================================================
+      * ============================================================= Tenders ========================================================
+      * ===============================================================================================================================
+      */
+
+      public function indexTenders(Request $request,$id){
+        $acution = Auction::find($id);
+        return view('dashboard.auctions.tenders.index',compact('acution'));
+      }
+
+      public function deleteTenders($tender_id){
+        $tender  = Tender::find($tender_id);
+        $tender->delete();
+
+        session()->flash('success', __('site.deleted_successfully'));
+
+        return redirect()->back();
+      }
 }
