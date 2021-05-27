@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Country;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -23,6 +24,16 @@ class Member extends Authenticatable implements JWTSubject
     public function country(){
         return $this->belongsTo(Country::class,'country_id');
     }
+
+    public function tenders(){
+        return $this->hasMany(Tender::class,'member_id');
+    }
+
+    public function auctions(){
+        return $this->hasMany(Auction::class,'member_id');
+    }
+
+
 
 
     // Rest omitted for brevity

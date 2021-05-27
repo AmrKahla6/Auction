@@ -15,4 +15,12 @@ class Category extends Model
     public function params(){
         return $this->hasMany(catParameter::class, 'cat_id');
     }
+
+    public function auctions(){
+        return $this->hasMany(Auction::class,'cat_id');
+    }
+    
+    public function auction_details(){
+        return $this->hasMany(AuctionDetials::class,'cat_id');
+    }
 }

@@ -11,4 +11,8 @@ class selectParams extends Model
     public function param(){
         return $this->belongsTo(catParameter::class,'param_id');
     }
+
+    public function auction_detail(){
+        return $this->hasMany(AuctionDetials::class,'param_value_id');
+    }
 }

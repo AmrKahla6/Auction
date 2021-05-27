@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'incorrect_info'=>'معلومات غير صحيحة',
     'no_data_found' => 'للأسف لا يوجد اي سجلات',
     'no_records' => 'للاسف لا يوجد اي سجلات',
     'menu' => 'القائمة',
