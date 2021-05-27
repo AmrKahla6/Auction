@@ -59,7 +59,6 @@
 					<ul>
 						<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a></li>
 						<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> التسجيل</a></li>
-						<li><a href="#"><span class="icon-heart1"></span> المفضلة</a></li>
 						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
 						<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
 						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
