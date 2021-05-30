@@ -67,7 +67,7 @@
                 <li class="treeview {{is_active('setting')}}">
                     <a href="#"><i class="fa  fa-bars"></i> <span>الاعدادات</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        {{-- <li><a href="{{route('dashboard.setting')}}"> من نحن   </a></li> --}}
+                        <li><a href="{{route('dashboard.setting-about')}}"> من نحن   </a></li>
                     </ul>
                 </li>
         </ul>

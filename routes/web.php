@@ -56,6 +56,9 @@ Route::prefix('live')->name('live.')->namespace('Onlin')->group(function () {
 
 });
 
+
+//Dashboard Routes
+
 Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middleware('auth')->group(function () {
     Route::get('/index', 'DashboardController@index')->name('index');
 
@@ -112,4 +115,8 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
 
     //Advertisement route
     Route::resource('/advertisement', 'AdvertisementController');
+
+    //Setting Routes
+    Route::get('/setting/about', 'SettingController@about')->name('setting-about');
+    Route::put('/setting/about/{id}/edit', 'SettingController@aboutEdit')->name('setting-about-edit');
   });
