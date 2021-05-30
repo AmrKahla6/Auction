@@ -119,4 +119,8 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     //Setting Routes
     Route::get('/setting/about', 'SettingController@about')->name('setting-about');
     Route::put('/setting/about/{id}/edit', 'SettingController@aboutEdit')->name('setting-about-edit');
+
+     //contact us
+     Route::get('/setting/contact-us', 'SettingController@contact')->name('setting-contact');
+     Route::delete('/setting/contact-us/{id}/delete', 'SettingController@deleteContact')->name('setting-contact-delete');
   });

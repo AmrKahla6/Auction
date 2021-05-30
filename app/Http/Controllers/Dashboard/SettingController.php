@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\About;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,4 +32,32 @@ class SettingController extends Controller
 
         return redirect()->route('dashboard.setting-about');
     }
+
+       /**
+      * Contact us
+      */
+
+      public function contact(Request $request)
+      {
+          $data['contacts'] = Contact::whereHas('member', function ($query) use ($request) {
+            $query->where('username', 'like', "%{$request->search}%")
+            ->orWhere('email' , 'like' , '%'. $request->search. '%')
+            ->orWhere('message' , 'like' , '%'. $request->search. '%');
+        })->latest()->paginate(5);
+
+          return view('dashboard.setting.contacts')->with($data);
+      }
+
+      /**
+       * Delete Contact
+       */
+
+       public function deleteContact($id){
+           $contact = Contact::find($id);
+           $contact->delete();
+
+           session()->flash('success', __('site.deleted_successfully'));
+
+           return redirect()->route('dashboard.setting-contact');
+       }
 }
