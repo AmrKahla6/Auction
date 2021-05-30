@@ -59,6 +59,17 @@
                 <li class="nav-item {{is_active('questions')}}">
                     <a href="{{route('dashboard.questions.index')}}"><i class="fa fa-flag"></i><span>الاسئله الشائعه</span></a>
                 </li>
+
+                <li class="nav-item {{is_active('advertisement')}}">
+                    <a href="{{route('dashboard.advertisement.index')}}"><i class="fa fa-flag"></i><span> الاعلانات</span></a>
+                </li>
+
+                <li class="treeview {{is_active('setting')}}">
+                    <a href="#"><i class="fa  fa-bars"></i> <span>الاعدادات</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        {{-- <li><a href="{{route('dashboard.setting')}}"> من نحن   </a></li> --}}
+                    </ul>
+                </li>
         </ul>
 
     </section>

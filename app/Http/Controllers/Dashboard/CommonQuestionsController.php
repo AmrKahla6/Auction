@@ -13,10 +13,12 @@ class CommonQuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $questions  = CommonQuestion::select('id','question_ar','answer_ar'
-        )->latest()->paginate(5);
+        $questions = CommonQuestion::when($request->search , function ($q) use ($request){
+            return $q->where('question_ar' , 'like' , '%'. $request->search. '%')
+            ->orWhere('question_en' , 'like' , '%'. $request->search. '%');
+        })->latest()->paginate(5);
 
         return view('dashboard.questions.index', compact('questions'));
     }

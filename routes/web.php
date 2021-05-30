@@ -109,4 +109,7 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
 
     //Common Questions
     Route::resource('/questions', 'CommonQuestionsController');
+
+    //Advertisement route
+    Route::resource('/advertisement', 'AdvertisementController');
   });
