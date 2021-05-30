@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MAZAD KW | شقة سكنية</title>
+		<link href="images/icon.ico" rel="icon">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Favicons
+            ================================================== -->
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
+
+        <!-- Bootstrap -->
+		<script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css"  href="css/bootstrap-a.css">
+        <link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="fonts/font.css">
+        <link rel="stylesheet" type="text/css" href="fonts/style.css">
+		<link href="js/owl-carousel/owl.carousel.css" type="text/css" rel="stylesheet" media="screen" />
+		<link href="js/owl-carousel/owl.transitions.css" type="text/css" rel="stylesheet" media="screen" />
+		<script src="js/owl-carousel/owl.carousel.js" type="text/javascript"></script>
+		<!-- Stylesheet
+            ================================================== -->
+        <link rel="stylesheet" type="text/css"  href="css/style.css">
+
+    </head>
+    <body class="wsmenucontainer clearfix">
+        <div class="overlapblackbg"></div>
+		<header>
+		<div id="header">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 col-xs-6">
+						<a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
+						<a href="index.html" class="logo"><img src="images/logo-header.png" class="img-responsive" alt="MAZAD KW"></a>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+						<div id="search" class="input-group">
+							<input type="text" name="search" value="" placeholder="عن ماذا تبحث ..؟" class="">
+							<button type="button" class=""><span class="icon-search1"></span></button>
+						</div>
+					</div>
+					<div class="col-sm-4 hidden-xs">
+						<div class="links">
+							<a class="btn btn-add" href="#"><span class="icon-plus-circle"></span> أضف مزاد</a>
+							<a class="btn btn-myacc" href="profile.html"><span class="icon-user1"></span> حسابي</a>
+							<a class="btn btn-logout" href="#"><span class="icon-power"></span> تسجيل خروج</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</header>
+		<div class="sub-nav">
+			<div class="sub-nav-content">
+				<div class="content-menu">
+					<ul>
+						<li><a href="profile.html"><span class="icon-user1"></span> حسابي</a></li>
+						<li><a href="#"><span class="icon-settings"></span> الإعدادات</a></li>
+						<li><a href="#"><span class="icon-plus-circle"></span> اضف مزاد</a></li>
+						<li><a href="#"><span class="icon-heart1"></span> المفضلة</a></li>
+						<li><a href="#"><span class="icon-message-circle"></span> الرسائل <span class="num">0</span></a></li>
+						<li><a href="about.html"><span class="icon-info"></span> من نحن</a></li>
+						<li><a href="mainfaq.html"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
+						<li><a href="terms.html"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
+						<li class="btn-logout"><a href="#"><span class="icon-power"></span> تسجيل خروج</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div id="product-page">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="product-images">
+							<div id="product-images" class="owl-carousel" style="opacity: 1;">
+								<div class="item text-center">
+									<a href="#"><img src="images/Upload/img-1.jpg" class="img-responsive" /></a>
+								</div>
+								<div class="item text-center">
+									<a href="#"><img src="images/Upload/img-2.jpg" class="img-responsive" /></a>
+								</div>
+								<div class="item text-center">
+									<a href="#"><img src="images/Upload/img-3.jpg" class="img-responsive" /></a>
+								</div>
+							</div>
+							<div class="expiry_date">الإنتهاء 2021/5/21</div>
+							<script>
+							$('#product-images').owlCarousel({
+								items: 1,   
+								itemsDesktop : [1199,1],
+								itemsDesktopSmall : [980,1],
+								itemsTablet: [768,1],
+								itemsTabletSmall: false,
+								itemsMobile : [479,1],
+								autoPlay: 3000,
+								navigation: true,
+								navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+								pagination: true
+							});
+							</script>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="product-detials">
+							<p class="time">23 سبتمبر 2021  <span>منذ 50:04</span></p>
+							<h3 class="product-name">شقة سكنية في منطقة مميزة</h3>
+							<div class="timer"><span class="icon-alarm"></span> <p id="timer-id09"></p></div>
+							<p class="opening_price">السعر الإفتتاحي <strong>350 درهم</strong></p>
+							<div>
+								<table class="table table-bordered">
+									<tr>
+										<td>أعلى سعر مزاد</td>
+										<td class="text-right text-cred"><strong>350 درهم</strong></td>
+									</tr>
+									<tr>
+										<td>أقل سعر مزاد</td>
+										<td class="text-right"><strong>350 درهم</strong> <span class="icon-info"></span></td>
+									</tr>
+								</table>
+							</div>
+							<button type="button" id="bid_now" onclick="$('#form-bid_now').toggleClass('hide'); $(this).toggleClass('hide')" class="btn btn-primary btn-lg btn-block">مزايدة الآن</button>
+							<div id="form-bid_now" class="hide">
+								<div class="form-title"><h3><span class="icon-wallet"></span> قيمة المزايدة</h3></div>
+								<input type="text" name="bid_value" value="" placeholder="أكتب قيمة المزايدة" id="input-bid" class="form-control">
+								<p class="alert_text">يرجى العلم ان الحد الادنى للمزايدة هو <span>350 درهم</span></p>
+								<div class="form-title"><h3><span class="icon-wallet"></span> مصاريف الإشتراك</h3></div>
+								<div class="subscription_fee">
+									<div class="sub_fee_text">
+										<p>الإشتراك في المزايدة</p>
+										<b>سيتم خصم</b>
+									</div>
+									<div class="sub_value">
+										<p>35 <span>درهم</span></p>
+									</div>
+								</div>
+								<div class="terms_conditions">
+									<p>الموافقة على الشروط والاحكام</p>
+									<input value="" type="checkbox" id="terms-input" name="terms-input" class="terms-input" checked>
+									<label for="terms-input" title="الموافقة على الشروط والاحكام">
+										<span class="fa fa-toggle-on"></span>
+									</label>
+								</div>
+								<button type="button" id="add_now" class="btn btn-primary btn-lg btn-block">أشترك الآن</button>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="col-sm-6">
+						<div class="product-about">
+							<div class="text-title">
+								<h3>وصف المعلن</h3>
+							</div>
+							<div class="content">
+								<p>فيلا سكنية بتقسيط 5.7% فقط ولفترة محدودة !</p>
+								<p>امتلك وحدتك السكنية معنا الآن</p>
+								<p>هناك حقيقة مثبتة منذ ومن طويل</p>
+								<p>وهيى أن المحتوى لصفحة ما سيلهي القارئ</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="product-owner">
+							<div class="text-title">
+								<h3>مواصفات المعلن للإعلان</h3>
+							</div>
+							<div class="content">
+								<div class="box-detials">
+									<div class="col-xs-6">
+										<div class="box-ico"><img src="images/002-meter.png" class="img-responsive" /></div>
+										<div class="box-content">
+											<p>سعر المتر</p>
+											<b>3500 درهم</b>
+										</div>
+									</div>
+									<div class="col-xs-6">
+										<div class="box-ico"><img src="images/001-taxes.png" class="img-responsive" /></div>
+										<div class="box-content">
+											<p>القيمة المضافة</p>
+											<b>2.5%</b>
+										</div>
+									</div>
+									<div class="col-xs-6">
+										<div class="box-ico"><img src="images/003-house.png" class="img-responsive" /></div>
+										<div class="box-content">
+											<p>مساحة المنزل</p>
+											<b>320 متر</b>
+										</div>
+									</div>
+									<div class="col-xs-6">
+										<div class="box-ico"><img src="images/004-info.png" class="img-responsive" /></div>
+										<div class="box-content">
+											<p>نوع العقار</p>
+											<b>تجاري</b>
+										</div>
+									</div>
+								</div>
+								<div id="owner-about">
+									<div class="image">
+										<img src="images/user.png" class="img-responsive" />
+									</div>
+									<div class="owner-about">
+										<p class="name">Mohamed Ahmed</p>
+										<p class="mail">ahmed@gmail.com</p>
+										<p id="phone-num" class="phone"></p>
+									</div>
+									<a onclick="myPhoneNum()" class="phone-num"><span class="icon-phone"></span></a>
+								</div>
+								<div class="owner-location"><span class="icon-location1"></span> <p>9437, الرصيفة ,مكة2432, السعودية</p></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="tenders">
+							<div class="head-title">
+								<h3>أحدث المزايدات</h3>
+								<p>إجمالي : 35 مزايدة</p>
+							</div>
+							<a class="count-tenders">جميع المزايدات</a>
+							<div class="tenders-boxs">
+								<div class="tender-box">
+									<p class="name">أحمد محمد</p>
+									<div class="detials">
+										<div class="bid-id"><p>رقم المزايدة: 3</p></div>
+										<div class="bid-value">
+											<p>قيمة المزايدة</p>
+											<strong>350 درهم</strong>
+										</div>
+									</div>
+									<p class="date">23 سبتمبر 2021  50:04</p>
+								</div>
+								<div class="tender-box">
+									<p class="name">أحمد محمد</p>
+									<div class="detials">
+										<div class="bid-id"><p>رقم المزايدة: 3</p></div>
+										<div class="bid-value">
+											<p>قيمة المزايدة</p>
+											<strong>350 درهم</strong>
+										</div>
+									</div>
+									<p class="date">23 سبتمبر 2021  50:04</p>
+								</div>
+								<div class="tender-box">
+									<p class="name">أحمد محمد</p>
+									<div class="detials">
+										<div class="bid-id"><p>رقم المزايدة: 3</p></div>
+										<div class="bid-value">
+											<p>قيمة المزايدة</p>
+											<strong>350 درهم</strong>
+										</div>
+									</div>
+									<p class="date">23 سبتمبر 2021  50:04</p>
+								</div>
+								<div class="tender-box">
+									<p class="name">أحمد محمد</p>
+									<div class="detials">
+										<div class="bid-id"><p>رقم المزايدة: 3</p></div>
+										<div class="bid-value">
+											<p>قيمة المزايدة</p>
+											<strong>350 درهم</strong>
+										</div>
+									</div>
+									<p class="date">23 سبتمبر 2021  50:04</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		
+		
+		<div class="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="links">
+							<h5>معلومات</h5>
+							<ul class="list-unstyled">
+							  <li><a href="about.html">من نحن</a></li>
+							  <li><a href="mainfaq.html">الاسئلة المتكررة</a></li>
+							  <li><a href="terms.html">شروط الاستخدام</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="social">
+							<h5>تابعنا على</h5>
+							<div class="clearfix"></div>
+							<a href="#" class="link-facebook"><i class="fa fa-facebook"></i></a>
+							<a href="#" class="link-twitter"><i class="fa fa-twitter"></i></a>
+							<a href="#" class="link-google-plus"><i class="fa fa-google-plus"></i></a>
+							<a href="#" class="link-youtube"><i class="fa fa-youtube"></i></a>
+							<a href="#" class="link-instagram"><i class="fa fa-instagram"></i></a>
+							<a href="#" class="link-rss"><i class="fa fa-rss"></i></a>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="apps">
+							<h5>حمل التطبيق الآن</h5>
+							<a href="#"><img src="images/appstore.png" class="img-responsive"></a>
+							<a href="#"><img src="images/googleplay.png" class="img-responsive"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="js/bootstrap.min.js"></script>   
+
+        <script type="text/javascript" src="js/wow.min.js"></script> 
+
+        <!-- Javascripts
+            ================================================== --> 
+        <script type="text/javascript" src="js/main.js"></script>
+        <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("March 29, 2021 24:37:25").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById("timer-id09").innerHTML = days + "<span>ي</span> " + hours + "<span>س</span> " + minutes + "<span>د</span> " + seconds + "<span>ث</span> ";
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+			clearInterval(x);
+				document.getElementById("timer-id09").innerHTML = "<font color='#e72727'>EXPIRED</font>";
+			}
+        }, 1000);
+        </script>
+
+<script>
+	
+//in case js in turned off
+   $(window).on('load', function () {
+        $("body").removeClass("h-fixed")
+  });
+
+$(window).scroll(function () {
+     var sc = $(window).scrollTop()
+    if (sc > 1) {
+        $("body").addClass("h-fixed")
+    } else {
+        $("body").removeClass("h-fixed")
+    }
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.sub-nav-menu').on('click', function () {
+        $('.sub-nav-content').toggleClass('is-active');
+        $('.sub-nav-menu').toggleClass('is-active');
+        $('.overlapblackbg').toggleClass('is-active');
+        toggleBodyScroll();
+    });
+    $('.overlapblackbg').on('click', function () {
+        $('.sub-nav-content').toggleClass('is-active');
+        $('.sub-nav-menu').toggleClass('is-active');
+        $('.overlapblackbg').toggleClass('is-active');
+        toggleBodyScroll(false);
+    });
+});
+</script>
+<script type="text/javascript">
+function myPhoneNum() {
+  var x = 0123456789;
+  document.getElementById("phone-num").innerHTML = x;
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add_now').on('click', function () {
+       $('#product-page').after('<div class="completebg"></div><div class="completeModal"><div class="big-icon"><i class="fa fa-check-circle"></i></div><h4>تمت المزايدة بنجاح</h4><p>مبلغ المزايدة <strong>350 درهم</strong></p><p>رقم المزايدة <strong>30</strong></p><a href="index.html">العودة للرئيسية</a></div>');
+		
+		
+        toggleBodyScroll();
+    });
+});
+</script>
+		
+		
+		
+    </body>
+
+</html> 
