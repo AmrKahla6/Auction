@@ -163,7 +163,9 @@ class AuctionController extends Controller
         return view('dashboard.auctions.tenders.index',compact('acution'));
       }
 
-      public function deleteTenders($tender_id){
+      //Delete Tenders
+      public function deleteTenders($acution_id, $tender_id){
+        $acution = Auction::find($acution_id);
         $tender  = Tender::find($tender_id);
         $tender->delete();
 

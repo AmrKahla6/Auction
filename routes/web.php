@@ -65,7 +65,7 @@ Route::get('/', function () {
     // Route::get('/auction/slider/{slider}/create', 'AuctionController@createSlider')->name('auction.slider-create');
     Route::post('/auction/slider/store', 'AuctionController@storeSlider')->name('auction.slider-store');
     Route::post('/auction/slider/{auction}/delete', 'AuctionController@deleteSlider')->name('auction.slider-delete');
-    Route::get('/auction/tenders/{tenders}/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
-    Route::delete('/auction/tenders/{tenders}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
+    Route::get('/auction/{tenders}/tenders/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
+    Route::delete('/auction/{auction}/tenders/{tender}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
 
   });
