@@ -121,6 +121,22 @@
                                             href="{{route('dashboard.auction.show' , $acution->id)}}"><i
                                                     class="fa fa-edit"></i>عرض</a>
 
+
+                                            <form method="post"
+                                                    action="{{route('dashboard.auction.disabled' , $acution->id)}}"
+                                                    style="display: inline-block">
+                                                  @csrf()
+                                                  @if ($acution->status == 0)
+
+                                                    <button type="submit" class="btn btn-primary btn-sm"><i
+                                                              class="fa fa-trash-o"></i>الغاء</button>
+                                                  @else
+                                                    <button type="submit" class="btn btn-blue btn-sm"><i
+                                                        class="fa fa-trash-o"></i>تفعيل</button>
+                                                  @endif
+                                            </form>
+
+
                                             <form method="post"
                                                   action="{{route('dashboard.auction.destroy' , $acution->id)}}"
                                                   style="display: inline-block">

@@ -124,6 +124,25 @@ class AuctionController extends Controller
     }
 
 
+     /**
+     * disabled the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function disabled($id){
+        $acution  = Auction::find($id);
+        if($acution->status == 0){
+            $acution->status = 1;
+        }else{
+            $acution->status = 0;
+        }
+        $acution->save();
+        session()->flash('success', __('site.updated_successfully'));
+        return redirect()->route('dashboard.auction.index');
+    }
+
+
     /**
      * ================================================================================
      * ========================= Slider ===============================================

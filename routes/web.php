@@ -104,7 +104,7 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     Route::post('/auction/slider/{auction}/delete', 'AuctionController@deleteSlider')->name('auction.slider-delete');
     Route::get('/auction/{tenders}/tenders/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
     Route::delete('/auction/{auction}/tenders/{tender}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
-
+    Route::post('/auction/{auction}/disabled', 'AuctionController@disabled')->name('auction.disabled');
 
     Route::get('/auction/tenders/{tenders}/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
     Route::delete('/auction/tenders/{tenders}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
