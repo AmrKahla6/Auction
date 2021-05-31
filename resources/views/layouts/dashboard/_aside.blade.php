@@ -43,11 +43,11 @@
                 <li class="treeview {{is_active('members')}}">
                     <a href="#"><i class="fa fa-car"></i> <span>العملاء</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li class="nav-item {{is_active('full-insurance')}}">
+                        <li class="nav-item {{is_active('members')}}">
                             <a href="{{route('dashboard.members.index')}}">عميل تجاري</a>
                         </li>
 
-                        <li class="nav-item {{is_active('full-insurance')}}">
+                        <li class="nav-item {{is_active('members-regular')}}">
                             <a href="{{route('dashboard.members-regular-index')}}"> عميل عادي</a>
                         </li>
                     </ul>
@@ -73,6 +73,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{route('dashboard.setting-about')}}"> من نحن   </a></li>
                         <li><a href="{{route('dashboard.setting-contact')}}">  الرسائل   </a></li>
+                        <li><a href="{{route('dashboard.setting-privicies')}}">  الشروط و الاحكام   </a></li>
                     </ul>
                 </li>
         </ul>

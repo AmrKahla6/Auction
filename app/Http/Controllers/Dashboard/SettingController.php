@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\About;
 use App\Models\Contact;
+use App\Models\Privicy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -60,4 +61,33 @@ class SettingController extends Controller
 
            return redirect()->route('dashboard.setting-contact');
        }
+
+
+        /**
+        * privicies
+        */
+
+        public function privicies(){
+            $data['privicies'] = Privicy::select('id','privcy_ar','privcy_en')->first();
+            return view('dashboard.setting.privicies')->with($data);
+        }
+
+        public function priviciesEdit(Request $request,$id){
+            $request->validate([
+                 'privcy_ar'    => 'required',
+                 'privcy_en'    => 'required',
+             ],[
+                 'privcy_ar.required'     => 'يرجي ادخال الشروط بالعربيه',
+                 'privcy_en.required'     => 'يرجي ادخال الشروط بالانجليزيه',
+             ]);
+
+             $terms  = Privicy::find($id);
+             $terms->privcy_ar = $request->privcy_ar;
+             $terms->privcy_en = $request->privcy_en;
+             $terms->save();
+
+             session()->flash('success', __('site.updated_successfully'));
+
+             return redirect()->route('dashboard.setting-privicies');
+         }
 }
