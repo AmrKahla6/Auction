@@ -41,6 +41,23 @@
                         </div>
 
                     </form>
+
+                </div>
+                <div class="box-header with-border">
+                    <form action="{{ route('dashboard.auction.index') }}" method="get">
+                        <div class="col-md-4">
+                            <select name="search_cat" class="form-control" id="">
+                                <option value="" selected disabled>ابحث بالقسم</option>
+                                @foreach ($cats as $item)
+                                    <option value="{{ $item->category_name_ar }}">{{$item->category_name_ar}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary"><i
+                                        class="fa fa-search"></i>بحث</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="box-body">
 
@@ -120,7 +137,7 @@
                         </table>
                         {{ $acutions->appends(request()->query())->links() }}
                     @else
-                        <h2>لا يوجد مشرفين</h2>
+                        <h2>لا يوجد مزادات</h2>
                     @endif
 
                 </div>
