@@ -64,6 +64,10 @@
                     <a href="{{route('dashboard.advertisement.index')}}"><i class="fa fa-flag"></i><span> الاعلانات</span></a>
                 </li>
 
+                <li class="nav-item {{is_active('sliders')}}">
+                    <a href="{{route('dashboard.sliders.index')}}"><i class="fa fa-flag"></i><span> سلايدر</span></a>
+                </li>
+
                 <li class="treeview {{is_active('setting')}}">
                     <a href="#"><i class="fa  fa-bars"></i> <span>الاعدادات</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">

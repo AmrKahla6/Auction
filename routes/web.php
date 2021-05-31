@@ -116,6 +116,9 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     //Advertisement route
     Route::resource('/advertisement', 'AdvertisementController');
 
+    //Slider route
+    Route::resource('/sliders', 'SliderController');
+
     //Setting Routes
     Route::get('/setting/about', 'SettingController@about')->name('setting-about');
     Route::put('/setting/about/{id}/edit', 'SettingController@aboutEdit')->name('setting-about-edit');
