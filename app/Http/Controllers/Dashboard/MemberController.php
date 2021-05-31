@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Member;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
@@ -69,5 +70,18 @@ class MemberController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.members-regular-index');
     }
+
+
+    /**
+     * ==================================================================================================================
+     * ====================================== Favorite Auctions =======================================================================
+     * ==================================================================================================================
+     */
+
+     public function getFavorite($id){
+         $member    = Member::find($id);
+         $favorites = Favorite::where('member_id',$member->id)->latest()->paginate(5);
+         return view('dashboard.members.favorite',compact('member','favorites'));
+     }
 
 }

@@ -69,7 +69,7 @@
                                 <th> العضو</th>
                                 <th>عنوان المزاد</th>
                                 <th>حاله الانتهاء</th>
-                                <th>حاله الالغاء</th>
+                                <th> التفعيل</th>
                                 <th>عمليات</th>
                             </tr>
                             </thead>
@@ -82,16 +82,16 @@
                                     <td>{{ $acution->auction_title }}</td>
                                     <td>
                                         @if ($acution->is_finished == 0)
-                                        <span class="badge badge-light">مزاد مستمر</span>
+                                        <span class="badge badge-light"> غير منتهي</span>
                                         @else
-                                        مزاد منتهي
+                                          منتهي
                                         @endif
                                     </td>
                                     <td>
                                         @if ($acution->status == 0)
-                                            <span class="badge badge-light">مستمر</span>
+                                            <span class="badge badge-light">مفعل</span>
                                         @else
-                                            مزاد ملغي
+                                             غير مفعل
                                         @endif
                                     </td>
                                     <td>

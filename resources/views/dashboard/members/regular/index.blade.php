@@ -65,6 +65,11 @@
                                         <td><img src="{{ asset('uploads/members/' . $user->img)}}" class="img-thumbnail" style="width: 50px;">
                                     </td>
                                     <td>
+
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{route('dashboard.members-get-favorite' , $user->id)}}"><i
+                                                    class="fa fa-heart"></i>المفضله</a>
+
                                         <a class="btn btn-info btn-sm"
                                             href="{{route('dashboard.members-regular-show' , $user->id)}}"><i
                                                     class="fa fa-edit"></i>عرض</a>

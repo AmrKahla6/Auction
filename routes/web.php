@@ -97,6 +97,9 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     Route::get('/members-regular/{member}', 'MemberController@regularShow')->name('members-regular-show');
     Route::delete('/members-regular/{member}/delete', 'MemberController@regularDestroy')->name('members-regular-destroy');
 
+    //Favorite
+    Route::get('/members-favorite/{member}', 'MemberController@getFavorite')->name('members-get-favorite');
+
     //Acution
     Route::resource('/auction', 'AuctionController');
     // Route::get('/auction/slider/{slider}/create', 'AuctionController@createSlider')->name('auction.slider-create');
