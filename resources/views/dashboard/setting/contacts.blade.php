@@ -66,9 +66,12 @@
                                                 style="display: inline-block">
                                             @csrf()
                                             @method('delete')
-
+                                            @if(auth()->user()->hasPermission('delete_contacts'))
                                                 <button type="submit" title="حذف الرساله !" class="btn btn-danger btn-sm delete"><i
                                                     class="fa fa-trash"></i>@lang('site.delete')</button>
+                                            @else
+                                                <button class="btn btn-danger" disabled><i class="fa fa-trash"></i>@lang('site.delete')</button>
+                                            @endif
 
                                         </form>
 

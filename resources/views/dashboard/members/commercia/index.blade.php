@@ -37,8 +37,6 @@
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i
                                     class="fa fa-search"></i>@lang('site.search')</button>
-                                    <a href="{{ route('dashboard.members.index') }}" class="btn btn-primary"><i
-                                                class="fa fa-plus"></i>اضافه</a>
                             </div>
                         </div>
 
@@ -67,23 +65,37 @@
                                         <td><img src="{{ asset('uploads/members/' . $user->img)}}" class="img-thumbnail" style="width: 50px;">
                                     </td>
                                     <td>
-
+                                    @if(auth()->user()->hasPermission('read_favorites'))
                                         <a class="btn btn-primary btn-sm"
-                                        href="{{route('dashboard.members-get-favorite' , $user->id)}}"><i
+                                            href="{{route('dashboard.members-get-favorite' , $user->id)}}"><i
                                                 class="fa fa-heart"></i>المفضله</a>
+                                    @else
+                                        <a class="btn btn-primary btn-sm" href="#" disabled><i
+                                                class="fa fa-heart"></i>المفضله</a>
+                                    @endif
 
+                                    @if(auth()->user()->hasPermission('read_commercia_member'))
                                         <a class="btn btn-info btn-sm"
                                             href="{{route('dashboard.members.show' , $user->id)}}"><i
                                                     class="fa fa-edit"></i>عرض</a>
+                                    @else
+                                        <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                class="fa fa-edit"></i>عرض</a>
+                                    @endif
 
-                                            <form method="post"
-                                                  action="{{route('dashboard.members.destroy' , $user->id)}}"
-                                                  style="display: inline-block">
-                                                @csrf()
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm delete"><i
-                                                            class="fa fa-trash"></i>حذف</button>
-                                            </form>
+                                        <form method="post"
+                                            action="{{route('dashboard.members.destroy' , $user->id)}}"
+                                            style="display: inline-block">
+                                            @csrf()
+                                            @method('delete')
+                                                @if(auth()->user()->hasPermission('delete_commercia_member'))
+                                                            <button type="submit" class="btn btn-danger btn-sm delete"><i
+                                                                        class="fa fa-trash"></i>حذف</button>
+                                                @else
+                                                    <a class="btn btn-danger btn-sm" href="#" disabled><i
+                                                            class="fa fa-trash"></i>حذف</a>
+                                                @endif
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

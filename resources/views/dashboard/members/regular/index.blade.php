@@ -66,21 +66,36 @@
                                     </td>
                                     <td>
 
-                                        <a class="btn btn-primary btn-sm"
-                                            href="{{route('dashboard.members-get-favorite' , $user->id)}}"><i
+                                        @if(auth()->user()->hasPermission('read_favorites'))
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{route('dashboard.members-get-favorite' , $user->id)}}"><i
                                                     class="fa fa-heart"></i>المفضله</a>
+                                        @else
+                                            <a class="btn btn-primary btn-sm" href="#" disabled><i
+                                                class="fa fa-heart"></i>المفضله</a>
+                                        @endif
 
-                                        <a class="btn btn-info btn-sm"
-                                            href="{{route('dashboard.members-regular-show' , $user->id)}}"><i
-                                                    class="fa fa-edit"></i>عرض</a>
+                                        @if(auth()->user()->hasPermission('read_regular_member'))
+                                            <a class="btn btn-info btn-sm"
+                                                href="{{route('dashboard.members-regular-show' , $user->id)}}"><i
+                                                        class="fa fa-edit"></i>عرض</a>
+                                        @else
+                                            <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                class="fa fa-edit"></i>عرض</a>
+                                        @endif
 
                                             <form method="post"
                                                   action="{{route('dashboard.members-regular-destroy' , $user->id)}}"
                                                   style="display: inline-block">
                                                 @csrf()
                                                 @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm delete"><i
-                                                            class="fa fa-trash"></i>حذف</button>
+                                                @if(auth()->user()->hasPermission('delete_regular_member'))
+                                                    <button type="submit" class="btn btn-danger btn-sm delete"><i
+                                                                class="fa fa-trash"></i>حذف</button>
+                                                @else
+                                                    <a class="btn btn-danger btn-sm" href="#" disabled><i
+                                                        class="fa fa-trash"></i>حذف</a>
+                                                @endif
                                             </form>
                                     </td>
                                 </tr>

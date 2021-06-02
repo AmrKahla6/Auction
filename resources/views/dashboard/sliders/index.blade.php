@@ -37,11 +37,11 @@
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i
                                             class="fa fa-search"></i>بحث</button>
-                                @if(auth()->user()->hasPermission('create_users'))
+                                @if(auth()->user()->hasPermission('create_sliders'))
                                     <a href="{{ route('dashboard.sliders.create') }}" class="btn btn-primary"><i
                                                 class="fa fa-plus"></i>اضافه</a>
                                 @else
-                                    <a class="btn btn-info" href="#" disabled>اضافه</a>
+                                    <a class="btn btn-plus" href="#" disabled>اضافه</a>
                                 @endif
 
                             </div>
@@ -74,7 +74,7 @@
                                                href="{{route('dashboard.sliders.show' , $slider->id)}}"><i
                                                         class="fa fa-show"></i>عرض</a>
 
-                                        @if(auth()->user()->hasPermission('update_users'))
+                                        @if(auth()->user()->hasPermission('update_sliders'))
                                             <a class="btn btn-info btn-sm"
                                                href="{{route('dashboard.sliders.edit' , $slider->id)}}"><i
                                                         class="fa fa-edit"></i>تعديل</a>
@@ -82,7 +82,7 @@
                                             <a class="btn btn-info btn-sm" href="#" disabled><i
                                                         class="fa fa-edit"></i>تعديل</a>
                                         @endif
-                                        @if(auth()->user()->hasPermission('delete_users'))
+                                        @if(auth()->user()->hasPermission('delete_sliders'))
                                             <form method="post"
                                                   action="{{route('dashboard.sliders.destroy' , $slider->id)}}"
                                                   style="display: inline-block">

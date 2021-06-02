@@ -37,11 +37,11 @@
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i
                                             class="fa fa-search"></i>بحث</button>
-                                @if(auth()->user()->hasPermission('create_users'))
+                                @if(auth()->user()->hasPermission('create_common_questions'))
                                     <a href="{{ route('dashboard.questions.create') }}" class="btn btn-primary"><i
                                                 class="fa fa-plus"></i>اضافه</a>
                                 @else
-                                    <a class="btn btn-info" href="#" disabled>اضافه</a>
+                                    <a class="btn btn-plus" href="#" disabled>اضافه</a>
                                 @endif
 
                             </div>
@@ -70,7 +70,7 @@
                                     <td>{!! substr($question->answer_ar, 0, 50) !!} ..... <a href="{{route('dashboard.questions.show',$question->id)}}"><small>مشاهده المزيد</small></a></td>
                                     </td>
                                     <td>
-                                        @if(auth()->user()->hasPermission('update_users'))
+                                        @if(auth()->user()->hasPermission('update_common_questions'))
                                             <a class="btn btn-info btn-sm"
                                                href="{{route('dashboard.questions.edit' , $question->id)}}"><i
                                                         class="fa fa-edit"></i>تعديل</a>
@@ -78,7 +78,9 @@
                                             <a class="btn btn-info btn-sm" href="#" disabled><i
                                                         class="fa fa-edit"></i>تعديل</a>
                                         @endif
-                                        @if(auth()->user()->hasPermission('delete_users'))
+
+
+                                        @if(auth()->user()->hasPermission('delete_common_questions'))
                                             <form method="post"
                                                   action="{{route('dashboard.questions.destroy' , $question->id)}}"
                                                   style="display: inline-block">

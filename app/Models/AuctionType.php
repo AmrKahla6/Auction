@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AuctionType extends Model
 {
-    //
+    protected $guarded = [];
 }

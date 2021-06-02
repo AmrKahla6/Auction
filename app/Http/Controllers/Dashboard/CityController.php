@@ -8,6 +8,19 @@ use App\Models\Governorate;
 
 class CityController extends Controller
 {
+
+    public function __construct()
+    {
+      $this->middleware(['permission:read_governorates'])->only('index');
+
+      $this->middleware(['permission:create_governorates'])->only('create');
+
+      $this->middleware(['permission:update_governorates'])->only('edit');
+
+      $this->middleware(['permission:delete_governorates'])->only('destroy');
+    }//end of construct
+
+
     /**
      * Display a listing of the resource.
      *

@@ -29,11 +29,11 @@
                         </div>
                         <div class="form-group">
                             @if(auth()->user()->hasPermission('update_abouts'))
-                                <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>@lang('site.edit')
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i>@lang('site.edit')</button>
                             @else
-                                <button class="btn btn-primary" disabled><i class="fa fa-plus"></i>@lang('site.edit')
+                                <button class="btn btn-primary" disabled><i class="fa fa-plus"></i>@lang('site.edit')</button>
                             @endif
-                            </button>
+
                         </div>
 
                     </form>

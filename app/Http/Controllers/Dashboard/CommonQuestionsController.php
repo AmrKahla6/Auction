@@ -8,6 +8,19 @@ use App\Http\Controllers\Controller;
 
 class CommonQuestionsController extends Controller
 {
+
+    public function __construct()
+    {
+      $this->middleware(['permission:read_common_questions'])->only('index');
+
+      $this->middleware(['permission:create_common_questions'])->only('create');
+
+      $this->middleware(['permission:update_common_questions'])->only('edit');
+
+      $this->middleware(['permission:delete_common_questions'])->only('destroy');
+    }//end of construct
+
+
     /**
      * Display a listing of the resource.
      *

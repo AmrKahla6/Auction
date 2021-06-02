@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Storage;
 
 class AuctionController extends Controller
 {
+
+
+    public function __construct()
+    {
+      $this->middleware(['permission:read_auctions'])->only('index');
+      $this->middleware(['permission:delete_auctions'])->only('destroy');
+    }//end of construct
+
+
     /**
      * Display a listing of the resource.
      *

@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware(['permission:read_commercia_member'])->only('index');
+      $this->middleware(['permission:delete_commercia_member'])->only('destroy');
+
+      $this->middleware(['permission:read_regular_member'])->only('regularIndex');
+      $this->middleware(['permission:delete_regular_member'])->only('regularDestroy');
+    }//end of construct
+
 
     /**
      * ============================================================================

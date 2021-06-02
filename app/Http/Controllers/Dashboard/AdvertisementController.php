@@ -10,6 +10,18 @@ use Illuminate\Support\Facades\Storage;
 
 class AdvertisementController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware(['permission:read_advertisements'])->only('index');
+
+      $this->middleware(['permission:create_advertisements'])->only('create');
+
+      $this->middleware(['permission:update_advertisements'])->only('edit');
+
+      $this->middleware(['permission:delete_advertisements'])->only('destroy');
+    }//end of construct
+
+
     /**
      * Display a listing of the resource.
      *

@@ -10,6 +10,19 @@ use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
+
+    public function __construct()
+    {
+      $this->middleware(['permission:read_sliders'])->only('index');
+
+      $this->middleware(['permission:create_sliders'])->only('create');
+
+      $this->middleware(['permission:update_sliders'])->only('edit');
+
+      $this->middleware(['permission:delete_sliders'])->only('destroy');
+    }//end of construct
+
+
     /**
      * Display a listing of the resource.
      *

@@ -100,6 +100,9 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     //Favorite
     Route::get('/members-favorite/{member}', 'MemberController@getFavorite')->name('members-get-favorite');
 
+    //Auction type routes
+    Route::resource('/auction-type', 'AuctionTypeController');
+
     //Acution
     Route::resource('/auction', 'AuctionController');
     // Route::get('/auction/slider/{slider}/create', 'AuctionController@createSlider')->name('auction.slider-create');
@@ -109,6 +112,8 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     Route::delete('/auction/{auction}/tenders/{tender}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
     Route::post('/auction/{auction}/disabled', 'AuctionController@disabled')->name('auction.disabled');
 
+
+    //tenders routes
     Route::get('/auction/tenders/{tenders}/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
     Route::delete('/auction/tenders/{tenders}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
 
@@ -133,4 +138,8 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
      //privicies
      Route::get('/setting/privicies', 'SettingController@privicies')->name('setting-privicies');
      Route::put('/setting/privicies/{id}/edit', 'SettingController@priviciesEdit')->name('setting-privicies-edit');
+
+    //trems
+    Route::get('/setting/trems', 'SettingController@trems')->name('setting-trems');
+    Route::put('/setting/trems/{id}/edit', 'SettingController@tremsEdit')->name('setting-trems-edit');
   });

@@ -23,42 +23,46 @@
 
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title" style="margin-bottom: 10px;">المشرفين
+                    <h3 class="box-title" style="margin-bottom: 10px;">المزادات
                         <small>{{ $acutions->total() }}</small>
                     </h3>
-                    <form action="{{ route('dashboard.auction.index') }}" method="get">
-                        <div class="row">
+                    <div class="row-cols-3">
+                        <div class="form-group col-md-6">
+                            <form action="{{ route('dashboard.auction.index') }}" method="get">
+                                <div class="row">
 
-                            <div class="col-md-4">
-                                <input type="text" name="search" class="form-control" value="{{ request()->search }}"
-                                       placeholder="@lang('site.search')">
-                            </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="search" class="form-control" value="{{ request()->search }}"
+                                               placeholder="@lang('site.search')">
+                                    </div>
 
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-primary"><i
-                                            class="fa fa-search"></i>بحث</button>
-                            </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>بحث</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
-                    </form>
+                        <div class="form-group col-md-6">
+                            <form action="{{ route('dashboard.auction.index') }}" method="get">
+                                <div class="col-md-6">
+                                    <select name="search_cat" class="form-control" id="">
+                                        <option value="" selected disabled>ابحث بالقسم</option>
+                                        @foreach ($cats as $item)
+                                            <option value="{{ $item->category_name_ar }}">{{$item->category_name_ar}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary"><i
+                                                class="fa fa-search"></i>بحث</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
                 </div>
-                <div class="box-header with-border">
-                    <form action="{{ route('dashboard.auction.index') }}" method="get">
-                        <div class="col-md-4">
-                            <select name="search_cat" class="form-control" id="">
-                                <option value="" selected disabled>ابحث بالقسم</option>
-                                @foreach ($cats as $item)
-                                    <option value="{{ $item->category_name_ar }}">{{$item->category_name_ar}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary"><i
-                                        class="fa fa-search"></i>بحث</button>
-                        </div>
-                    </form>
-                </div>
+
                 <div class="box-body">
 
                     @if($acutions->count() > 0)
@@ -95,15 +99,20 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-info btn-sm"
-                                            href="{{route('dashboard.auction.tenders-index' , $acution->id)}}">
-                                            <i class="fa fa-edit"></i>
-                                                    المزايدات
-                                        </a>
+                                        @if(auth()->user()->hasPermission('read_tenders'))
+                                            <a class="btn btn-info btn-sm"
+                                                href="{{route('dashboard.auction.tenders-index' , $acution->id)}}">
+                                                <i class="fa fa-terminal"></i>
+                                                        المزايدات
+                                            </a>
+                                        @else
+                                            <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                    class="fa fa-edit"></i>تعديل</a>
+                                        @endif
 
-
+                                    @if(auth()->user()->hasPermission('update_acution_slider'))
                                         @if ($acution->is_slider == 0)
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
+                                            <a class="modal-effect btn btn-sm btn-bitbucket" data-effect="effect-scale"
                                                 data-id="{{ $acution->id }}" data-toggle="modal"
                                                 href="#exampleModal2" title="اضافه الي السلايدر"><i class="fa fa-sliders">سلايدر</i>
                                             </a>
@@ -112,16 +121,26 @@
                                                     action="{{route('dashboard.auction.slider-delete' , $acution->id)}}"
                                                     style="display: inline-block">
                                                 @csrf()
-                                                <button type="submit" title="حذف من السلايدر" class="btn btn-danger btn-sm"><i
+                                                <button type="submit" title="حذف من السلايدر" class="btn btn-bitbucket btn-sm"><i
                                                             class="fa fa-sliders"></i>سلايدر</button>
                                             </form>
                                         @endif
+                                    @else
+                                        <a class="btn btn-bitbucket btn-sm" href="#" disabled><i
+                                                class="fa fa-sliders"></i>سلايدر</a>
+                                    @endif
 
+
+                                    @if(auth()->user()->hasPermission('read_auctions'))
                                         <a class="btn btn-info btn-sm"
                                             href="{{route('dashboard.auction.show' , $acution->id)}}"><i
-                                                    class="fa fa-edit"></i>عرض</a>
+                                                    class="fa fa-book"></i>عرض</a>
+                                    @else
+                                        <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                class="fa fa-book"></i>عرض</a>
+                                    @endif
 
-
+                                    @if(auth()->user()->hasPermission('update_acution_cancle'))
                                             <form method="post"
                                                     action="{{route('dashboard.auction.disabled' , $acution->id)}}"
                                                     style="display: inline-block">
@@ -135,16 +154,29 @@
                                                         class="fa fa-trash-o"></i>تفعيل</button>
                                                   @endif
                                             </form>
+                                    @else
+                                        @if ($acution->status == 0)
+                                            <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                class="fa fa-book"></i>الغاء</a>
+                                        @else
+                                            <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                class="fa fa-book"></i>تفعيل</a>
+                                        @endif
+                                    @endif
 
-
-                                            <form method="post"
-                                                  action="{{route('dashboard.auction.destroy' , $acution->id)}}"
-                                                  style="display: inline-block">
-                                                @csrf()
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm delete"><i
-                                                            class="fa fa-trash"></i>حذف</button>
-                                            </form>
+                                        <form method="post"
+                                            action="{{route('dashboard.auction.destroy' , $acution->id)}}"
+                                            style="display: inline-block">
+                                            @csrf()
+                                            @method('delete')
+                                                @if(auth()->user()->hasPermission('delete_auctions'))
+                                                        <button type="submit" class="btn btn-danger btn-sm delete"><i
+                                                                    class="fa fa-trash"></i>حذف</button>
+                                                @else
+                                                    <a class="btn btn-danger btn-sm" href="#" disabled><i
+                                                            class="fa fa-trash"></i>حذف</a>
+                                                @endif
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

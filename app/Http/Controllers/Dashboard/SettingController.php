@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Term;
 use App\Models\About;
 use App\Models\Contact;
 use App\Models\Privicy;
@@ -10,6 +11,16 @@ use App\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware(['permission:update_abouts'])->only('aboutEdit');
+      $this->middleware(['permission:update_terms'])->only('tremsEdit');
+      $this->middleware(['permission:update_privicies'])->only('priviciesEdit');
+      $this->middleware(['permission:read_contacts'])->only('contact');
+
+    }//end of construct
+
+
     public function about(){
         $data['about'] = About::select('id','detials_ar','detials_en')->first();
         return view('dashboard.setting.about')->with($data);
@@ -89,5 +100,34 @@ class SettingController extends Controller
              session()->flash('success', __('site.updated_successfully'));
 
              return redirect()->route('dashboard.setting-privicies');
+         }
+
+
+          /**
+        * trems
+        */
+
+        public function trems(){
+            $data['trems'] = Term::select('id','term_ar','term_en')->first();
+            return view('dashboard.setting.trems')->with($data);
+        }
+
+        public function tremsEdit(Request $request,$id){
+            $request->validate([
+                 'term_ar'    => 'required',
+                 'term_en'    => 'required',
+             ],[
+                 'term_ar.required'     => 'يرجي ادخال الشروط بالعربيه',
+                 'term_en.required'     => 'يرجي ادخال الشروط بالانجليزيه',
+             ]);
+
+             $terms  = Term::find($id);
+             $terms->term_ar = $request->term_ar;
+             $terms->term_en = $request->term_en;
+             $terms->save();
+
+             session()->flash('success', __('site.updated_successfully'));
+
+             return redirect()->route('dashboard.setting-trems');
          }
 }
