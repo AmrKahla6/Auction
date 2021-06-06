@@ -15,6 +15,7 @@ use App\Models\Tender;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use LaravelLocalization;
+use Str;
 
 class Profile extends BaseController
 {
@@ -46,6 +47,7 @@ class Profile extends BaseController
         if (!empty($member)) {
             $data['active_tenders'] = $member->tenders()->where('is_winner', 1)->get();
             $data['dis_tenders'] = $member->tenders()->where('is_winner', 0)->get();
+            $data['member'] =$member;
             return view('online.profile.my_tenders')->with($data);
         } else {
             return redirect('live/login');
@@ -122,7 +124,7 @@ class Profile extends BaseController
 
     public function post_auctions(Request $request)
     {
-        //dd($request->all());
+       // dd($request['auction_detials']);
         if ($request->session()->exists('member')) {
             $data = $request->validate([
                 'auction_title' => ['required', 'string', 'max:255'],
@@ -169,11 +171,9 @@ class Profile extends BaseController
             if ($request->hasfile('auction_images')) {
                 $images = $request->file('auction_images');
                 foreach ($images as $image) {
-                    $name = $image->hashName();
-                    $path = $image->store('public/auctions');
-                    //    $path = $image->storeAs('uploads', $name, 'public');
+                   $image_name=$this->save_img($image,'aucations');
                     AuctionImage::create([
-                        'img' => $path,
+                        'img' => $image_name,
                         'auction_id' => $object->id,
                     ]);
                 }
@@ -267,4 +267,49 @@ class Profile extends BaseController
             ]);
         }
     }
+    public function save_img($filles,$path){
+        $type = array(
+            "jpg"=>"image",
+            "jpeg"=>"image",
+            "png"=>"image",
+            "svg"=>"image",
+            "webp"=>"image",
+            "gif"=>"image",
+            "mp4"=>"video",
+            "mpg"=>"video",
+            "mpeg"=>"video",
+            "webm"=>"video",
+            "ogg"=>"video",
+            "avi"=>"video",
+            "mov"=>"video",
+            "flv"=>"video",
+            "swf"=>"video",
+            "mkv"=>"video",
+            "wmv"=>"video",
+            "wma"=>"audio",
+            "aac"=>"audio",
+            "wav"=>"audio",
+            "mp3"=>"audio",
+            "zip"=>"archive",
+            "rar"=>"archive",
+            "7z"=>"archive",
+            "doc"=>"document",
+            "txt"=>"document",
+            "docx"=>"document",
+            "pdf"=>"document",
+            "csv"=>"document",
+            "xml"=>"document",
+            "ods"=>"document",
+            "xlr"=>"document",
+            "xls"=>"document",
+            "xlsx"=>"document"
+        );
+       
+        $file_name= time() . Str::random(10) . '.' . $filles->getClientOriginalExtension();
+      
+            $filles->move(public_path($path), $file_name);
+                return $path.'/'.$file_name;
+      
+    }
+
 }

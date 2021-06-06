@@ -120,11 +120,7 @@
                     </div>
                 
                    <div id="ParamsHouse"></div>
-            
-                         
-                  
-             
-             
+        
                     <div class="login-box-footer">
                         <button  type="submit"id="add_build"  class="btn btn-block btn-lg btn-primary">حفظ المزاد</button>
                     </div>
