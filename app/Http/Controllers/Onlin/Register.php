@@ -1,48 +1,59 @@
 <?php
 
 namespace App\Http\Controllers\Onlin;
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Validator;
+use Carbon\Carbon;
 use App\Models\Member;
 use App\Models\Auction;
-use Carbon\Carbon;
+use App\Models\Country;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 class Register extends Controller
 {
 
 
     public function register()
     {
-        return view('online.auth.register');
+        $data['countries'] = Country::select("id","country_name_" .app()->getLocale() . ' as country_name')->get();
+        return view('online.auth.register')->with($data);
     }
 
     public function register_post(Request $request)
     {
         $data = $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
-            'date_of_birth' => ['required'], 
-            'phone' => ['required', 'string','unique:members'],
-            'password' => ['required', 'string', 'min:8'], 
-            'commercial_record' => [], 
-            'nationality' => [], 
-            'id_number' => [], 
-            'type' => [], 
-             
-         ]);
+            'username'            => 'required',
+            'phone'               => 'required|unique:members',
+            'date_of_birth'       => 'required',
+            'country_id'          => 'required',
+            'email'               => 'required|unique:members',
+            'password'            => 'required|min:6',
+        ],
+        [
+            'username.required'            => __("user.username"),
+            'phone.required'               => __("user.phone"),
+            'phone.unique'                 => __("user.unique_phone"),
+            'date_of_birth.required'       => __("user.date_of_birth"),
+            'country_id.required'          => __("user.nationality"),
+            'email.required'               => __("user.email"),
+            'email.unique'                 => __("user.unique_email"),
+            'password.required'            => __("user.password"),
+            'password.min'                 => __("user.max_password"),
+        ]
+    );
          $data['password'] = bcrypt($request->password);
          $member = Member::create($data);
          session()->flash('success', __('site.added_successfully'));
         return redirect()->route('live.login');
-  
-        
+
+
     }
 
 
-    
+
 
     public function login()
     {
@@ -60,9 +71,9 @@ class Register extends Controller
     public function login_post(Request $request)
     {
         $data = $request->validate([
-            'phone' => ['required'], 
-            'password' => ['required'], 
-             
+            'phone' => ['required'],
+            'password' => ['required'],
+
          ]);
         // $remember_token = $request->get('remember_token')==1?true:false;
          if(auth()->guard('members')->attempt([
@@ -76,7 +87,7 @@ class Register extends Controller
              }else{
                // session()->flash('success', __('site.updated_successfully'));
                  session()->flash('error', __('site.incorrect_info'));
-                 return redirect()->back();  
+                 return redirect()->back();
              }
      }
 
@@ -102,11 +113,11 @@ class Register extends Controller
     public function terms(){
         return view('online.static.terms');
     }
-    
+
     public function repetedquestions(){
         return view('online.static.repetedquestions');
     }
 
 
-    
+
 }
