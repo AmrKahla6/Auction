@@ -36,8 +36,12 @@
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i
                                         lass="fa fa-search"></i>@lang('site.search')</button>
-                                <a href="{{ route('dashboard.cats.create') }}" class="btn btn-primary"><i
-                                    class="fa fa-plus"></i>@lang('site.add')</a>
+                                    @if(auth()->user()->hasPermission('create_users'))
+                                        <a href="{{ route('dashboard.cats.create') }}" class="btn btn-primary"><i
+                                            class="fa fa-plus"></i>@lang('site.add')</a>
+                                    @else
+                                        <a class="btn btn-info" href="#" disabled>اضافه</a>
+                                    @endif
                             </div>
                         </div>
 

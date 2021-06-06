@@ -56,9 +56,29 @@ return [
 
 
 
-
+    'logout'            => 'تسجيل الخروج',
     'main'              => 'الرئيسيه',
     'districts'         => 'المدن',
     'related_districts' => 'الاحياء',
+    'members'           => 'العملاء',
+    'commercia_member'  => 'عميل تجاري',
+    'regular_member'    => 'عميل عادي',
+    'governorates'      => 'المحافظات',
+    'cities'            => 'المدن',
+    'auctions'          => 'المزادات',
+    'acution_slider'    => 'سلايدر المزادات',
+    'acution_cancle'    => 'الغاء مزاد',
+    'auction_types'     => 'انواع المزادات',
+    'tenders'           => 'المزايدات',
+    'advertisements'    => 'الاعلانات',
+    'common_questions'  => 'الاسئله الشائعه',
+    'favorites'         => 'المزادات المفضله',
+    'contacts'          => 'رسائل التواصل',
+    'sliders'           => 'سلايدر',
+    'setting'           => 'الاعدادات',
+    'abouts'            => 'من نحن',
+    'terms'             => 'الشروط و الاحكام',
+    'privicies'         => 'الخصوصيه',
+
 
 ];

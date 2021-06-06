@@ -117,23 +117,7 @@
                             <textarea name="" id="" class="form-control ckeditor" cols="30" rows="10" disabled>{{$acution->detials}}</textarea>
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label>سلايدر</label>
-                                @if ($acution->is_slider == 0)
-                                    <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                        data-id="{{ $acution->id }}" data-toggle="modal"
-                                        href="#exampleModal2" title="اضافه الي السلايدر"><i class="fa fa-sliders">سلايدر</i>
-                                    </a>
-                                 @else
-                                    <form method="post"
-                                            action="{{route('dashboard.auction.slider-delete' , $acution->id)}}"
-                                            style="display: inline-block">
-                                        @csrf()
-                                        <button type="submit" title="حذف من السلايدر" class="btn btn-danger btn-sm"><i
-                                                    class="fa fa-sliders"></i>سلايدر</button>
-                                     </form>
-                                 @endif
-                        </div>
+
                     </div>
 
 
@@ -147,7 +131,8 @@
                         <div class="col-md-12">
                             <label> تفاصيل القسم </label>
                             @foreach ($detials as $detial)
-                                <span  class="form-control">{{$detial->param_value}}</span>
+                                <span  class="form-control" style="color: blue">{{$detial->cat_parm->param_name_ar}}</span><br>
+                                <span  class="form-control">{{isset($detial->param_value) ? $detial->param_value : $detial->type->param_name_ar}}</span><br>
                             @endforeach
                         </div>
 

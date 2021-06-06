@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Tender;
 use App\Models\Auction;
+use App\Models\Category;
 use App\Models\AuctionImage;
 use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
@@ -12,6 +13,15 @@ use Illuminate\Support\Facades\Storage;
 
 class AuctionController extends Controller
 {
+
+
+    public function __construct()
+    {
+      $this->middleware(['permission:read_auctions'])->only('index');
+      $this->middleware(['permission:delete_auctions'])->only('destroy');
+    }//end of construct
+
+
     /**
      * Display a listing of the resource.
      *
@@ -19,22 +29,29 @@ class AuctionController extends Controller
      */
     public function index(Request $request)
     {
-        $data['acutions'] = Auction::whereHas('member', function ($query) use ($request) {
-            $query->where('username', 'like', "%{$request->search}%")
-            ->orWhere('email' , 'like' , '%'. $request->search. '%')
-            ->orWhere('auction_title' , 'like' , '%'. $request->search. '%')
-            ->orWhere('address' , 'like' , '%'. $request->search. '%')
-            ->orWhere('price_opining' , 'like' , '%'. $request->search. '%')
-            ->orWhere('price_closing' , 'like' , '%'. $request->search. '%')
-            ->orWhere('status' , 'like' , '%'. $request->search. '%')
-            ->orWhere('is_finished' , 'like' , '%'. $request->search. '%')
-            ->orWhere('is_slider' , 'like' , '%'. $request->search. '%');
-        })
-        ->orWhereHas('category', function ($query) use ($request) {
-            $query->where('category_name_ar', 'like', "%{$request->search}%")
-            ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%');
-        })
-        ->latest()->paginate(5);
+        $data['cats']     = Category::where('parent_id', '!=' ,0)->get();
+        if($request->search_cat){
+            $data['acutions'] = Auction::whereHas('category', function ($query) use ($request) {
+                $query->where('category_name_ar', 'like', "%{$request->search_cat}%");
+            })->latest()->paginate(20);
+        }else{
+            $data['acutions'] = Auction::whereHas('member', function ($query) use ($request) {
+                $query->where('username', 'like', "%{$request->search}%")
+                ->orWhere('email' , 'like' , '%'. $request->search. '%')
+                ->orWhere('auction_title' , 'like' , '%'. $request->search. '%')
+                ->orWhere('address' , 'like' , '%'. $request->search. '%')
+                ->orWhere('price_opining' , 'like' , '%'. $request->search. '%')
+                ->orWhere('price_closing' , 'like' , '%'. $request->search. '%')
+                ->orWhere('status' , 'like' , '%'. $request->search. '%')
+                ->orWhere('is_finished' , 'like' , '%'. $request->search. '%')
+                ->orWhere('is_slider' , 'like' , '%'. $request->search. '%');
+            })
+            ->orWhereHas('category', function ($query) use ($request) {
+                $query->where('category_name_ar', 'like', "%{$request->search}%")
+                ->orWhere('category_name_en' , 'like' , '%'. $request->search. '%');
+            })
+            ->latest()->paginate(20);
+        }
 
         return view('dashboard.auctions.index')->with($data);
     }
@@ -116,6 +133,25 @@ class AuctionController extends Controller
     }
 
 
+     /**
+     * disabled the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function disabled($id){
+        $acution  = Auction::find($id);
+        if($acution->status == 0){
+            $acution->status = 1;
+        }else{
+            $acution->status = 0;
+        }
+        $acution->save();
+        session()->flash('success', __('site.updated_successfully'));
+        return redirect()->route('dashboard.auction.index');
+    }
+
+
     /**
      * ================================================================================
      * ========================= Slider ===============================================
@@ -163,7 +199,9 @@ class AuctionController extends Controller
         return view('dashboard.auctions.tenders.index',compact('acution'));
       }
 
-      public function deleteTenders($tender_id){
+      //Delete Tenders
+      public function deleteTenders($acution_id, $tender_id){
+        $acution = Auction::find($acution_id);
         $tender  = Tender::find($tender_id);
         $tender->delete();
 

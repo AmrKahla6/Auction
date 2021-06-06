@@ -56,6 +56,9 @@ Route::prefix('live')->name('live.')->namespace('Onlin')->group(function () {
 
 });
 
+
+//Dashboard Routes
+
 Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middleware('auth')->group(function () {
     Route::get('/index', 'DashboardController@index')->name('index');
 
@@ -94,14 +97,49 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     Route::get('/members-regular/{member}', 'MemberController@regularShow')->name('members-regular-show');
     Route::delete('/members-regular/{member}/delete', 'MemberController@regularDestroy')->name('members-regular-destroy');
 
+    //Favorite
+    Route::get('/members-favorite/{member}', 'MemberController@getFavorite')->name('members-get-favorite');
+
+    //Auction type routes
+    Route::resource('/auction-type', 'AuctionTypeController');
+
     //Acution
     Route::resource('/auction', 'AuctionController');
     // Route::get('/auction/slider/{slider}/create', 'AuctionController@createSlider')->name('auction.slider-create');
     Route::post('/auction/slider/store', 'AuctionController@storeSlider')->name('auction.slider-store');
     Route::post('/auction/slider/{auction}/delete', 'AuctionController@deleteSlider')->name('auction.slider-delete');
+    Route::get('/auction/{tenders}/tenders/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
+    Route::delete('/auction/{auction}/tenders/{tender}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
+    Route::post('/auction/{auction}/disabled', 'AuctionController@disabled')->name('auction.disabled');
 
 
+    //tenders routes
     Route::get('/auction/tenders/{tenders}/index', 'AuctionController@indexTenders')->name('auction.tenders-index');
     Route::delete('/auction/tenders/{tenders}/delete','AuctionController@deleteTenders')->name('auction.tenders-delete');
 
+
+    //Common Questions
+    Route::resource('/questions', 'CommonQuestionsController');
+
+    //Advertisement route
+    Route::resource('/advertisement', 'AdvertisementController');
+
+    //Slider route
+    Route::resource('/sliders', 'SliderController');
+
+    //Setting Routes
+    Route::get('/setting/about', 'SettingController@about')->name('setting-about');
+    Route::put('/setting/about/{id}/edit', 'SettingController@aboutEdit')->name('setting-about-edit');
+
+     //contact us
+     Route::get('/setting/contact-us', 'SettingController@contact')->name('setting-contact');
+     Route::delete('/setting/contact-us/{id}/delete', 'SettingController@deleteContact')->name('setting-contact-delete');
+
+     //privicies
+     Route::get('/setting/privicies', 'SettingController@privicies')->name('setting-privicies');
+     Route::put('/setting/privicies/{id}/edit', 'SettingController@priviciesEdit')->name('setting-privicies-edit');
+
+    //trems
+    Route::get('/setting/trems', 'SettingController@trems')->name('setting-trems');
+    Route::put('/setting/trems/{id}/edit', 'SettingController@tremsEdit')->name('setting-trems-edit');
   });

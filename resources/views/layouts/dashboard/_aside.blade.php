@@ -19,10 +19,11 @@
         </div>
 
         <ul class="sidebar-menu" data-widget="tree">
-
-            <li class="nav-item {{is_active('index')}}">
-                <a href="{{ route('dashboard.index') }}"><i class="fa fa-th"></i><span>الرئيسيه</span></a>
-            </li>
+            @if(auth()->user()->hasPermission('read_main'))
+                <li class="nav-item {{is_active('index')}}">
+                    <a href="{{ route('dashboard.index') }}"><i class="fa fa-th"></i><span>الرئيسيه</span></a>
+                </li>
+            @endif
 
             @if(auth()->user()->hasPermission('read_users'))
                 <li class="nav-item {{is_active('users')}}">
@@ -36,25 +37,80 @@
                 </li>
             @endif
 
-            <li class="nav-item {{is_active('cats')}}">
-                <a href="{{route('dashboard.cats.index')}}"><i class="fa fa-flag"></i><span>الاقسام</span></a>
-            </li>
+            @if(auth()->user()->hasPermission('read_categories'))
+                <li class="nav-item {{is_active('cats')}}">
+                    <a href="{{route('dashboard.cats.index')}}"><i class="fa fa-list-alt"></i><span>الاقسام</span></a>
+                </li>
+            @endif
 
+            @if(auth()->user()->hasPermission('read_members'))
                 <li class="treeview {{is_active('members')}}">
-                    <a href="#"><i class="fa fa-car"></i> <span>العملاء</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <a href="#"><i class="fa fa-address-book"></i> <span>العملاء</span> <i class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li class="nav-item {{is_active('full-insurance')}}">
+                        <li class="nav-item {{is_active('members')}}">
                             <a href="{{route('dashboard.members.index')}}">عميل تجاري</a>
                         </li>
 
-                        <li class="nav-item {{is_active('full-insurance')}}">
+                        <li class="nav-item {{is_active('members-regular')}}">
                             <a href="{{route('dashboard.members-regular-index')}}"> عميل عادي</a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{is_active('auction')}}">
-                    <a href="{{route('dashboard.auction.index')}}"><i class="fa fa-flag"></i><span>المزادات</span></a>
+            @endif
+
+            @if(auth()->user()->hasPermission('read_auction_types'))
+                <li class="nav-item {{is_active('auction-type')}}">
+                    <a href="{{route('dashboard.auction-type.index')}}"><i class="fa fa-file-archive-o"></i><span>انواع المزادات</span></a>
                 </li>
+            @endif
+
+            @if(auth()->user()->hasPermission('read_auctions'))
+                <li class="nav-item {{is_active('auction')}}">
+                    <a href="{{route('dashboard.auction.index')}}"><i class="fa fa-handshake-o"></i><span>المزادات</span></a>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasPermission('read_common_questions'))
+                <li class="nav-item {{is_active('questions')}}">
+                    <a href="{{route('dashboard.questions.index')}}"><i class="fa fa-podcast"></i><span>الاسئله الشائعه</span></a>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasPermission('read_advertisements'))
+                <li class="nav-item {{is_active('advertisement')}}">
+                    <a href="{{route('dashboard.advertisement.index')}}"><i class="fa fa-adn"></i><span> الاعلانات</span></a>
+                </li>
+            @endif
+
+
+            @if(auth()->user()->hasPermission('read_sliders'))
+                <li class="nav-item {{is_active('sliders')}}">
+                    <a href="{{route('dashboard.sliders.index')}}"><i class="fa fa-sliders"></i><span> سلايدر</span></a>
+                </li>
+            @endif
+
+            @if(auth()->user()->hasPermission('read_setting'))
+                <li class="treeview {{is_active('setting')}}">
+                    <a href="#"><i class="fa  fa-bars"></i> <span>الاعدادات</span> <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        @if(auth()->user()->hasPermission('read_abouts'))
+                            <li><a href="{{route('dashboard.setting-about')}}"> من نحن   </a></li>
+                        @endif
+
+                        @if(auth()->user()->hasPermission('read_contacts'))
+                            <li><a href="{{route('dashboard.setting-contact')}}">  الرسائل   </a></li>
+                        @endif
+
+                        @if(auth()->user()->hasPermission('read_privicies'))
+                            <li><a href="{{route('dashboard.setting-privicies')}}">  الخصوصيه   </a></li>
+                        @endif
+
+                        @if(auth()->user()->hasPermission('read_terms'))
+                            <li><a href="{{route('dashboard.setting-trems')}}">  الشروط و الاحكام   </a></li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
         </ul>
 
     </section>

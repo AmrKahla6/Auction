@@ -19,8 +19,8 @@ class CreateAuctionsTable extends Migration
             $table->unsignedBigInteger('member_id')->nullable();
             $table->decimal('price',8,2)->nullable();
             $table->string('address')->nullable();
-            $table->decimal('price_opining',8,2)->nullable();
-            $table->decimal('price_closing',8,2)->nullable();
+            $table->double('price_opining')->nullable();
+            $table->double('price_closing')->nullable();
             $table->date('start_data')->nullable();
             $table->date('end_data')->nullable();
             $table->text('detials',8,2)->nullable();

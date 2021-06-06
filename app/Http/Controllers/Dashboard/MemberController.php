@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Member;
+use App\Models\Favorite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
@@ -11,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware(['permission:read_commercia_member'])->only('index');
+      $this->middleware(['permission:delete_commercia_member'])->only('destroy');
+
+      $this->middleware(['permission:read_regular_member'])->only('regularIndex');
+      $this->middleware(['permission:delete_regular_member'])->only('regularDestroy');
+    }//end of construct
+
 
     /**
      * ============================================================================
@@ -69,5 +79,18 @@ class MemberController extends Controller
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('dashboard.members-regular-index');
     }
+
+
+    /**
+     * ==================================================================================================================
+     * ====================================== Favorite Auctions =======================================================================
+     * ==================================================================================================================
+     */
+
+     public function getFavorite($id){
+         $member    = Member::find($id);
+         $favorites = Favorite::where('member_id',$member->id)->latest()->paginate(5);
+         return view('dashboard.members.favorite',compact('member','favorites'));
+     }
 
 }

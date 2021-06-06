@@ -32,7 +32,7 @@
                             @endif
                             <td>
                                 <form method="post"
-                                    {{-- action="{{route('dashboard.auction.tenders-delete' , ['auction'=>$tender->auction->id,'tender'=>$tender->id])}}" --}}
+                                    action="{{route('dashboard.auction.tenders-delete' , ['auction'=>$tender->auction->id,'tender'=>$tender->id])}}"
                                     style="display: inline-block">
                                     @csrf()
                                     @method('delete')
