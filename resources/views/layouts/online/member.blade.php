@@ -27,7 +27,7 @@
             ================================================== -->
         <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
 		<link rel="stylesheet" href="{{ asset('dashboard/plugins/noty/noty.css') }}">
-		<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script> 
+		<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script>
 
     </head>
     <body class="clearfix wsmenucontainer">
@@ -36,8 +36,8 @@
 		<div id="header">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-4 col-xs-6">
-						<a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
+                    <div class="col-sm-4 col-xs-6">
+                        <a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
 						<a href="{{route('live.myonline')}}" class="logo"><img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW"></a>
 					</div>
 					<div class="col-sm-4 col-xs-6">
@@ -46,10 +46,11 @@
 							<button type="button" class=""><span class="icon-search1"></span></button>
 						</div>
 					</div>
+
 					<div class="col-sm-4 hidden-xs">
 						<div class="links">
 						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
-					
+
 							<a class="btn btn-add" href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> أضف مزاد</a>
 							<a class="btn btn-myacc" href="{{route('live.profile')}}"><span class="icon-user1"></span> حسابي</a>
 							<a class="btn btn-logout" href="{{route('live.logout')}}"><span class="icon-power"></span> تسجيل خروج</a>
@@ -57,11 +58,12 @@
 						<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a>
 						<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> تسجيل</a>
 						@endif
+
 					</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                </div>
+            </div>
+        </div>
+    </div>
 		</header>
 		<div class="sub-nav">
 			<div class="sub-nav-content">
@@ -97,7 +99,7 @@
 		@yield('content')
 		@include('partials._session')
 		<!-- end of content -->
-		
+
 		<div class="footer">
 			<div class="container">
 				<div class="row">
@@ -135,13 +137,13 @@
 		</div>
 		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
         <!-- Latest compiled and minified JavaScript -->
-        <script src="{{ asset('online/js/bootstrap.min.js')}}"></script>  
-	
+        <script src="{{ asset('online/js/bootstrap.min.js')}}"></script>
 
 
-		
+
+
 <script>
-	
+
 //in case js in turned off
    $(window).on('load', function () {
         $("body").removeClass("h-fixed")
@@ -172,8 +174,8 @@ $(document).ready(function() {
     });
 });
 </script>
-		
-		
+
+
     </body>
 
-</html> 
+</html>
