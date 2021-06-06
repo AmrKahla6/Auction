@@ -148,7 +148,7 @@ class AuctionController extends Controller
         }
         $acution->save();
         session()->flash('success', __('site.updated_successfully'));
-        return redirect()->route('dashboard.auction.index');
+        return redirect()->back();
     }
 
 
