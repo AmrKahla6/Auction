@@ -20,4 +20,18 @@ return [
     'forgtpass'       => 'نسيت كلمه المرور؟',
     'login_now'       => 'تسجيل الأن',
     'skip'            => 'تخطي',
+
+    //Store Auction
+    'auction_name'    => 'اسم  المزاد',
+    'price'           => 'السعر',
+    'address'         => 'العنوان',
+    'open_price'      => 'سعر الافتتاح',
+    'close_price'     => 'سعر الإغلاق',
+    'show_type'       => 'نوع العرض',
+    'date_close'      => 'تاريخ الاغلاق',
+    'detials'         => 'تفاصيل',
+    'governorate'     => 'المحافظة',
+    'city'            => 'المدينة',
+    'images'          => 'الصور',
+    'category'        => 'القسم',
 ];

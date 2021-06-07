@@ -176,13 +176,13 @@ class Profile extends BaseController
                     $newimg->save();
             }
         }
-            //auction_detials part
-            if (!empty($request['auction_detials'])) {
-                foreach ($request['auction_detials'] as $auction_detials) {
+        //auction_detials part
+        if (!empty($request['auction_detials'])) {
+            foreach ($request['auction_detials'] as $auction_detials) {
                     if ($auction_detials['param_value'] != null) {
-                        $auction_detials['type_id'] = 1;
-                        $auction_detials['cat_id'] = $object->cat_id;
-                        $auction_detials['auction_id'] = $object->id;
+                        $auction_detials['type_id']      = 1;
+                        $auction_detials['cat_id']       = $object->cat_id;
+                        $auction_detials['auction_id']   = $object->id;
                         AuctionDetials::create($auction_detials);
                     } elseif ($auction_detials['param_value'] === null) {
                         $pram = selectParams::find($auction_detials['param_value_id']);
@@ -193,10 +193,10 @@ class Profile extends BaseController
                             $param_name = $pram->param_name_en;
                         }
 
-                        $auction_detials['type_id'] = 2;
-                        $auction_detials['param_value'] = $param_name;
-                        $auction_detials['cat_id'] = $object->cat_id;
-                        $auction_detials['auction_id'] = $object->id;
+                        $auction_detials['type_id']        = 2;
+                        $auction_detials['param_value']    = $param_name;
+                        $auction_detials['cat_id']         = $object->cat_id;
+                        $auction_detials['auction_id']     = $object->id;
                         $auction_detials['param_value_id'] = $pram->id;
                         AuctionDetials::create($auction_detials);
                     }

@@ -20,4 +20,18 @@ return [
     'forgtpass'       => 'Forgot your password?',
     'login_now'       => 'Login Now',
     'skip'            => 'Skip',
+
+    //Store Auction
+    'auction_name'    => 'Auction Name',
+    'price'           => 'Price' ,
+    'address'         => 'Address',
+    'open_price'      => 'Opening Price',
+    'close_price'     => 'Closeing Price',
+    'show_type'       => 'Show Type',
+    'date_close'      => 'Date Closeing',
+    'detials'         => 'Detials',
+    'governorate'     => 'Governorate',
+    'city'            => 'City',
+    'images'          => 'Images',
+    'category'        => 'Category',
 ];
