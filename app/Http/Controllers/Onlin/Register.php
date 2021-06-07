@@ -27,7 +27,7 @@ class Register extends Controller
         $data = $request->validate([
             'username'            => 'required',
             'phone'               => 'required|unique:members',
-            'date_of_birth'       => 'required',
+            'date_of_birth'       => 'required|date|before:-15 years',
             'country_id'          => 'required',
             'email'               => 'required|unique:members',
             'password'            => 'required|min:6',
@@ -37,6 +37,7 @@ class Register extends Controller
             'phone.required'               => __("user.phone"),
             'phone.unique'                 => __("user.unique_phone"),
             'date_of_birth.required'       => __("user.date_of_birth"),
+            'date_of_birth.before'         => __("user.before"),
             'country_id.required'          => __("user.nationality"),
             'email.required'               => __("user.email"),
             'email.unique'                 => __("user.unique_email"),
