@@ -18,7 +18,7 @@
                         <input type="number"  required="required" name="price" value="" placeholder="السعر"  class="form-control">
                     </div>
                     </div>
-                   
+
                     <div class="row">
                     <div class="col-md-6">
                         <label>  العنوان</label>
@@ -49,7 +49,7 @@
                     <div class="row"  id="Stat_Date">
                         </div>
                     <div class="row">
-                    
+
                     <div class="col-md-12 form-group">
                         <label>تاريخ الاغلاق</label>
                         <input type="date"  required="required" name="end_data" value="" placeholder="end_data"  class="form-control">
@@ -61,18 +61,18 @@
                         <textarea type="text"  required="required" name="detials" placeholder="تفاصيل"  class="form-control"></textarea>
                     </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-md-6 form-group">
                             <label>الوصف بالعربي </label>
                         <input type="text"  required="required" name="desc_ar" value="" placeholder="الوصف بالعربي"  class="form-control">
-                    </div>
-                    <div class="col-md-6 form-group">
+                    </div> --}}
+                    {{-- <div class="col-md-6 form-group">
                         <label> الوصف بالانجليزية </label>
                         <input type="text"  required="required" name="desc_en" placeholder="الوصف بالانجليزية"  class="form-control">
+                    </div> --}}
                     </div>
-                    </div>
-        
-              
+
+
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>  المحافظة </label>
@@ -118,9 +118,9 @@
                         </select>
                     </div>
                     </div>
-                
+
                    <div id="ParamsHouse"></div>
-        
+
                     <div class="login-box-footer">
                         <button  type="submit"id="add_build"  class="btn btn-block btn-lg btn-primary">حفظ المزاد</button>
                     </div>
@@ -128,10 +128,10 @@
     </div>
             </div>
             </div>
-        
-  
-      
-       
+
+
+
+
     <script>
    function loadPreview(input){
        var data = $(input)[0].files; //this file data
@@ -171,7 +171,7 @@
    $("#ParamsHouse").html(data);
 
 });
- 
+
 }else{
   $("#ParamsHouse").html("");
 }
@@ -182,7 +182,7 @@ Get_Params();
 </script>
 <script>
     function Stat_Date_option() {
-        $("#Stat_Date").html(""); 
+        $("#Stat_Date").html("");
         if($("#type_id option:selected").val() > 1){
            // alert($("#type_id option:selected").val());
         $("#Stat_Date").html('<div class="col-md-12 form-group">\
@@ -190,7 +190,7 @@ Get_Params();
          <input type="date" name="start_data" value="" placeholder="تاريخ الافتتاح"  class="form-control">\
                     </div>');
                 }else{
-                    $("#Stat_Date").html("");  
+                    $("#Stat_Date").html("");
                 }
     }
 </script>

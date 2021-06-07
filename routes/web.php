@@ -40,6 +40,7 @@ Route::group(
             Route::get('/register', 'Register@register')->name('register');
             Route::get('/login', 'Register@login')->name('login');
             Route::post('/register', 'Register@register_post')->name('register_post');
+            Route::post('/register-commercial', 'Register@commercialRegister')->name('commercial-register');
             Route::post('/login', 'Register@login_post')->name('login_post');
             Route::get('/logout', 'Register@logout')->name('logout');
             Route::get('/forgetpassword', 'Register@forgetpassword')->name('forgetpassword');

@@ -127,39 +127,36 @@ class Profile extends BaseController
        // dd($request['auction_detials']);
         if ($request->session()->exists('member')) {
             $data = $request->validate([
-                'auction_title' => ['required', 'string', 'max:255'],
-                'price' => ['required'],
-                'address' => ['required'],
-                'price_opining' => ['required'],
-                'price_closing' => ['required'],
+                'auction_title'  => ['required', 'string', 'max:255'],
+                'price'          => ['required'],
+                'address'        => ['required'],
+                'price_opining'  => ['required'],
+                'price_closing'  => ['required'],
                 //   'start_data' => ['required'],
-                'end_data' => ['required'],
-                'detials' => ['required'],
-                'cat_id' => ['required'],
-                'type_id' => ['required'],
-                'gover_id' => ['required'],
-                'city_id' => ['required'],
-                'status' => [],
-                'is_slider' => [],
-                'desc_ar' => [],
-                'desc_en' => [],
-                'is_finished' => [],
+                'end_data'       => ['required'],
+                'detials'        => ['required'],
+                'cat_id'         => ['required'],
+                'type_id'        => ['required'],
+                'gover_id'       => ['required'],
+                'city_id'        => ['required'],
+                'status'         => [],
+                'is_slider'      => [],
+                'is_finished'    => [],
                 'share_location' => [],
 
             ],
                 [
                     'auction_title.required' => __("auctions.auction_title"),
-                    'price.required' => __("auctions.price"),
-                    'address.required' => __("auctions.address"),
+                    'price.required'         => __("auctions.price"),
+                    'address.required'       => __("auctions.address"),
                     'price_opining.required' => __("auctions.price_opining"),
                     'price_closing.required' => __("auctions.price_closing"),
-                    'end_data.required' => __("auctions.end_data"),
-                    'detials.required' => __("auctions.detials"),
-
-                    'cat_id.required' => __("auctions.cat_id"),
-                    'type_id.required' => __("auctions.type_id"),
-                    'gover_id.required' => __("auctions.gover_id"),
-                    'city_id.required' => __("auctions.city_id"),
+                    'end_data.required'      => __("auctions.end_data"),
+                    'detials.required'       => __("auctions.detials"),
+                    'cat_id.required'        => __("auctions.cat_id"),
+                    'type_id.required'       => __("auctions.type_id"),
+                    'gover_id.required'      => __("auctions.gover_id"),
+                    'city_id.required'       => __("auctions.city_id"),
                 ]
             );
             $data['member_id'] = $request->session()->get('member')->id;
@@ -171,13 +168,14 @@ class Profile extends BaseController
             if ($request->hasfile('auction_images')) {
                 $images = $request->file('auction_images');
                 foreach ($images as $image) {
-                   $image_name=$this->save_img($image,'aucations');
-                    AuctionImage::create([
-                        'img' => $image_name,
-                        'auction_id' => $object->id,
-                    ]);
-                }
+                    $newimg = new AuctionImage;
+                    $img_name = rand(55556, 99999) . '.' . $image->getClientOriginalExtension();
+                    $image->move(base_path('/public/uploads/acution/'), $img_name);
+                    $newimg->img         = $img_name;
+                    $newimg->auction_id  = $object->id;
+                    $newimg->save();
             }
+        }
             //auction_detials part
             if (!empty($request['auction_detials'])) {
                 foreach ($request['auction_detials'] as $auction_detials) {
@@ -304,12 +302,12 @@ class Profile extends BaseController
             "xls"=>"document",
             "xlsx"=>"document"
         );
-       
+
         $file_name= time() . Str::random(10) . '.' . $filles->getClientOriginalExtension();
-      
+
             $filles->move(public_path($path), $file_name);
                 return $path.'/'.$file_name;
-      
+
     }
 
 }

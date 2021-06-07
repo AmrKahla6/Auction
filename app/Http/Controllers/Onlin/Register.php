@@ -45,11 +45,43 @@ class Register extends Controller
         ]
     );
          $data['password'] = bcrypt($request->password);
+         $data['type']     = 1;
          $member = Member::create($data);
          session()->flash('success', __('site.added_successfully'));
         return redirect()->route('live.login');
+    }
 
 
+
+    public function commercialRegister(Request $request)
+    {
+        $data = $request->validate([
+            'commercial_record'   => 'required|unique:members',
+            'phone'               => 'required|unique:members',
+            'date_of_birth'       => 'required',
+            'id_number'           => 'required|unique:members',
+            'email'               => 'required|unique:members',
+            'password'            => 'required|min:6',
+        ],
+        [
+            'commercial_record.required'   => __("user.commercial_record"),
+            'commercial_record.unique'     => __("user.commercial_exist"),
+            'phone.required'               => __("user.phone"),
+            'phone.unique'                 => __("user.unique_phone"),
+            'date_of_birth.required'       => __("user.date_of_birth"),
+            'id_number.required'           => __("user.id_number"),
+            'id_number.unique'             => __("user.unique_id_number"),
+            'email.required'               => __("user.email"),
+            'email.unique'                 => __("user.unique_email"),
+            'password.required'            => __("user.password"),
+            'password.min'                 => __("user.max_password"),
+        ]
+    );
+         $data['password'] = bcrypt($request->password);
+         $data['type']     = 0;
+         $member = Member::create($data);
+         session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('live.login');
     }
 
 
@@ -61,7 +93,7 @@ class Register extends Controller
         return view('online.auth.login');
     }else{
         $data['auctions_active']  = Auction::where('member_id',$member->id)->where('is_finished',false)->with('images')->get();
-        $data['auctions_dis']  = Auction::where('member_id',$member->id)->where('is_finished',true)->with('images')->get();
+        $data['auctions_dis']     = Auction::where('member_id',$member->id)->where('is_finished',true)->with('images')->get();
         // return redirect('live/registerd');
          return redirect()->route('live.registerd');
 
@@ -71,7 +103,7 @@ class Register extends Controller
     public function login_post(Request $request)
     {
         $data = $request->validate([
-            'phone' => ['required'],
+            'phone'    => ['required'],
             'password' => ['required'],
 
          ]);

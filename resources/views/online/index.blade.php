@@ -86,7 +86,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="slider-top">
 			<div id="carousel-slider" class="owl-carousel" style="opacity: 1;">
 				@if($auctions->where('is_slider',1)->count() > 0)
@@ -112,7 +112,7 @@
 
 			<script>
 			$('#carousel-slider').owlCarousel({
-				items: 1,   
+				items: 1,
 				itemsDesktop : [1199,1],
 				itemsDesktopSmall : [980,1],
 				itemsTablet: [768,1],
@@ -150,11 +150,13 @@
 					<div class="col-md-4 col-sm-6 col-xs-12">
 						<a href="{{route('live.single_auction',$auction->id)}}" id="product-{{$auction->id}}" class="product">
 							<div class="image">
+
 								@if($auction->images()->count() > 0)
-								<img src="{{asset($auction->images()->first()->img)}}" class="img-responsive" />
+                                    <img src="{{asset('uploads/acution/'.$auction->images()->first()->img)}}" class="img-responsive" />
 								@else
-								<img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
+								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
+
 								<p class="price">{{$auction->price}} درهم</p>
 								<div class="addtofavorite">
 									<input value="" type="checkbox" id="add-favorite-id01" name="add-favorite-{{$auction->id}}" class="favorite-input">
@@ -168,7 +170,7 @@
 								<h3 class="product-name">{{$auction->auction_title}}</h3>
 								<div class="timer"><span class="icon-alarm"></span> <p id="timer-{{$auction->id}}"></p></div>
 								<script>
-									
+
 								// Set the date we're counting down to
 								var countDownDate = new Date("{{$auction->end_data}}").getTime();
 								// Update the count down every 1 second
@@ -181,15 +183,15 @@
 								  var distance = countDownDate - now;
 
 								  // Time calculations for days, hours, minutes and seconds
-								  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-								  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+								  var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+								  var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 								  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 								  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
 								  document.getElementById("timer-{{$auction->id}}").innerHTML = days + "<span>ي</span> " + hours + "<span>س</span> "
 								  + minutes + "<span>د</span> " + seconds + "<span>ث</span> ";
 
-								  // If the count down is over, write some text 
+								  // If the count down is over, write some text
 								  if (distance < 0) {
 									clearInterval(x);
 									document.getElementById("timer-{{$auction->id}}").innerHTML = "<font color='#e72727'>EXPIRED</font>";
@@ -199,15 +201,15 @@
 							</div>
 						</a>
 					</div>
-												 
+
 					@endforeach
 				@endif
-				
+
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 		<div class="footer">
 			<div class="container">
 				<div class="row">
@@ -245,16 +247,16 @@
 		</div>
 		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
         <!-- Latest compiled and minified JavaScript -->
-        <script src="{{ asset('online/js/bootstrap.min.js')}}"></script>   
+        <script src="{{ asset('online/js/bootstrap.min.js')}}"></script>
 
-        <script type="text/javascript" src="{{ asset('online/js/wow.min.js')}}"></script> 
+        <script type="text/javascript" src="{{ asset('online/js/wow.min.js')}}"></script>
 
         <!-- Javascripts
-            ================================================== --> 
+            ================================================== -->
         <script type="text/javascript" src="{{ asset('online/js/main.js')}}"></script>
-		
+
 <script>
-	
+
 //in case js in turned off
    $(window).on('load', function () {
         $("body").removeClass("h-fixed")
@@ -289,13 +291,13 @@ $(document).ready(function() {
 $(document).ready(function() {
     if ($('.favorite-input').is(':checked')) {
 		$('.overlapblackbg').after('<div class="completeModal">'تم تم تم '</div>');
-        } else {		
+        } else {
 		$('.overlapblackbg').after('<div class="completeModal">'متمش متمش متمش '</div>');
     });
 });
 </script>
-		
-		
+
+
     </body>
 
-</html> 
+</html>

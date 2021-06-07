@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MAZAD KW | تسجيل دخول</title>
+        <title>MAZAD KW | @lang('live.login')</title>
 		<link href="{{ asset('online/images/icon.ico')}}" rel="icon">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -11,7 +11,7 @@
             ================================================== -->
 			<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
 			<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
-	
+
 			<!-- Bootstrap -->
 			<script src="{{ asset('online/js/jquery-2.1.1.min.js')}}" type="text/javascript"></script>
 			<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
@@ -25,7 +25,7 @@
 				================================================== -->
 			<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
 			<link rel="stylesheet" href="{{ asset('dashboard/plugins/noty/noty.css') }}">
-			<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script> 
+			<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script>
     </head>
     <body class="wsmenucontainer clearfix">
         <div class="overlapblackbg"></div>
@@ -39,14 +39,14 @@
 					</div>
 					<div class="col-sm-4 col-xs-6">
 						<div id="search" class="input-group">
-							<input type="text" name="search" value="" placeholder="عن ماذا تبحث ..؟" class="">
+							<input type="text" name="search" value="" placeholder="@lang('live.search')" class="">
 							<button type="button" class=""><span class="icon-search1"></span></button>
 						</div>
 					</div>
 					<div class="col-sm-4 hidden-xs">
 						<div class="links">
-							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a>
-							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> تسجيل</a>
+							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
+							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 	       @yield('content')
 		   @include('partials._session')
 		  <!-- end of content -->
-		
+
 		<div class="footer">
 			<div class="container">
 				<div class="row">
@@ -108,12 +108,12 @@
 		</div>
 		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
         <!-- Latest compiled and minified JavaScript -->
-		<script src="{{ asset('online/js/bootstrap.min.js')}}"></script>   
+		<script src="{{ asset('online/js/bootstrap.min.js')}}"></script>
 
 
-		
+
 <script>
-	
+
 //in case js in turned off
    $(window).on('load', function () {
         $("body").removeClass("h-fixed")
@@ -144,8 +144,8 @@ $(document).ready(function() {
     });
 });
 </script>
-		
-		
+
+
     </body>
 
-</html> 
+</html>

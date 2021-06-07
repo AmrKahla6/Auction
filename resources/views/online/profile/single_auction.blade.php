@@ -9,19 +9,16 @@
                     <div id="product-images" class="owl-carousel" style="opacity: 1;">
                         @if($auction->images()->count() > 0)
                           @foreach ( $auction->images()->get() as $image)
-                        <div class="text-center item">
-                            <img src="{{Storage::url($image->img)}}" class="img-responsive" />                        </div>
-                        <div class="text-center item">
-                            <img src="{{Storage::url($image->img)}}" class="img-responsive" />                        </div>
-                        <div class="text-center item">
-                            <img src="{{Storage::url($image->img)}}" class="img-responsive" />                        </div>
-                        @endforeach
+                            <div class="text-center item">
+                                <img src="{{asset('uploads/acution/'.$image->img)}}" class="img-responsive" />
+                            </div>
+                          @endforeach
                         @endif
                     </div>
                     <div class="expiry_date">الإنتهاء {{$auction->end_data}}</div>
                     <script>
                     $('#product-images').owlCarousel({
-                        items: 1,   
+                        items: 1,
                         itemsDesktop : [1199,1],
                         itemsDesktopSmall : [980,1],
                         itemsTablet: [768,1],
@@ -88,7 +85,7 @@
                     </div>
                     <div class="content">
                         <p>{{$auction->desc_ar}}</p>
-                    
+
                     </div>
                 </div>
             </div>
@@ -100,7 +97,7 @@
                     <div class="content">
                         <div class="box-detials">
                             @if($auction->more_detials()->count() > 0)
-                        
+
                               @foreach ( $auction->more_detials()->get() as $detail)
                               @if($detail->type_id ==1)
                               <div class="col-xs-6">
@@ -108,7 +105,7 @@
                                 <div class="box-content">
                                     <p>{{$detail->cat_parm()->first()->param_name_ar}}</p>
                                     <p>{{$detail->param_value}}</p>
-                                   
+
                                 </div>
                             </div>
                             @elseif($detail->type_id ==2)
@@ -116,8 +113,8 @@
                                 <div class="box-ico"><img src="images/002-meter.png" class="img-responsive" /></div>
                                 <div class="box-content">
                                     <p>{{$detail->param()->first()->param()->first()->param_name_ar}}</p>
-                                    <p>{{$detail->param_value}}</p>   
-                                   
+                                    <p>{{$detail->param_value}}</p>
+
                                 </div>
                             </div>
                             @endif
@@ -167,7 +164,7 @@
             </div>
         </div>
     </div>
-</div>	
+</div>
 
 <script type="text/javascript">
     function myPhoneNum() {
@@ -205,17 +202,17 @@
 				   text: 'You clicked the button!',
 				   type:'success'
 				});*/
-            
+
 
 			} ,
 			error:function (error) {
-				
+
             }
 
-     	}); 
+     	});
     }
         });
-    
+
     });
     </script>
 @endsection
