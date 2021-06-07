@@ -46,7 +46,7 @@ Route::group(
             Route::get('/forgetpassword', 'Register@forgetpassword')->name('forgetpassword');
             /* end of auth route //online part */
             /*genderal pages routes */
-            Route::get('/aboute', 'Register@aboute')->name('aboute');
+            Route::get('/aboute', 'SettingController@about')->name('aboute');
             Route::get('/terms', 'Register@terms')->name('terms');
             route::get('/repetedquestions', 'Register@repetedquestions')->name('repetedquestions');
 

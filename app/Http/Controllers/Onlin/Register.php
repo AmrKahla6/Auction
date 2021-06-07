@@ -138,9 +138,9 @@ class Register extends Controller
         dd($request->all());
     }
 
-    public function aboute(){
-        return view('online.static.aboute');
-    }
+    // public function aboute(){
+    //     return view('online.static.aboute');
+    // }
 
     public function terms(){
         return view('online.static.terms');

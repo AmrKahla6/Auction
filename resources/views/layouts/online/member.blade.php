@@ -42,7 +42,7 @@
 					</div>
 					<div class="col-sm-4 col-xs-6">
 						<div id="search" class="input-group">
-							<input type="text" name="search" value="" placeholder="عن ماذا تبحث ..؟" class="">
+							<input type="text" name="search" value="" placeholder="@lang('live.search')" class="">
 							<button type="button" class=""><span class="icon-search1"></span></button>
 						</div>
 					</div>
@@ -51,12 +51,12 @@
 						<div class="links">
 						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
 
-							<a class="btn btn-add" href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> أضف مزاد</a>
-							<a class="btn btn-myacc" href="{{route('live.profile')}}"><span class="icon-user1"></span> حسابي</a>
-							<a class="btn btn-logout" href="{{route('live.logout')}}"><span class="icon-power"></span> تسجيل خروج</a>
+							<a class="btn btn-add" href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a>
+							<a class="btn btn-myacc" href="{{route('live.profile')}}"><span class="icon-user1"></span> @lang('live.my_acc')</a>
+							<a class="btn btn-logout" href="{{route('live.logout')}}"><span class="icon-power"></span> @lang('live.logout') </a>
 						@else
-						<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a>
-						<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> تسجيل</a>
+                            <a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
+                            <a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>
 						@endif
 
 					</div>
@@ -71,24 +71,24 @@
 					<ul>
 						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
 
-						<li><a href="{{route("live.profile")}}"><span class="icon-user1"></span> حسابي</a></li>
-						<li><a href="{{route("live.myonline")}}"><span class="icon-settings"></span> الرئيسية</a></li>
-						<li><a href="#"><span class="icon-settings"></span> الإعدادات</a></li>
-						<li><a href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> اضف مزاد</a></li>
-						<li><a href="{{route('live.registerd')}}"><span class="icon-plus-circle"></span> مزاداتي</a></li>
-						<li><a href="#"><span class="icon-heart1"></span> المفضلة</a></li>
-						<li><a href="#"><span class="icon-message-circle"></span> الرسائل <span class="num">0</span></a></li>
-						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
-						<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
-						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
-						<li class="btn-logout"><a href="{{route('live.logout')}}"><span class="icon-power"></span> تسجيل خروج</a></li>
+						<li><a href="{{route("live.profile")}}"><span class="icon-user1"></span> @lang('live.my_acc')</a></li>
+						<li><a href="{{route("live.myonline")}}"><span class="icon-settings"></span> @lang('live.main')</a></li>
+						<li><a href="#"><span class="icon-settings"></span> @lang('live.setting')</a></li>
+						<li><a href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a></li>
+						<li><a href="{{route('live.registerd')}}"><span class="icon-plus-circle"></span> @lang('live.my_auctions')</a></li>
+						<li><a href="#"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
+						<li><a href="#"><span class="icon-message-circle"></span> @lang('live.my_msg') <span class="num">0</span></a></li>
+						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> @lang('live.about_as')</a></li>
+						<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a></li>
+						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> @lang('live.terms')</a></li>
+						<li class="btn-logout"><a href="{{route('live.logout')}}"><span class="icon-power"></span> @lang('live.logout')</a></li>
 						@else
 						<ul>
-							<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a></li>
-							<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> التسجيل</a></li>
-							<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
-							<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
-							<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
+							<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a></li>
+							<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a></li>
+							<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span>@lang('live.about_as')</a></li>
+							<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
+							<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span>  @lang('live.terms')</a></li>
 						</ul>
 						@endif
 					</ul>
@@ -105,17 +105,17 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="links">
-							<h5>معلومات</h5>
+							<h5>@lang('live.infos')</h5>
 							<ul class="list-unstyled">
-							  <li><a href="{{route('live.aboute')}}">من نحن</a></li>
-							  <li><a href="mainfaq.html">الاسئلة المتكررة</a></li>
-							  <li><a href="{{route('live.terms')}}">شروط الاستخدام</a></li>
+							  <li><a href="{{route('live.aboute')}}">@lang('live.about_as')</a></li>
+							  <li><a href="mainfaq.html">@lang('live.comm_question')</a></li>
+							  <li><a href="{{route('live.terms')}}">@lang('live.terms')</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="social">
-							<h5>تابعنا على</h5>
+							<h5>@lang('live.follow')</h5>
 							<div class="clearfix"></div>
 							<a href="#" class="link-facebook"><i class="fa fa-facebook"></i></a>
 							<a href="#" class="link-twitter"><i class="fa fa-twitter"></i></a>
@@ -127,7 +127,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="apps">
-							<h5>حمل التطبيق الآن</h5>
+							<h5> @lang('live.dawonload') </h5>
 							<a href="#"><img src="{{ asset('online/images/appstore.png')}}" class="img-responsive"></a>
 							<a href="#"><img src="{{ asset('online/images/googleplay.png')}}" class="img-responsive"></a>
 						</div>
@@ -135,7 +135,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
+		<div class="footer-copyright">@lang('live.rights')</div>
         <!-- Latest compiled and minified JavaScript -->
         <script src="{{ asset('online/js/bootstrap.min.js')}}"></script>
 

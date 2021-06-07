@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Onlin;
 
-use App\Http\Controllers\API\BaseController as BaseController;
-use App\Models\Auction;
-use App\Models\AuctionDetials;
-use App\Models\AuctionImage;
-use App\Models\AuctionType;
-use App\Models\Category;
-use App\Models\Governorate;
-use App\Models\Member;
-use App\Models\selectParams;
-use App\Models\Tender;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use LaravelLocalization;
 use Str;
+use Carbon\Carbon;
+use App\Models\Member;
+use App\Models\Tender;
+use App\Models\Auction;
+use App\Models\Category;
+use LaravelLocalization;
+use App\Models\AuctionType;
+use App\Models\Governorate;
+use App\Models\AuctionImage;
+use App\Models\selectParams;
+use Illuminate\Http\Request;
+use App\Models\AuctionDetials;
+use App\Http\Controllers\API\BaseController as BaseController;
 
 class Profile extends BaseController
 {
@@ -73,16 +73,17 @@ class Profile extends BaseController
         $gover = Governorate::find($gover_id);
         $cities = $gover->cities()->select('id', 'city_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
         $total_row = $cities->count();
+
         if ($total_row > 0) {
             $output = '<option disabled="disabled" value="-"> اختر المدينة</option>';
             foreach ($cities as $index => $row) {
-                $output .= '
+         $output .= '
         <option value="' . $row->id . '">' . $row->name . '</option>';
             }
         } else {
             $output = '<option value="-" selected disabled> لم تسجل أي مدينة </option>';
         }
-        return response()->json($output);
+        return response($output);
         // dd($cities);
 
     }
@@ -124,39 +125,39 @@ class Profile extends BaseController
 
     public function post_auctions(Request $request)
     {
-       // dd($request['auction_detials']);
         if ($request->session()->exists('member')) {
             $data = $request->validate([
-                'auction_title'  => ['required', 'string', 'max:255'],
-                'price'          => ['required'],
-                'address'        => ['required'],
-                'price_opining'  => ['required'],
-                'price_closing'  => ['required'],
+                'auction_title' => ['required', 'string', 'max:255'],
+                'price' => ['required'],
+                'address' => ['required'],
+                'price_opining' => ['required'],
+                'price_closing' => ['required'],
                 //   'start_data' => ['required'],
-                'end_data'       => ['required'],
-                'detials'        => ['required'],
-                'cat_id'         => ['required'],
-                'type_id'        => ['required'],
-                'gover_id'       => ['required'],
-                'city_id'        => ['required'],
-                'status'         => [],
-                'is_slider'      => [],
-                'is_finished'    => [],
+                'end_data' => ['required'],
+                'detials' => ['required'],
+                'cat_id' => ['required'],
+                'type_id' => ['required'],
+                'gover_id' => ['required'],
+                'city_id' => ['required'],
+                'status' => [],
+                'is_slider' => [],
+                'is_finished' => [],
                 'share_location' => [],
 
             ],
                 [
                     'auction_title.required' => __("auctions.auction_title"),
-                    'price.required'         => __("auctions.price"),
-                    'address.required'       => __("auctions.address"),
+                    'price.required' => __("auctions.price"),
+                    'address.required' => __("auctions.address"),
                     'price_opining.required' => __("auctions.price_opining"),
                     'price_closing.required' => __("auctions.price_closing"),
-                    'end_data.required'      => __("auctions.end_data"),
-                    'detials.required'       => __("auctions.detials"),
-                    'cat_id.required'        => __("auctions.cat_id"),
-                    'type_id.required'       => __("auctions.type_id"),
-                    'gover_id.required'      => __("auctions.gover_id"),
-                    'city_id.required'       => __("auctions.city_id"),
+                    'end_data.required' => __("auctions.end_data"),
+                    'detials.required' => __("auctions.detials"),
+
+                    'cat_id.required' => __("auctions.cat_id"),
+                    'type_id.required' => __("auctions.type_id"),
+                    'gover_id.required' => __("auctions.gover_id"),
+                    'city_id.required' => __("auctions.city_id"),
                 ]
             );
             $data['member_id'] = $request->session()->get('member')->id;
@@ -168,22 +169,24 @@ class Profile extends BaseController
             if ($request->hasfile('auction_images')) {
                 $images = $request->file('auction_images');
                 foreach ($images as $image) {
-                    $newimg = new AuctionImage;
-                    $img_name = rand(55556, 99999) . '.' . $image->getClientOriginalExtension();
-                    $image->move(base_path('/public/uploads/acution/'), $img_name);
-                    $newimg->img         = $img_name;
-                    $newimg->auction_id  = $object->id;
-                    $newimg->save();
+                   $image_name=$this->save_img($image,'aucations');
+                    AuctionImage::create([
+                        'img' => $image_name,
+                        'auction_id' => $object->id,
+                    ]);
+                }
             }
-        }
-        //auction_detials part
-        if (!empty($request['auction_detials'])) {
-            foreach ($request['auction_detials'] as $auction_detials) {
+            dd($request['auction_detials']);
+            //auction_detials part
+            if (!empty($request['auction_detials'])) {
+                foreach ($request['auction_detials'] as $auction_detials) {
                     if ($auction_detials['param_value'] != null) {
-                        $auction_detials['type_id']      = 1;
-                        $auction_detials['cat_id']       = $object->cat_id;
-                        $auction_detials['auction_id']   = $object->id;
-                        AuctionDetials::create($auction_detials);
+                        AuctionDetials::create([
+                            $auction_detials['type_id']    => 1,
+                            $auction_detials['cat_id']     => $object->cat_id,
+                            $auction_detials['auction_id'] => $object->id,
+
+                        ]);
                     } elseif ($auction_detials['param_value'] === null) {
                         $pram = selectParams::find($auction_detials['param_value_id']);
                         $param_name = "";
@@ -193,12 +196,13 @@ class Profile extends BaseController
                             $param_name = $pram->param_name_en;
                         }
 
-                        $auction_detials['type_id']        = 2;
-                        $auction_detials['param_value']    = $param_name;
-                        $auction_detials['cat_id']         = $object->cat_id;
-                        $auction_detials['auction_id']     = $object->id;
-                        $auction_detials['param_value_id'] = $pram->id;
-                        AuctionDetials::create($auction_detials);
+                        AuctionDetials::create([
+                            $auction_detials['type_id']        => 2,
+                            $auction_detials['param_value']    => $param_name,
+                            $auction_detials['cat_id']         => $object->cat_id,
+                            $auction_detials['auction_id']     => $object->id,
+                            $auction_detials['param_value_id'] => $pram->id,
+                        ]);
                     }
                 }
             }

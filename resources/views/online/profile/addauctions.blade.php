@@ -183,8 +183,8 @@
         if($("#type_id option:selected").val() > 1){
            // alert($("#type_id option:selected").val());
         $("#Stat_Date").html('<div class="col-md-12 form-group">\
-         <label>تاريخ البدء</label>\
-         <input type="date" name="start_data" value="" placeholder="تاريخ الافتتاح"  class="form-control">\
+         <label>  @lang('live.start_date')</label>\
+         <input type="date" name="start_data" value="" placeholder="@lang('live.start_date')"  class="form-control">\
                     </div>');
                 }else{
                     $("#Stat_Date").html("");
