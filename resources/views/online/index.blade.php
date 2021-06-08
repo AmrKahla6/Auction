@@ -157,11 +157,12 @@
 								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
 
-								<p class="price">{{$auction->price}} درهم</p>
-								<div class="addtofavorite">
-									<input value="" type="checkbox" id="add-favorite-id01" name="add-favorite-{{$auction->id}}" class="favorite-input">
+								<p class="price">{{$auction->price_opining}} درهم</p>
+								<div class="addtofavorite" data-id="{{ $auction->id}}">
+									<input value="" type="checkbox" id="add-favorite-id01" name="is_like" class="favorite-input">
+                                    <input type="hidden" id="member_id" name="member_id" value="{{Auth::guard('members')->user()->id}}">
 									<label for="add-favorite-{{$auction->id}}" title="أضف للمفضلة">
-										<i class="fa fa-heart-o"></i>
+										<i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
 									</label>
 								</div>
 							</div>
@@ -287,7 +288,7 @@ $(document).ready(function() {
     });
 });
 </script>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 $(document).ready(function() {
     if ($('.favorite-input').is(':checked')) {
 		$('.overlapblackbg').after('<div class="completeModal">'تم تم تم '</div>');
@@ -295,9 +296,46 @@ $(document).ready(function() {
 		$('.overlapblackbg').after('<div class="completeModal">'متمش متمش متمش '</div>');
     });
 });
+</script> --}}
+
+<script>
+   $(document).ready(function() {
+    $('.addtofavorite').on('click', function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var member_id  = $('#member_id').attr('name');
+        var auction_id =  $(this).data('id');
+        var is_like    = $('#add-favorite-id01').attr('name');
+        $.ajax({
+            type:"POST",
+			url:"live/add-favorite/"+auction_id,
+            data:{
+                member_id  : member_id,
+                auction_id : auction_id,
+                is_like    : is_like ,
+                _token:"{{ csrf_token() }}"},
+            dataty:"json",
+            cache: false,
+
+            success:function (data) {
+                if(data.status= true){
+                    if(data.favorite.is_like == 1){
+                        $('#heart-'+auction_id).append('<i class="fa fa-heart"></i>');
+                    }
+                    if(data.favorite.is_like == 0){
+                        $('#heart-'+auction_id).append('<i class="fa fa-heart-o"></i>');
+                    }
+				}
+            }
+        })
+    });
+   });
 </script>
-
-
     </body>
 
 </html>

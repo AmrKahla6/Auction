@@ -13,7 +13,7 @@ class onlinehome extends Controller
     public function index()
     {
         $data['categories'] = Category::where('parent_id',0)->select('id','category_name_ar','category_name_en','img')->with(['auctions','auctions.images'])->get();
-        $data['auctions'] = Auction::orderBy('id', 'DESC')->with('images')->get();
+        $data['auctions']   = Auction::orderBy('id', 'DESC')->with('images')->orderBy('id', 'desc')->take(8)->get();
 
         return view('online.index')->with($data);
     }
@@ -32,14 +32,14 @@ class onlinehome extends Controller
 }
 
 
-    
+
 
     public function categories(){
         return view('online.categories');
     }
 
     public function sub_categories(Request $request, $parent_id){
-        //الأقسام الفرعية والمزادات الخاصة بيها 
+        //الأقسام الفرعية والمزادات الخاصة بيها
         $data['categories'] = Category::where('parent_id',$parent_id)->select('id','category_name_ar','category_name_en')->with(['auctions','auctions.images'])->get();
        if(empty( $data['categories'])){
       $data['categories'] = Category::where('id',$parent_id)->select('id','category_name_ar','category_name_en')->with(['auctions','auctions.images'])->get();

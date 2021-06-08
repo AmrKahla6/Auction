@@ -66,6 +66,9 @@ Route::group(
             Route::get('/categories', 'onlinehome@categories')->name('categories');
             Route::get('/sub_categories/{id}', 'onlinehome@sub_categories')->name('sub_categories');
 
+            //Favorite
+            Route::post('/add-favorite/{id}', 'Profile@add_favorite')->name('add_favorite');
+
         });
     });
 

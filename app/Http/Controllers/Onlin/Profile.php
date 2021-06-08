@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
 use App\Models\Category;
+use App\Models\Favorite;
 use LaravelLocalization;
 use App\Models\AuctionType;
 use App\Models\Governorate;
@@ -312,6 +313,32 @@ class Profile extends BaseController
             $filles->move(public_path($path), $file_name);
                 return $file_name;
 
+    }
+
+    public function add_favorite(Request $request,$id){
+        $member = Member::find(auth()->guard('members')->id());
+        $auction = Auction::find($id);
+
+        $old_fav = Favorite::where('member_id',$member->id)->where('auction_id',$auction->id)->first();
+        if($old_fav){
+            $old_fav->delete();
+            return response()->json([
+                'favorite' => $old_fav,
+                'status'   => true,
+                'msg'      => 'تم الحذف من المفضله',
+            ]);
+        }else{
+            $favorite = new Favorite;
+            $favorite->member_id  = $member->id;
+            $favorite->auction_id = $auction->id;
+            $favorite->is_like    = 1;
+            $favorite->save();
+            return response()->json([
+                'favorite' => $favorite,
+                'status'   => true,
+                'msg'      => 'تم الاضافه الي المفضله',
+            ]);
+        }
     }
 
 }
