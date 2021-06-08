@@ -60,7 +60,7 @@ Route::group(
             Route::get('/get_params/{id}', 'Profile@get_params')->name('get_params');
             Route::post('/post_auctions', 'Profile@post_auctions')->name('post_auctions');
             Route::get('/single_auction/{id}', 'Profile@single_auction')->name('single_auction');
-            Route::post('/add_tender', 'Profile@add_tender')->name('add_tender');
+            Route::post('/add_tender/{auction}', 'Profile@add_tender')->name('add_tender');
             Route::get('/my_tenders', 'Profile@my_tenders')->name('my_tenders');
             /*end of profile routes */
             Route::get('/categories', 'onlinehome@categories')->name('categories');

@@ -143,7 +143,6 @@ class Profile extends BaseController
         if ($request->session()->exists('member')) {
             $data = $request->validate([
                 'auction_title' => ['required', 'string', 'max:255'],
-                'price' => ['required'],
                 'address' => ['required'],
                 'price_opining' => ['required'],
                 'price_closing' => ['required'],
@@ -164,7 +163,6 @@ class Profile extends BaseController
             ],
                 [
                     'auction_title.required' => __("auctions.auction_title"),
-                    'price.required' => __("auctions.price"),
                     'address.required' => __("auctions.address"),
                     'price_opining.required' => __("auctions.price_opining"),
                     'price_closing.required' => __("auctions.price_closing"),
@@ -178,6 +176,7 @@ class Profile extends BaseController
                 ]
             );
             $data['member_id'] = $request->session()->get('member')->id;
+            $data['price']     = 0;
             if ($request->type_id == 1) {
                 $data['start_data'] = Carbon::now();
             }
@@ -230,52 +229,45 @@ class Profile extends BaseController
 
     }
 
-    public function add_tender(Request $request)
-    {
+    public function add_tender(Request $request,$aucation_id)
+    {  $validatedData = $request->validate([
+            'price' => 'required',
+        ],[
+            'price.required'  => 'يرجي ادخال السعر',
+        ]);
         //dd($request->all() );
         $member = Member::find(auth()->guard('members')->id());
-        if (!empty($member->id)) {
-            //update price in aucation and add tender
-            $auction = Auction::find($request->aucation_id);
-            $expcted = ($auction->price) + ($request->price);
-            //dd($expcted,'price');
-            if (($expcted) >= ($auction->price_closing)) {
-                //close auction
-                $auction->update(['is_finished' => true,
-                    'price' => $expcted]);
-                //create Tender
-                $t = Tender::create(['member_id' => $member->id,
-                    'auction_id' => $auction->id,
-                    'price' => $request->price,
-                    'is_winner' => true]);
-                return response()->json([
-                    'msg' => "success",
-                    'price' => $request->price,
-                    'id' => $t->id,
 
-                ]);
-            } else {
-                //update price only
-                $auction->update(['price' =>
-                    $expcted]);
-                $t = Tender::create(['member_id' => $member->id,
-                    'auction_id' => $auction->id,
-                    'price' => $request->price,
-                    'is_winner' => true]);
-                return response()->json([
-                    'msg' => "success",
-                    'price' => $request->price,
-                    'id' => $t->id,
-
-                ]);
-            }
-
-        } else {
-            return response()->json([
-                'msg' => "error",
-
-            ]);
+        //update price in aucation and add tender
+        $auction = Auction::find($aucation_id);
+        $tender  = new Tender;
+        $tender->member_id  = $member->id;
+        $tender->auction_id = $auction->id;
+        if($request->price < $auction->price_opining){
+            session()->flash('error', "السعر غير صحيح");
+            return redirect()->back();
         }
+        $tender->price      = $request->price;
+
+        if($request->price > $auction->price_closing){
+            $tender->is_winner    = 1;
+            $auction->is_finished = 1;
+        }else {
+            $tender->is_winner = 0;
+        }
+        if($request->price > $auction->price){
+            $auction->price = $request->price;
+        }
+        $auction->save();
+        $tender->save();
+
+        if($tender->is_winner = 0){
+
+            session()->flash('success', "تم اضافه المزاديه بنجاح");
+        }else{
+            session()->flash('success', "لقد حصلت علي المزاد");
+        }
+        return redirect()->back();
     }
     public function save_img($filles,$path){
         $type = array(

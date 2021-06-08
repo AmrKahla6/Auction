@@ -46,35 +46,50 @@
                             </tr>
                             <tr>
                                 <td>أقل سعر مزاد</td>
-                                <td class="text-right"><strong>350 درهم</strong> <span class="icon-info"></span></td>
+                                <td class="text-right"><strong>{{$auction->price_opining}} درهم</strong> <span class="icon-info"></span></td>
                             </tr>
                         </table>
                     </div>
-                    <button type="button" id="bid_now" onclick="$('#form-bid_now').toggleClass('hide'); $(this).toggleClass('hide')" class="btn btn-primary btn-lg btn-block">مزايدة الآن</button>
-                    <div id="form-bid_now" class="hide">
-                        <div class="form-title"><h3><span class="icon-wallet"></span> قيمة المزايدة</h3></div>
-                        <input type="text" id="price" name="bid_value" value="" placeholder="أكتب قيمة المزايدة" id="input-bid" class="form-control">
-                        <input value="{{$auction->id}}" id="aucation_id" class="hide">
-                        <p class="alert_text">يرجى العلم ان الحد الادنى للمزايدة هو <span>{{$auction->price_closing}} </span></p>
-                        <div class="form-title"><h3><span class="icon-wallet"></span> مصاريف الإشتراك</h3></div>
-                        <div class="subscription_fee">
-                            <div class="sub_fee_text">
-                                <p>الإشتراك في المزايدة</p>
-                                <b>سيتم خصم</b>
+                    @if(Auth::guard('members')->user()->id == $auction->member_id)
+                        <button type="button" disabled title="@lang('live.can_not_auction')" class="btn btn-danger btn-lg btn-block"> مزادك</button>
+                     @elseif(Auth::guard('members')->check())
+                     @if ($auction->is_finished == 1)
+                        <button type="button" disabled title="مزاد منتهي" class="btn btn-danger btn-lg btn-block">مزايدة منتهي</button>
+                     @else
+                        <button type="button" id="bid_now" onclick="$('#form-bid_now').toggleClass('hide'); $(this).toggleClass('hide')" class="btn btn-primary btn-lg btn-block">مزايدة الآن</button>
+                     @endif
+                    @endif
+
+                    @include('partials._errors')
+                    @include('partials._session')
+                    <form action="{{route('live.add_tender',$auction->id)}}" method="post">
+                        @method('POST')
+                        @csrf
+                        <div id="form-bid_now" class="hide">
+                            <div class="form-title"><h3><span class="icon-wallet"></span> قيمة المزايدة</h3></div>
+                            <input type="text" id="price" name="price" value="{{ old('price') }}" placeholder="أكتب قيمة المزايدة" id="input-bid" class="form-control">
+                            {{-- <input value="{{$auction->id}}" id="aucation_id" class="hide"> --}}
+                            <p class="alert_text">يرجى العلم ان الحد الادنى للمزايدة هو <span>{{$auction->price_opining}} </span></p>
+                            <div class="form-title"><h3><span class="icon-wallet"></span> مصاريف الإشتراك</h3></div>
+                            <div class="subscription_fee">
+                                <div class="sub_fee_text">
+                                    <p>الإشتراك في المزايدة</p>
+                                    <b>سيتم خصم</b>
+                                </div>
+                                <div class="sub_value">
+                                    <p>35 <span>درهم</span></p>
+                                </div>
                             </div>
-                            <div class="sub_value">
-                                <p>35 <span>درهم</span></p>
+                            <div class="terms_conditions">
+                                <p>الموافقة على الشروط والاحكام</p>
+                                <input value="" type="checkbox" id="terms-input" name="terms-input" class="terms-input" checked>
+                                <label for="terms-input" title="الموافقة على الشروط والاحكام">
+                                    <span class="fa fa-toggle-on"></span>
+                                </label>
                             </div>
+                            <button type="submit" id="add_now" class="btn btn-primary btn-lg btn-block">أشترك الآن</button>
                         </div>
-                        <div class="terms_conditions">
-                            <p>الموافقة على الشروط والاحكام</p>
-                            <input value="" type="checkbox" id="terms-input" name="terms-input" class="terms-input" checked>
-                            <label for="terms-input" title="الموافقة على الشروط والاحكام">
-                                <span class="fa fa-toggle-on"></span>
-                            </label>
-                        </div>
-                        <button type="button" id="add_now" class="btn btn-primary btn-lg btn-block">أشترك الآن</button>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -172,7 +187,7 @@
       document.getElementById("phone-num").innerHTML = x;
     }
     </script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
     $(document).ready(function() {
         $('#add_now').on('click', function () {
             $.ajaxSetup({
@@ -184,8 +199,8 @@
             var aucation_id = $("#aucation_id").val();
          if(Number(price)> 0){
            $.ajax({
-			type:"post",
-			url:"/live/add_tender/",
+			type:"POST",
+			url:"/live/add_tender",
 			data:{
             price:price,
             aucation_id:aucation_id,
@@ -214,5 +229,5 @@
         });
 
     });
-    </script>
+    </script> --}}
 @endsection

@@ -60,4 +60,5 @@ return [
     'call'            => 'Call Us',
     'about_header'    => 'Here is an overview of our story and vision...',
     'vision'          => 'Our Vision',
+    'can_not_auction' => 'You cannot bid on an auction that belongs to you'
 ];
