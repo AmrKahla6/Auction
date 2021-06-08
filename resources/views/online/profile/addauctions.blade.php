@@ -1,47 +1,48 @@
 @extends('layouts.online.member')
 @section('content')
+
 <div id="login-content">
     <div class="content">
         <div class="login-box">
             @include('partials._errors')
             @include('partials._session')
-                <form action="{{route('live.post_auctions')}}" id="myform" method="post" enctype="multipart/form-data" autocomplete="off">
+                <form action="{{route('live.post_auctions')}}" id="myform" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('post')
                     <div class="row">
                         <div class="col-md-6">
-                            <label>  @lang('live.auction_name') </label>
-                            <input type="text"  required="required" name="auction_title" value="{{ old('auction_title') }}" placeholder="@lang('live.auction_name')"  class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label>  @lang('live.price') </label>
-                            <input type="number"  required="required" name="price" value="{{ old('price') }}" placeholder="@lang('live.price')"  class="form-control">
-                        </div>
+                            <label>  اسم  المزاد </label>
+                        <input type="text"  required="required" name="auction_title" value="" placeholder="اسم المزاد"  class="form-control">
+                       </div>
+                       <div class="col-md-6">
+                        <label>  السعر </label>
+                        <input type="number"  required="required" name="price" value="" placeholder="السعر"  class="form-control">
+                    </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
-                            <label>  @lang('live.address')</label>
-                            <input type="text" name="address"  required="required" value="{{ old('address') }}" placeholder="@lang('live.address')"  class="form-control">
-                        </div>
-                        <div class="col-md-6">
-                            <label> @lang('live.open_price')</label>
-                            <input type="number"  required="required" name="price_opining" value="{{ old('price_opining') }}" placeholder=" @lang('live.open_price')"  class="form-control">
-                        </div>
+                    <div class="col-md-6">
+                        <label>  العنوان</label>
+                        <input type="text" name="address"  required="required" value="" placeholder="العنوان"  class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label> سعر الافتتاح</label>
+                        <input type="number"  required="required" name="price_opining" value="" placeholder="سعر الافتتاح"  class="form-control">
+                    </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 form-group ">
-                            <label> @lang('live.close_price') </label>
-                            <input type="number"  required="required" name="price_closing" value="{{ old('price_closing') }}" placeholder=" @lang('live.close_price')"  class="form-control">
-                        </div>
+                    <div class="col-md-12 form-group ">
+                        <label> سعر الإغلاق</label>
+                        <input type="number"  required="required" name="price_closing" value="" placeholder="سعر الاغلاق"  class="form-control">
+                    </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label> @lang('live.show_type') </label>
+                            <label> نوع العرض </label>
                         <select name="type_id" id="type_id" onchange="Stat_Date_option()" required="required" class="form-control">
                             @foreach ($types as $type)
-                                <option value="{{$type->id}}">{{$type->name}}</option>
+                            <option value="{{$type->id}}">{{$type->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -51,68 +52,68 @@
                     <div class="row">
 
                     <div class="col-md-12 form-group">
-                        <label>@lang('live.date_close')</label>
-                        <input type="date"  required="required" name="end_data" value="{{ old('end_data') }}" placeholder="@lang('live.date_close')"  class="form-control">
+                        <label>تاريخ الاغلاق</label>
+                        <input type="date"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
                     </div>
                     </div>
                     <div class="row">
-                        <label> @lang('live.detials') </label>
-                        <div class="col-md-12 form-group">
-                            <textarea type="text"  required="required" name="detials" placeholder="@lang('live.detials')"  class="form-control">{{ old('detials') }}</textarea>
-                        </div>
+                        <label> تفاصيل </label>
+                  <div class="col-md-12 form-group">
+                        <textarea type="text"  required="required" name="detials" placeholder="تفاصيل"  class="form-control"></textarea>
                     </div>
-                    {{-- <div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-md-6 form-group">
                             <label>الوصف بالعربي </label>
                         <input type="text"  required="required" name="desc_ar" value="" placeholder="الوصف بالعربي"  class="form-control">
-                    </div> --}}
-                    {{-- <div class="col-md-6 form-group">
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label> الوصف بالانجليزية </label>
                         <input type="text"  required="required" name="desc_en" placeholder="الوصف بالانجليزية"  class="form-control">
-                    </div> --}}
+                    </div>
                     </div>
 
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label>  @lang('live.governorate') </label>
+                            <label>  المحافظة </label>
                         <select name="gover_id"  required="required" id="gover_id" class="form-control"  onchange="get_Cites()">
-                            <option disabled="disabled" value="-1"> @lang('live.governorate')</option>
+                            <option disabled="disabled" value="-1"> المحافظة</option>
                             @foreach ($governorate as $gov)
-                                 <option value="{{$gov->id}}">{{$gov->name}}</option>
+                            <option value="{{$gov->id}}">{{$gov->name}}</option>
                             @endforeach
                         </select>
                       </div>
                         <div class="col-md-6 form-group">
-                            <label>  @lang('live.city') </label>
+                            <label>  المدينة </label>
                         <select name="city_id"  required="required" class="form-control" id="city_id">
                         </select>
                     </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
-                            <label>   @lang('live.images')  </label>
-                            <input type="file"  required="required" onchange="loadPreview(this)" id="file-input" class="form-control" name="auction_images[]" multiple="true" accept="image/*" >
-                            @if ($errors->has('files'))
-                                @foreach ($errors->get('files') as $error)
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $error }}</strong>
-                                    </span>
-                                @endforeach
-                            @endif
-                            <div id="thumb-output"></div>
-                            <br>
-                       </div>
+                            <label>   الصور  </label>
+                        <input type="file"  required="required" onchange="loadPreview(this)" id="file-input" class="form-control" name="auction_images[]" multiple="true" accept="image/*" >
+                        @if ($errors->has('files'))
+                          @foreach ($errors->get('files') as $error)
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $error }}</strong>
+                          </span>
+                          @endforeach
+                        @endif
+                        <div id="thumb-output"></div>
+                        <br>
+                    </div>
                     </div>
                     <div class="row">
                      <div class="col-md-12 form-group">
-                        <label>   @lang('live.category')  </label>
+                        <label>   القسم  </label>
                         <select name="cat_id" id="cat_id" class="form-control" onchange="Get_Params()" required="required">
-                            <option disabled="disabled"  value="-1">@lang('live.category')   </option>
+                            <option disabled="disabled"  value="-1">القسم </option>
                             @foreach ($categories as $cat)
                             <option value="{{$cat->id}}">{{$cat->name}}</option>
-                             @foreach ($cat->subcategory()->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name',)->get() as $sub)
-                                <option value="{{$sub->id}}">{{$sub->name}}</option>
+                         @foreach ($cat->subcategory()->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name',)->get() as $sub)
+                             <option value="{{$sub->id}}">{{$sub->name}}</option>
                              @endforeach
                             @endforeach
                         </select>
@@ -125,7 +126,7 @@
                         <button  type="submit"id="add_build"  class="btn btn-block btn-lg btn-primary">حفظ المزاد</button>
                     </div>
                 </form>
-                </div>
+    </div>
             </div>
             </div>
 
@@ -154,8 +155,8 @@
   var gover_id = $("#gover_id").find("option:selected").val();
   if(gover_id > 0 ){
   $.get('/live/get_cites/'+gover_id,function(data){
-   // console.log(data)
-   $("#city_id").append(data);
+    $("#city_id").html("");
+   $("#city_id").html(data);
   })
 }else{
   $("#city_id").html("");
@@ -168,14 +169,15 @@
   var cat_id = $("#cat_id").find("option:selected").val();
   if(cat_id > 0 ){
    $.get('/live/get_params/'+cat_id,function(data){
-        $("#ParamsHouse").html(data);
-    });
-    }else{
-    $("#ParamsHouse").html("");
-    }
+   $("#ParamsHouse").html(data);
+
+});
+
+}else{
+  $("#ParamsHouse").html("");
 }
-    get_Cites();
-    Get_Params();
+}
+
 </script>
 <script>
     function Stat_Date_option() {
@@ -183,12 +185,63 @@
         if($("#type_id option:selected").val() > 1){
            // alert($("#type_id option:selected").val());
         $("#Stat_Date").html('<div class="col-md-12 form-group">\
-         <label>  @lang('live.start_date')</label>\
-         <input type="date" name="start_data" value="" placeholder="@lang('live.start_date')"  class="form-control">\
+         <label>تاريخ البدء</label>\
+         <input type="date" name="start_data" onchange="check_date()" id="start_data" class="form-control"value="" placeholder="تاريخ الافتتاح"  class="form-control">\
                     </div>');
+                    $("#start_data").date({
+                     minDate: new Date() ,
+                    dateFormat: 'dd/mm/yy',
+                    changeYear:true,
+                    changeMonth:true,
+  });
                 }else{
                     $("#Stat_Date").html("");
                 }
     }
+
+    //end date
+$(document).ready(function() {
+ get_Cites();
+Get_Params();
+const today = new Date();
+ const tomorrow = new Date(today);
+  $("#end_data").date({
+    minDate: new Date() ,
+  	dateFormat: 'dd/mm/yy',
+	changeYear:true,
+	changeMonth:true,
+    changeDay:true,
+  });
+
+
+});
+
+function check_date(){
+    var endDate = $('#end_data').val();
+    var startDate = $('#start_data').val();
+    var toDay = new Date();
+    if($('#end_data').val()!="" && $('#end_data').val() != undefined ){
+	if(Date.parse(endDate) <= new Date()){
+		alert("you are not allowed to select past date");
+		$('#end_data').val('');
+	}
+}
+    if($('#start_data').val()!="" && $('#start_data').val() != undefined ){
+        if(Date.parse(startDate) < new Date()){
+		alert("you are not allowed to select past date");
+		$('#start_data').val('');
+	}
+}
+if($('#start_data').val()!="" && $('#end_data').val()!=""){
+  if(Date.parse(endDate) <= Date.parse(startDate)){
+		alert("you are not allowed to select invalid date");
+		//$('#start_data').val('');
+        $('#end_data').val('');
+	}
+}
+
+}
 </script>
+
+
 @endsection
