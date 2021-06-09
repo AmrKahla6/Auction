@@ -42,7 +42,7 @@ return [
     'setting'         => 'Setting',
     'my_auctions'     => 'My Auctions',
     'my_fav'          => 'Favorite',
-    'my_msg'          => 'Messages',
+    'my_msg'          => 'Contact us',
     'about_as'        => 'About As',
     'comm_question'   => 'Common Questions',
     'terms'           => 'Terms and Conditions',
@@ -65,6 +65,15 @@ return [
     //Common Questions
     'repeat_question' => 'Frequently Asked Questions',
     'hope_quetions'   => 'We hope you enjoy the answers...',
+
+      //Contact Us
+      'contact_us'      => 'Call Us',
+      'happy_contact'   => 'We are pleased to communicate with you.',
+      'write_note'      => 'Write your note to us.',
+      'contact_with'    => 'Or contact us via',
+      'write_here'      => 'Write your note here.',
+      'send_contact'    => 'Send',
+      'succss_contact'  => 'The message has been sent successfully',
 
 
 ];

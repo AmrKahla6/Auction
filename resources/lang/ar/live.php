@@ -42,7 +42,7 @@ return [
     'setting'         => 'الإعدادات',
     'my_auctions'     => 'مزاداتي',
     'my_fav'          => 'المفضلة',
-    'my_msg'          => 'الرسائل',
+    'my_msg'          => 'تواصل معانا',
     'about_as'        => 'من نحن',
     'comm_question'   => 'الاسئلة المتكررة',
     'terms'           => 'شروط الاستخدام ',
@@ -65,5 +65,15 @@ return [
     //Common Questions
     'repeat_question' => 'الاسئلة المتكررة',
     'hope_quetions'   => 'نتمنى ان تكون استفدت من الاجوبه...',
+
+    //Contact Us
+    'contact_us'      => 'اتصل بنا',
+    'happy_contact'   => 'يسعدنا التواصل معك.',
+    'write_note'      => 'اكتب ملاحظتك لنا.',
+    'contact_with'    => 'أو تواصل معنا عبر',
+    'write_here'      => 'اكتب ملاحظتك هنا.',
+    'send_contact'    => 'ارسال',
+    'succss_contact'  => 'تم ارسال الرساله بنجاح',
+
 
 ];

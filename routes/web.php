@@ -72,6 +72,10 @@ Route::group(
             //Common Questions
             Route::get('/common-questions', 'SettingController@commonQuestions')->name('common-questions');
 
+            //Contact us
+            Route::get('/contact-us', 'SettingController@contactUs')->name('contact-us');
+            Route::post('/contact-us/store', 'SettingController@storeContactUs')->name('store-contact-us');
+
         });
     });
 

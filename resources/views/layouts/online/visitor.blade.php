@@ -57,11 +57,11 @@
 			<div class="sub-nav-content">
 				<div class="content-menu">
 					<ul>
-						<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a></li>
-						<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> التسجيل</a></li>
-						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
-						<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
-						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
+                        <li><a href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a></li>
+                        <li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a></li>
+                        <li><a href="{{route('live.aboute')}}"><span class="icon-info"></span>@lang('live.about_as')</a></li>
+                        <li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
+                        <li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span>  @lang('live.terms')</a></li>
 					</ul>
 				</div>
 			</div>
@@ -78,9 +78,9 @@
 						<div class="links">
 							<h5>معلومات</h5>
 							<ul class="list-unstyled">
-							  <li><a href="{{route('live.aboute')}}">من نحن</a></li>
-							  <li><a href="mainfaq.html">الاسئلة المتكررة</a></li>
-							  <li><a href="{{route('live.terms')}}">شروط الاستخدام</a></li>
+							  <li><a href="{{route('live.aboute')}}"> @lang('live.about_as')</a></li>
+							  <li><a href="{{route('live.common-questions')}}"> @lang('live.comm_question')</a></li>
+							  <li><a href="{{route('live.terms')}}"> @lang('live.terms')</a></li>
 							</ul>
 						</div>
 					</div>
