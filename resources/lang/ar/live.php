@@ -62,4 +62,8 @@ return [
     'vision'          => 'رؤيتنا',
     'can_not_auction' => 'لا يمكنك المزاديه علي مزاد ملك لك',
 
+    //Common Questions
+    'repeat_question' => 'الاسئلة المتكررة',
+    'hope_quetions'   => 'نتمنى ان تكون استفدت من الاجوبه...',
+
 ];

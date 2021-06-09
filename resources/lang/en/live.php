@@ -60,5 +60,11 @@ return [
     'call'            => 'Call Us',
     'about_header'    => 'Here is an overview of our story and vision...',
     'vision'          => 'Our Vision',
-    'can_not_auction' => 'You cannot bid on an auction that belongs to you'
+    'can_not_auction' => 'You cannot bid on an auction that belongs to you',
+
+    //Common Questions
+    'repeat_question' => 'Frequently Asked Questions',
+    'hope_quetions'   => 'We hope you enjoy the answers...',
+
+
 ];

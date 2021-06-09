@@ -79,7 +79,7 @@
 						<li><a href="#"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
 						<li><a href="#"><span class="icon-message-circle"></span> @lang('live.my_msg') <span class="num">0</span></a></li>
 						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> @lang('live.about_as')</a></li>
-						<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a></li>
+						<li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a></li>
 						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> @lang('live.terms')</a></li>
 						<li class="btn-logout"><a href="{{route('live.logout')}}"><span class="icon-power"></span> @lang('live.logout')</a></li>
 						@else
@@ -87,7 +87,7 @@
 							<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a></li>
 							<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a></li>
 							<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span>@lang('live.about_as')</a></li>
-							<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
+							<li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
 							<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span>  @lang('live.terms')</a></li>
 						</ul>
 						@endif

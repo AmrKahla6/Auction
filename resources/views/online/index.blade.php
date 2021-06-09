@@ -69,7 +69,7 @@
 						<li><a href="#"><span class="icon-heart1"></span> المفضلة</a></li>
 						<li><a href="#"><span class="icon-message-circle"></span> الرسائل <span class="num">0</span></a></li>
 						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
-						<li><a href="mainfaq.html"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
+						<li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
 						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
 						<li class="btn-logout"><a href="{{route('live.logout')}}"><span class="icon-power"></span> تسجيل خروج</a></li>
 						@else
@@ -78,7 +78,7 @@
 						<li><a href="#"><span class="icon-heart1"></span> المفضلة</a></li>
 						<li><a href="#"><span class="icon-message-circle"></span> الرسائل <span class="num">0</span></a></li>
 						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
-						<li><a href="mainfaq.html"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
+						<li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
 						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
 						@endif
 
