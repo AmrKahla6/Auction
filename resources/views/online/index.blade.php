@@ -158,13 +158,22 @@
 								@endif
 
 								<p class="price">{{$auction->price_opining}} درهم</p>
-								<div class="addtofavorite" data-id="{{ $auction->id}}">
-									<input value="" type="checkbox" id="add-favorite-id01" name="is_like" class="favorite-input">
-                                    <input type="hidden" id="member_id" name="member_id" value="{{Auth::guard('members')->user()->id}}">
-									<label for="add-favorite-{{$auction->id}}" title="أضف للمفضلة">
-										<i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
-									</label>
-								</div>
+								@if (Auth::guard('members')->user())
+									<div class="addtofavorite" data-id="{{ $auction->id}}">
+										<input value="" type="checkbox" id="add-favorite-id01" name="is_like" class="favorite-input">
+										<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
+										<label for="add-favorite-{{$auction->id}}" title="أضف للمفضلة">
+											<i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
+										</label>
+									</div>
+								@else
+									<div class="addtofavorite">
+										<input value="" type="checkbox" disabled class="favorite-input">
+										<label disabled title="قم بتسجيل الدخول">
+											<i disabled class="fa fa-heart-o"></i>
+										</label>
+									</div>
+								@endif
 							</div>
 							<div class="product-detials">
 								<p class="time">{{$auction->start_data}} <span>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $auction->created_at)->diffForHumans()}}</span></p>
@@ -299,6 +308,7 @@ $(document).ready(function() {
 </script> --}}
 
 <script>
+	//Favorit Ajax
    $(document).ready(function() {
     $('.addtofavorite').on('click', function (e) {
         e.preventDefault();
@@ -325,11 +335,11 @@ $(document).ready(function() {
             success:function (data) {
                 if(data.status= true){
                     if(data.favorite.is_like == 1){
-                        $('#heart-'+auction_id).append('<i class="fa fa-heart"></i>');
-                    }
-                    if(data.favorite.is_like == 0){
-                        $('#heart-'+auction_id).append('<i class="fa fa-heart-o"></i>');
-                    }
+						$('#heart-'+auction_id).replaceWith('<i class="fa fa-heart"></i>');
+                    }else{
+						$('#heart-'+auction_id).replaceWith('<i class="fa fa-heart-o"></i>');
+					}
+
 				}
             }
         })
