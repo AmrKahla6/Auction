@@ -112,9 +112,9 @@
                             <option disabled="disabled"  value="-1">القسم </option>
                             @foreach ($categories as $cat)
                             <option value="{{$cat->id}}">{{$cat->name}}</option>
-                         @foreach ($cat->subcategory()->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name',)->get() as $sub)
-                             <option value="{{$sub->id}}">{{$sub->name}}</option>
-                             @endforeach
+                                 {{-- @foreach ($cat->subcategory()->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name',)->get() as $sub)
+                                    <option value="{{$sub->id}}">{{$sub->name}}</option>
+                                @endforeach --}}
                             @endforeach
                         </select>
                     </div>

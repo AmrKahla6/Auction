@@ -18,6 +18,7 @@
 				<div id="person" class="tab-pane fade in active">
 					<div class="login-box">
                         @include('partials._errors')
+                        @include('partials._session')
 						<form action="{{route('live.register')}}" method="post" autocomplete="off">
 							@csrf
 							@method('post')

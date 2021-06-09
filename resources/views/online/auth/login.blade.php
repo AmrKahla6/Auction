@@ -12,6 +12,7 @@
     <div class="content">
         <div class="login-box">
             @include('partials._errors')
+            @include('partials._session')
             <form action="{{route('live.login_post')}}" method="post">
                 @csrf
                 @method('post')

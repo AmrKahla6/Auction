@@ -59,9 +59,8 @@ class Profile extends BaseController
     public function add_auctions(Request $request)
     {
         if ($request->session()->exists('member')) {
-            $data['categories'] = Category::select('id', 'category_name_' . LaravelLocalization::getCurrentLocale() . ' as name', )->where('parent_id', 0)
-                ->with(['subcategory'])
-                ->get();
+            $data['categories'] = Category::select('id', 'category_name_' . LaravelLocalization::getCurrentLocale() . ' as name', )->where('parent_id', '!=' ,0)
+                                    ->get();
             $data['types'] = AuctionType::select('id', 'type_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
             $data['governorate'] = Governorate::select('id', 'governorate_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
             return view('online.profile.addauctions')->with($data);

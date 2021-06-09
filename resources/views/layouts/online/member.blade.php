@@ -40,13 +40,7 @@
                         <a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
 						<a href="{{route('live.myonline')}}" class="logo"><img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW"></a>
 					</div>
-					<div class="col-sm-4 col-xs-6">
-						<div id="search" class="input-group">
-							<input type="text" name="search" value="" placeholder="@lang('live.search')" class="">
-							<button type="button" class=""><span class="icon-search1"></span></button>
-						</div>
-					</div>
-
+                    @include('layouts.online.search')
 					<div class="col-sm-4 hidden-xs">
 						<div class="links">
 						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
