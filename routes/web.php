@@ -44,6 +44,10 @@ Route::group(
             Route::post('/login', 'Register@login_post')->name('login_post');
             Route::get('/logout', 'Register@logout')->name('logout');
             Route::get('/forgetpassword', 'Register@forgetpassword')->name('forgetpassword');
+            Route::get('/forgetpassword2', 'Register@forgetpassword2')->name('forgetpassword2');
+            Route::post('/forgetpassword_post', 'Register@forgetpassword_post')->name('forgetpassword_post');
+
+
             /* end of auth route //online part */
             /*genderal pages routes */
             Route::get('/aboute', 'SettingController@about')->name('aboute');

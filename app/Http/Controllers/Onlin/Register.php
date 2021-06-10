@@ -133,11 +133,35 @@ class Register extends Controller
     {
         return view('online.auth.forgetpassword');
     }
+    public function forgetpassword2()
+    {
+        return view('online.auth.forgetpassword2');
+    }
 
     public function forgetpassword_post(Request $request)
     {
-        dd($request->all());
-    }
+        $data = $request->validate([
+            'password'            => 'required|min:6',
+            'password_confirmation' => ['required'],
+            [
+                'password.required'            => __("user.password"),
+                'password.min'                 => __("user.max_password"),
+            ]
+
+         ]);
+      $member = Member::find(auth()->guard('members')->id());
+         if($request->password == $request->password_confirmation){
+             $member->password =  bcrypt($request->password);
+           $member->update([$member->password=>  $member->password]);
+          session()->flash('success', __('site.changed_password_successfully'));
+          return redirect()->back();
+         }else{
+            session()->flash('error', __('site.passwords_not_valid'));  
+            return redirect()->back();
+         }
+        }
+        
+    
 
     // public function aboute(){
     //     return view('online.static.aboute');

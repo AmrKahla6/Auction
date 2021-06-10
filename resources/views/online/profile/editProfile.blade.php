@@ -1,4 +1,4 @@
-@extends('layouts.online.visitor')
+@extends('layouts.online.member')
 @section('content')
 		<div class="page-title">
 			<div class="container">
@@ -61,7 +61,7 @@
                                 <div class="login-box-footer">
                                     <button type="submit"  class="btn btn-block btn-lg btn-primary">@lang('live.edit_profile')</button>
                                     <div class="text-hr"><span>@lang('live.or')</span></div>
-                                    <p><a href="{{route('live.login')}}" class="link-register">@lang('live.chang_pass')</a></p>
+                                    <p><a href="{{route('live.forgetpassword')}}" class="link-register">@lang('live.chang_pass')</a></p>
                                 </div>
                             </form>
                         </div>
@@ -103,7 +103,7 @@
                                 <div class="login-box-footer">
                                     <button type="submit" class="btn btn-block btn-lg btn-primary">@lang('live.edit_profile')</button>
                                     <div class="text-hr"><span>@lang('live.or')</span></div>
-                                    <p><a href="{{route('live.login')}}" class="link-register"> @lang('live.chang_pass')</a></p>
+                                    <p><a href="{{route('live.forgetpassword2')}}" class="link-register"> @lang('live.chang_pass')</a></p>
                                 </div>
                             </form>
                         </div>

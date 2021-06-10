@@ -52,6 +52,8 @@ return [
     'new_password' => 'كلمة المرور الجديده',
     'update_profile' => 'تعديل بيانات الحساب',
     'change_password' => 'تغيير كلمة المرور',
+    'changed_password_successfully'=> 'تم تغيير كلمة المرور ',
+    'passwords_not_valid'=>'كلمتا المرور غير متطابقتين',
 
 
 
