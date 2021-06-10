@@ -1,5 +1,6 @@
 @extends('layouts.online.member')
 @section('content')
+
 <div id="login-content">
     <div class="content">
         <div class="login-box">
@@ -52,7 +53,7 @@
                     
                     <div class="col-md-12 form-group">
                         <label>تاريخ الاغلاق</label>
-                        <input type="date"  required="required" name="end_data" value="" placeholder="end_data"  class="form-control">
+                        <input type="date"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
                     </div>
                     </div>
                     <div class="row">
@@ -154,8 +155,8 @@
   var gover_id = $("#gover_id").find("option:selected").val();
   if(gover_id > 0 ){
   $.get('/live/get_cites/'+gover_id,function(data){
-   // console.log(data)
-   $("#city_id").append(data);
+    $("#city_id").html("");
+   $("#city_id").html(data);
   })
 }else{
   $("#city_id").html("");
@@ -177,8 +178,6 @@
 }
 }
 
-get_Cites();
-Get_Params();
 </script>
 <script>
     function Stat_Date_option() {
@@ -187,11 +186,62 @@ Get_Params();
            // alert($("#type_id option:selected").val());
         $("#Stat_Date").html('<div class="col-md-12 form-group">\
          <label>تاريخ البدء</label>\
-         <input type="date" name="start_data" value="" placeholder="تاريخ الافتتاح"  class="form-control">\
+         <input type="date" name="start_data" onchange="check_date()" id="start_data" class="form-control"value="" placeholder="تاريخ الافتتاح"  class="form-control">\
                     </div>');
+                    $("#start_data").date({  
+                     minDate: new Date() ,
+                    dateFormat: 'dd/mm/yy',
+                    changeYear:true,
+                    changeMonth:true,
+  });
                 }else{
                     $("#Stat_Date").html("");  
                 }
     }
+
+    //end date 
+$(document).ready(function() {
+ get_Cites();
+Get_Params();
+const today = new Date();
+ const tomorrow = new Date(today);
+  $("#end_data").date({  
+    minDate: new Date() ,
+  	dateFormat: 'dd/mm/yy',
+	changeYear:true,
+	changeMonth:true,
+    changeDay:true,
+  });
+  
+  
+});
+
+function check_date(){
+    var endDate = $('#end_data').val();
+    var startDate = $('#start_data').val();
+    var toDay = new Date();
+    if($('#end_data').val()!="" && $('#end_data').val() != undefined ){
+	if(Date.parse(endDate) <= new Date()){
+		alert("you are not allowed to select past date");
+		$('#end_data').val('');
+	}
+}
+    if($('#start_data').val()!="" && $('#start_data').val() != undefined ){
+        if(Date.parse(startDate) < new Date()){
+		alert("you are not allowed to select past date");
+		$('#start_data').val('');
+	}
+}
+if($('#start_data').val()!="" && $('#end_data').val()!=""){
+  if(Date.parse(endDate) <= Date.parse(startDate)){
+		alert("you are not allowed to select invalid date");
+		//$('#start_data').val('');
+        $('#end_data').val('');
+	}
+}
+  
+}
 </script>
+
+
 @endsection

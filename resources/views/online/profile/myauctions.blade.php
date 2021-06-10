@@ -17,7 +17,7 @@
 						<a href="{{route('live.single_auction',$auction->id)}}" id="product-{{$auction->id}}" class="product">
 							<div class="image">
 								@if($auction->images()->count() > 0)
-								<img src="{{Storage::url($auction->images()->first()->img)}}" class="img-responsive" />
+								<img src="{{asset($auction->images()->first()->img)}}" class="img-responsive" />
 								@else
 								<img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif

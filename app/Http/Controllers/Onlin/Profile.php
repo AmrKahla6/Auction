@@ -73,16 +73,17 @@ class Profile extends BaseController
         $gover = Governorate::find($gover_id);
         $cities = $gover->cities()->select('id', 'city_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
         $total_row = $cities->count();
+     
         if ($total_row > 0) {
             $output = '<option disabled="disabled" value="-"> اختر المدينة</option>';
             foreach ($cities as $index => $row) {
-                $output .= '
+         $output .= '
         <option value="' . $row->id . '">' . $row->name . '</option>';
             }
         } else {
             $output = '<option value="-" selected disabled> لم تسجل أي مدينة </option>';
         }
-        return response()->json($output);
+        return response($output);
         // dd($cities);
 
     }
@@ -90,27 +91,40 @@ class Profile extends BaseController
     public function get_params($cat_id)
     {
         $cat = Category::find($cat_id);
-        $params = $cat->params()->select('id', 'type', 'param_name_ar', 'param_name_en')
+        $params = $cat->params()->select('id', 'type', 'param_name_ar', 'param_name_en' )
             ->with(['selected'])->get();
-        //  dd($params);
+         //dd($params);
         $total_row = $params->count();
         $output = '';
+
         if ($total_row > 0) {
             foreach ($params as $index => $pram) {
+                if(LaravelLocalization::getCurrentLocale()=="ar"){
+                    $param_value = $pram->param_name_ar;
+                }else{
+                    $param_value = $pram->param_name_en;  
+                }
                 if ($pram->type == 1) {
                     $output .= '<div class="form-group">
             <input  value="' . $pram->id . '"  class="hide" type="number" name="auction_detials[' . $index . '][param_value_id]">
-            <input value="" class="form-control" type="text" name="auction_detials[' . $index . '][param_value]" placeholder="' . $pram->param_name_ar . '"></div>';
+            <input  value="' . null . '"  class="hide" type="number" name="auction_detials[' . $index . '][type_id]">
+            <input value="" class="form-control" type="text" name="auction_detials[' . $index . '][param_value]" placeholder="' . $param_value . '"></div>';
                 } elseif ($pram->type == 2) {
                     //get select values
                     $selected_rows = $pram->selected()->get();
                     if ($selected_rows->count() > 0) {
                         $output .= '<div class="form-group">
-        <input  value=""  class="hide" type="number" name="auction_detials[' . $index . '][param_value]">
-        <select  name="auction_detials[' . $index . '][param_value_id]"  class="form-control">
-        <option disabled="disabled">' . $pram->param_name_ar . '</option>';
+        <input  value="'.$pram->id.'"   class="hide" type="number" name="auction_detials[' . $index . '][param_value_id]">
+        <input value="' . $param_value . '" class="hide" type="text" name="auction_detials[' . $index . '][param_value]">
+        <select  name="auction_detials[' . $index . '][type_id]"  class="form-control">
+        <option disabled="disabled">' . $param_value . '</option>';
                         foreach ($selected_rows as $single) {
-                            $output .= '<option value="' . $single->id . '">' . $single->param_name_ar . '</option>';
+                            if(LaravelLocalization::getCurrentLocale()=="ar"){
+                                $p_param_value = $single->param_name_ar;
+                            }else{
+                                $p_param_value = $single->param_name_en;  
+                            }
+                            $output .= '<option value="' . $single->id . '">' . $p_param_value . '</option>';
                         }
                         $output .= '</select></div>';
                     }
@@ -124,7 +138,7 @@ class Profile extends BaseController
 
     public function post_auctions(Request $request)
     {
-       // dd($request['auction_detials']);
+        //dd($request['auction_detials']);
         if ($request->session()->exists('member')) {
             $data = $request->validate([
                 'auction_title' => ['required', 'string', 'max:255'],
@@ -171,38 +185,31 @@ class Profile extends BaseController
             if ($request->hasfile('auction_images')) {
                 $images = $request->file('auction_images');
                 foreach ($images as $image) {
-                   $image_name=$this->save_img($image,'aucations');
+                   $image_name=$this->save_img($image,'uploads/acution');
                     AuctionImage::create([
                         'img' => $image_name,
                         'auction_id' => $object->id,
                     ]);
                 }
             }
+        
             //auction_detials part
-            if (!empty($request['auction_detials'])) {
+            if ($request['auction_detials']!=null) {
+              //   dd($request['auction_detials']);
                 foreach ($request['auction_detials'] as $auction_detials) {
-                    if ($auction_detials['param_value'] != null) {
-                        $auction_detials['type_id'] = 1;
-                        $auction_detials['cat_id'] = $object->cat_id;
+                    if ($auction_detials['type_id'] === null) {
                         $auction_detials['auction_id'] = $object->id;
-                        AuctionDetials::create($auction_detials);
-                    } elseif ($auction_detials['param_value'] === null) {
-                        $pram = selectParams::find($auction_detials['param_value_id']);
-                        $param_name = "";
-                        if (LaravelLocalization::getCurrentLocale() == "ar") {
-                            $param_name = $pram->param_name_ar;
-                        } else {
-                            $param_name = $pram->param_name_en;
-                        }
-
-                        $auction_detials['type_id'] = 2;
-                        $auction_detials['param_value'] = $param_name;
                         $auction_detials['cat_id'] = $object->cat_id;
-                        $auction_detials['auction_id'] = $object->id;
-                        $auction_detials['param_value_id'] = $pram->id;
                         AuctionDetials::create($auction_detials);
+                    } elseif ($auction_detials['type_id'] != null) {
+                        $auction_detials['auction_id'] = $object->id;
+                        $auction_detials['cat_id'] = $object->cat_id;
+                        AuctionDetials::create($auction_detials);
+                     //   dd($auction_detials);
+                       
                     }
                 }
+              
             }
             session()->flash('success', __('auctions.auction_success'));
             return redirect()->back();
