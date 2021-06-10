@@ -15,7 +15,11 @@
 
         <!-- Bootstrap -->
 		<script src="{{ asset('online/js/jquery-2.1.1.min.js')}}" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
+    		@if (app()->getLocale() == 'ar')
+            <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
+    		@else
+    		<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap.css')}}">
+    		@endif
         <link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/font-awesome/css/font-awesome.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/font.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/style.css')}}">
@@ -24,7 +28,11 @@
 		<script src="{{ asset('online/js/owl-carousel/owl.carousel.js')}}" type="text/javascript"></script>
 		<!-- Stylesheet
             ================================================== -->
-        <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
+    		@if (app()->getLocale() == 'ar')
+            <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style-ar.css')}}">
+    		@else
+    		<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
+    		@endif
 
     </head>
     <body class="clearfix wsmenucontainer">
@@ -33,16 +41,22 @@
 		<div id="header">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-4 col-xs-6">
+					<div class="col-sm-3 col-xs-6">
 						<a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
 						<a href="{{route('live.myonline')}}" class="logo"><img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW"></a>
 					</div>
-                    @include('layouts.online.search')
-					<div class="col-sm-4 hidden-xs">
-						<div class="links">
+				@include('layouts.online.search')
+					<div class="col-sm-5 hidden-xs">
+						<div class="links dropdown">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <a class="btn btn-language" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                <span class="icon-earth"></span>
+                                {{ $properties['native'] }}
+                            </a>
+                            @endforeach
 							@if(empty(App\Models\Member::find(auth()->guard('members')->id())))
-							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a>
-							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> تسجيل</a>
+							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
+							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>
 							@endif
 						</div>
 					</div>
@@ -50,44 +64,17 @@
 			</div>
 		</div>
 		</header>
-		<div class="sub-nav">
-			<div class="sub-nav-content">
-				<div class="content-menu">
-					<ul>
-						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
-                            <li><a href="{{route("live.profile")}}"><span class="icon-user1"></span> @lang('live.my_acc')</a></li>
-                            <li><a href="{{route("live.myonline")}}"><span class="icon-settings"></span> @lang('live.main')</a></li>
-                            <li><a href="#"><span class="icon-settings"></span> @lang('live.setting')</a></li>
-                            <li><a href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a></li>
-                            <li><a href="{{route('live.registerd')}}"><span class="icon-plus-circle"></span> @lang('live.my_auctions')</a></li>
-                            <li><a href="#"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
-                            <li><a href="{{route('live.contact-us')}}"><span class="icon-message-circle"></span> @lang('live.my_msg') <span class="num">0</span></a></li>
-                            <li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> @lang('live.about_as')</a></li>
-                            <li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a></li>
-                            <li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> @lang('live.terms')</a></li>
-                            <li class="btn-logout"><a href="{{route('live.logout')}}"><span class="icon-power"></span> @lang('live.logout')</a></li>
-						@else
-                            <li><a href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a></li>
-                            <li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a></li>
-                            <li><a href="{{route('live.aboute')}}"><span class="icon-info"></span>@lang('live.about_as')</a></li>
-                            <li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
-                            <li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span>  @lang('live.terms')</a></li>
-						@endif
-
-					</ul>
-				</div>
-			</div>
-		</div>
+        @include('layouts.online.sidebar')
 
 		<div class="slider-top">
 			<div id="carousel-slider" class="owl-carousel" style="opacity: 1;">
 				@if($auctions->where('is_slider',1)->count() > 0)
 				@foreach ($auctions->where('is_slider',1) as  $auction)
-				@if($auction->images()->count() > 0)
-				<div class="text-center item">
-					<a href="{{route('live.single_auction',$auction->id)}}"><img src="{{Storage::url($auction->images()->first()->img)}}" class="img-responsive" /></a>
-				</div>
-				@endif
+                    @if($auction->images()->count() > 0)
+                        <div class="text-center item">
+                            <a href="{{route('live.single_auction',$auction->id)}}"><img src="{{Storage::url($auction->images()->first()->img)}}" class="img-responsive" /></a>
+                        </div>
+                    @endif
 				@endforeach
 				@else
 				<div class="text-center item">
@@ -124,13 +111,13 @@
 			<div class="products-title">
 				<div class="container">
 					<div class="head-title">
-						<h3>أحدث المزادات القائمة</h3>
-						<p>أحدث المزادات في مختلف الأقسام</p>
+						<h3>@lang('live.new_auctions')</h3>
+						<p>@lang('live.new_diff_sec')</p>
 					</div>
 					@if($auctions->count() > 0)
-					<span class="count-products">{{$auctions->count()}}  مزاد قائم </span>
+					<span class="count-products">{{$auctions->count()}}  @lang('live.curr_auct')</span>
 					@else
-					<span class="count-products"> ليس هناك مزادات قائمة  </span>
+					<span class="count-products"> @lang('live.no_auctions')  </span>
 
 					@endif
 				</div>
@@ -149,19 +136,19 @@
 								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
 
-								<p class="price">{{$auction->price_opining}} درهم</p>
+								<p class="price">{{$auction->price_opining}} @lang('live.dirhams')</p>
 								@if (Auth::guard('members')->user())
 									<div class="addtofavorite" data-id="{{ $auction->id}}">
 										<input value="" type="checkbox" id="add-favorite-id01" name="is_like" class="favorite-input">
 										<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
-										<label for="add-favorite-{{$auction->id}}" title="أضف للمفضلة">
+										<label for="add-favorite-{{$auction->id}}" title="@lang('live.add_favorit')">
 											<i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
 										</label>
 									</div>
 								@else
 									<div class="addtofavorite">
 										<input value="" type="checkbox" disabled class="favorite-input">
-										<label disabled title="قم بتسجيل الدخول">
+										<label disabled title="@lang('live.not_login')">
 											<i disabled class="fa fa-heart-o"></i>
 										</label>
 									</div>
@@ -217,17 +204,17 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="links">
-							<h5>معلومات</h5>
+							<h5>@lang('live.infos')</h5>
 							<ul class="list-unstyled">
-							  <li><a href="{{route('live.aboute')}}">من نحن</a></li>
-							  <li><a href="mainfaq.html">الاسئلة المتكررة</a></li>
-							  <li><a href="{{route('live.terms')}}">شروط الاستخدام</a></li>
+							  <li><a href="{{route('live.aboute')}}">@lang('live.about_as')</a></li>
+							  <li><a href="mainfaq.html">@lang('live.comm_question')</a></li>
+							  <li><a href="{{route('live.terms')}}">@lang('live.terms')</a></li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="social">
-							<h5>تابعنا على</h5>
+							<h5>@lang('live.follow')</h5>
 							<div class="clearfix"></div>
 							<a href="#" class="link-facebook"><i class="fa fa-facebook"></i></a>
 							<a href="#" class="link-twitter"><i class="fa fa-twitter"></i></a>
@@ -239,7 +226,7 @@
 					</div>
 					<div class="col-md-4">
 						<div class="apps">
-							<h5>حمل التطبيق الآن</h5>
+							<h5> @lang('live.dawonload') </h5>
 							<a href="#"><img src="{{ asset('online/images/appstore.png')}}" class="img-responsive"></a>
 							<a href="#"><img src="{{ asset('online/images/googleplay.png')}}" class="img-responsive"></a>
 						</div>
@@ -247,7 +234,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
+		<div class="footer-copyright">@lang('live.rights')</div>
         <!-- Latest compiled and minified JavaScript -->
         <script src="{{ asset('online/js/bootstrap.min.js')}}"></script>
 

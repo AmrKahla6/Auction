@@ -61,6 +61,7 @@ return [
     'about_header'    => 'Here is an overview of our story and vision...',
     'vision'          => 'Our Vision',
     'can_not_auction' => 'You cannot bid on an auction that belongs to you',
+    'save_auction'    => 'Save Auction',
 
     //Common Questions
     'repeat_question' => 'Frequently Asked Questions',
@@ -74,6 +75,18 @@ return [
       'write_here'      => 'Write your note here.',
       'send_contact'    => 'Send',
       'succss_contact'  => 'The message has been sent successfully',
+
+      //index
+      'browes_sec'      => 'Browse sections',
+      'choose_sec'      => 'Choose the section you want',
+      'new_auctions'    => 'Latest Auctions List',
+      'new_diff_sec'    => 'Latest auctions in various sections',
+      'curr_auct'       => 'Current Auction',
+      'no_auctions'     => 'There are no auctions listed',
+      'add_favorit'     => 'Add to favorites',
+      'not_login'       => 'Sign in',
+      'dirhams'         => 'Dirhams',
+
 
 
 ];

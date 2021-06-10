@@ -17,9 +17,9 @@
 						<a href="{{route('live.single_auction',$auction->id)}}" id="product-{{$auction->id}}" class="product">
 							<div class="image">
 								@if($auction->images()->count() > 0)
-								    <img src="{{asset('uploads/acution/'.$auction->images()->first()->img)}}" class="img-responsive" />
+								<img src="{{Storage::url($auction->images()->first()->img)}}" class="img-responsive" />
 								@else
-								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
+								<img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
 								<p class="price">{{$auction->price}} درهم</p>
 								<div class="addtofavorite">
@@ -34,7 +34,7 @@
 								<h3 class="product-name">{{$auction->auction_title}}</h3>
 								<div class="timer"><span class="icon-alarm"></span> <p id="timer-{{$auction->id}}"></p></div>
 								<script>
-
+									
 									// Set the date we're counting down to
 									var s_date = '"{{$auction->end_data}}"';
 									var countDownDate = new Date(s_date).getTime();
@@ -52,11 +52,11 @@
 									var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 									var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 									var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+	
 									  document.getElementById("timer-{{$auction->id}}").innerHTML = days + "<span>ي</span> " + hours + "<span>س</span> "
 									  + minutes + "<span>د</span> " + seconds + "<span>ث</span> ";
-
-									  // If the count down is over, write some text
+									
+									  // If the count down is over, write some text 
 									  if (distance <= 0) {
 										clearInterval(x);
 										document.getElementById("timer-{{$auction->id}}").innerHTML = "<font color='#e72727'>EXPIRED</font>";
@@ -66,10 +66,10 @@
 							</div>
 						</a>
 					</div>
-
+												 
 					@endforeach
 				@endif
-
+				
 				</div>
 			</div>
         </div>
@@ -84,7 +84,7 @@
 						<a href="product.html" id="product-id01" class="product">
 							<div class="image">
 								@if($auction->images()->count() > 0)
-								<img src="{{asset('uploads/acution/'.$auction->images()->first()->img)}}" class="img-responsive" />
+								<img src="{{Storage::url($auction->images()->first()->img)}}" class="img-responsive" />
 								@else
 								<img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
@@ -101,7 +101,7 @@
 								<h3 class="product-name">{{$auction->auction_title}}</h3>
 								<div class="timer"><span class="icon-alarm"></span> <p id="timer-{{$auction->id}}"></p></div>
 								<script>
-
+									
 								// Set the date we're counting down to
 								var countDownDate = new Date("{{$auction->end_data}}").getTime();
 								// Update the count down every 1 second
@@ -110,7 +110,7 @@
 								  var now =  new Date().getTime();
 								  // Find the distance between now and the count down date
 								  var distance = countDownDate - now;
-
+                                    
 								  // Time calculations for days, hours, minutes and seconds
 								var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 								var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -120,7 +120,7 @@
 								  document.getElementById("timer-{{$auction->id}}").innerHTML = days + "<span>ي</span> " + hours + "<span>س</span> "
 								  + minutes + "<span>د</span> " + seconds + "<span>ث</span> ";
                                    // console.log(distance);
-								  // If the count down is over, write some text
+								  // If the count down is over, write some text 
 								  if (distance <= 0) {
 									clearInterval(x);
 									document.getElementById("timer-{{$auction->id}}").innerHTML = "<font color='#e72727'>EXPIRED</font>";
@@ -130,10 +130,10 @@
 							</div>
 						</a>
 					</div>
-
+												 
 					@endforeach
 				@endif
-
+				
 				</div>
 			</div>
         </div>

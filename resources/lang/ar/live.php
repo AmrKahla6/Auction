@@ -61,6 +61,7 @@ return [
     'about_header'    => 'اليكم نبذه عن قصتنا و رؤيتنا...',
     'vision'          => 'رؤيتنا',
     'can_not_auction' => 'لا يمكنك المزاديه علي مزاد ملك لك',
+    'save_auction'    => 'حفظ المزاد',
 
     //Common Questions
     'repeat_question' => 'الاسئلة المتكررة',
@@ -74,6 +75,18 @@ return [
     'write_here'      => 'اكتب ملاحظتك هنا.',
     'send_contact'    => 'ارسال',
     'succss_contact'  => 'تم ارسال الرساله بنجاح',
+
+
+    //index
+    'browes_sec'     => 'تصفح الأقسام',
+    'choose_sec'     => 'أختر القسم الذي تريدة',
+    'new_auctions'   => 'أحدث المزادات القائمة',
+    'new_diff_sec'   => 'أحدث المزادات في مختلف الأقسام',
+    'curr_auct'      => 'مزاد قائم',
+    'no_auctions'    => 'ليس هناك مزادات قائمة',
+    'add_favorit'    => 'أضف للمفضلة',
+    'not_login'      => 'قم بتسجيل الدخول',
+    'dirhams'        => 'درهم',
 
 
 ];

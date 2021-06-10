@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Onlin;
 
+use App\Models\Member;
+use App\Models\Auction;
+use LaravelLocalization;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Category;
-use App\Models\Auction;
-use App\Models\Member;
+
+
 class onlinehome extends Controller
 {
     public function index()
     {
-        $data['categories'] = Category::where('parent_id',0)->select('id','category_name_ar','category_name_en','img')->with(['auctions','auctions.images'])->get();
+        $data['categories'] = Category::where('parent_id',0)->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name','img')->with(['auctions','auctions.images'])->get();
         $data['auctions']   = Auction::orderBy('id', 'DESC')->with('images')->orderBy('id', 'desc')->take(8)->get();
 
         return view('online.index')->with($data);

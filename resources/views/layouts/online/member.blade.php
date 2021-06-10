@@ -16,7 +16,13 @@
 
         <!-- Bootstrap -->
 		<script src="{{ asset('online/js/jquery-2.1.1.min.js')}}" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
+
+		@if (app()->getLocale() == 'ar')
+            <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
+            @else
+            <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap.css')}}">
+		@endif
+
         <link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/font-awesome/css/font-awesome.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/font.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/style.css')}}">
@@ -25,7 +31,12 @@
 		<script src="{{ asset('online/js/owl-carousel/owl.carousel.js')}}" type="text/javascript"></script>
 		<!-- Stylesheet
             ================================================== -->
-        <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
+
+    		@if (app()->getLocale() == 'ar')
+                <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style-ar.css')}}">
+                @else
+                <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
+    		@endif
 		<link rel="stylesheet" href="{{ asset('dashboard/plugins/noty/noty.css') }}">
 		<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script>
 
@@ -40,9 +51,16 @@
                         <a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
 						<a href="{{route('live.myonline')}}" class="logo"><img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW"></a>
 					</div>
-                    @include('layouts.online.search')
-					<div class="col-sm-4 hidden-xs">
-						<div class="links">
+					<div class="col-sm-3 col-xs-6">
+						<div id="search" class="input-group">
+							<input type="text" name="search" value="" placeholder="@lang('live.search')" class="">
+							<button type="button" class=""><span class="icon-search1"></span></button>
+						</div>
+					</div>
+
+					<div class="col-sm-5 hidden-xs">
+						<div class="links dropdown">
+							@include('layouts.online.language')
 						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
 
 							<a class="btn btn-add" href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a>
@@ -59,36 +77,7 @@
         </div>
     </div>
 		</header>
-		<div class="sub-nav">
-			<div class="sub-nav-content">
-				<div class="content-menu">
-					<ul>
-						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
-
-						<li><a href="{{route("live.profile")}}"><span class="icon-user1"></span> @lang('live.my_acc')</a></li>
-						<li><a href="{{route("live.myonline")}}"><span class="icon-settings"></span> @lang('live.main')</a></li>
-						<li><a href="#"><span class="icon-settings"></span> @lang('live.setting')</a></li>
-						<li><a href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a></li>
-						<li><a href="{{route('live.registerd')}}"><span class="icon-plus-circle"></span> @lang('live.my_auctions')</a></li>
-						<li><a href="#"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
-						<li><a href="{{route('live.contact-us')}}"><span class="icon-message-circle"></span> @lang('live.my_msg') <span class="num">0</span></a></li>
-						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> @lang('live.about_as')</a></li>
-						<li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a></li>
-						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> @lang('live.terms')</a></li>
-						<li class="btn-logout"><a href="{{route('live.logout')}}"><span class="icon-power"></span> @lang('live.logout')</a></li>
-						@else
-						<ul>
-							<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a></li>
-							<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a></li>
-							<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span>@lang('live.about_as')</a></li>
-							<li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
-							<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span>  @lang('live.terms')</a></li>
-						</ul>
-						@endif
-					</ul>
-				</div>
-			</div>
-		</div>
+        @include('layouts.online.sidebar')
 		<!--  here my content -->
 		@yield('content')
 		@include('partials._session')
