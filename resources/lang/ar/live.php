@@ -26,6 +26,9 @@ return [
     'price'           => 'السعر',
     'address'         => 'العنوان',
     'open_price'      => 'سعر الافتتاح',
+    'opining_pice'    => 'السعر الإفتتاحي',
+    'hight_price'     => 'أعلى سعر مزاد',
+    'your_auction'    => 'مزادك',
     'close_price'     => 'سعر الإغلاق',
     'show_type'       => 'نوع العرض',
     'date_close'      => 'تاريخ الاغلاق',
@@ -42,6 +45,8 @@ return [
     'setting'         => 'الإعدادات',
     'my_auctions'     => 'مزاداتي',
     'my_fav'          => 'المفضلة',
+    'auction_fav'     => 'المزادات المفضلة لدي',
+    'no_favorits'     => 'لا توجد مفضله',
     'my_msg'          => 'تواصل معانا',
     'about_as'        => 'من نحن',
     'comm_question'   => 'الاسئلة المتكررة',
@@ -53,6 +58,7 @@ return [
     'tenders'         => 'مزايدة',
     'curr_auction'    => 'مزاد حالي',
     'finish_auction'  => 'مزاد منتهي',
+    'auction_now'     => 'مزايدة الآن',
     'wallet'          => 'محفظتي',
     'buy'             => 'شراء رصيد',
     'my_tenders'      => 'مزايداتي',
@@ -62,6 +68,22 @@ return [
     'vision'          => 'رؤيتنا',
     'can_not_auction' => 'لا يمكنك المزاديه علي مزاد ملك لك',
     'save_auction'    => 'حفظ المزاد',
+    'bid_value'       => 'قيمة المزايدة',
+    'write_bid'       => 'أكتب قيمة المزايدة',
+    'min_bid'         => 'يرجى العلم ان الحد الادنى للمزايدة هو ',
+    'sub_fees'        => 'مصاريف الإشتراك',
+    'parti_bid'       => 'الإشتراك في المزايدة',
+    'deducted'        => 'سيتم خصم',
+    'accept_terms'    => 'الموافقة على الشروط والاحكام',
+    'sub_now'         => 'أشترك الآن',
+    'adv_desc'        => 'وصف المعلن',
+    'ad_speci_adver'  => 'مواصفات المعلن للإعلان',
+    'latest_bids'     => 'أحدث المزايدات',
+    'total_bids'      => 'إجمالي',
+    'all_bids'        => 'جميع المزايدات',
+    'bid_number'      => 'رقم المزايدة',
+    'current_auct'    => 'الحالي',
+    'finish_auct'     => 'منتهي',
 
     //Common Questions
     'repeat_question' => 'الاسئلة المتكررة',
@@ -87,6 +109,10 @@ return [
     'add_favorit'    => 'أضف للمفضلة',
     'not_login'      => 'قم بتسجيل الدخول',
     'dirhams'        => 'درهم',
+
+    //single_auction
+    'ended'          => 'الإنتهاء',
+    'ago'            => 'منذ',
 
 
 ];

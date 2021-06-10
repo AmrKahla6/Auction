@@ -26,6 +26,10 @@ return [
     'price'           => 'Price' ,
     'address'         => 'Address',
     'open_price'      => 'Opening Price',
+    'opining_pice'    => 'Opining Price',
+    'hight_price'     => 'Highest Auction Price',
+    'your_auction'    => 'Your Auction',
+    'auction_now'     => 'Bid now',
     'close_price'     => 'Closeing Price',
     'show_type'       => 'Show Type',
     'date_close'      => 'Date Closeing',
@@ -42,6 +46,8 @@ return [
     'setting'         => 'Setting',
     'my_auctions'     => 'My Auctions',
     'my_fav'          => 'Favorite',
+    'auction_fav'     => 'My Favorite Auctions',
+    'no_favorits'     => 'There is no favourite',
     'my_msg'          => 'Contact us',
     'about_as'        => 'About As',
     'comm_question'   => 'Common Questions',
@@ -62,6 +68,22 @@ return [
     'vision'          => 'Our Vision',
     'can_not_auction' => 'You cannot bid on an auction that belongs to you',
     'save_auction'    => 'Save Auction',
+    'bid_value'       => 'Bid Value',
+    'write_bid'       => 'Enter the bid value',
+    'min_bid'         => 'Please note that the minimum bid is',
+    'sub_fees'        => 'Subscription fees',
+    'parti_bid'       => 'Participate in the bidding',
+    'deducted'        => 'Will Be Deducted',
+    'accept_terms'    => 'Agree to the terms and conditions',
+    'sub_now'         => 'Subscribe Now',
+    'adv_desc'        => 'Advertiser Description',
+    'ad_speci_adver'  => 'Advertiser specifications for advertising',
+    'latest_bids'     => 'Latest Bids',
+    'total_bids'      => 'Total',
+    'all_bids'        => 'All Bids',
+    'bid_number'      => 'Bid Number',
+    'current_auct'    => 'Current',
+    'finish_auct'     => 'Finish',
 
     //Common Questions
     'repeat_question' => 'Frequently Asked Questions',
@@ -86,6 +108,10 @@ return [
       'add_favorit'     => 'Add to favorites',
       'not_login'       => 'Sign in',
       'dirhams'         => 'Dirhams',
+
+      //single_auction
+      'ended'          => 'Finish',
+      'ago'            => 'Ago',
 
 
 

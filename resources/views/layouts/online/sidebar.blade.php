@@ -8,7 +8,7 @@
                     <li><a href="#"><span class="icon-settings"></span> @lang('live.setting')</a></li>
                     <li><a href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a></li>
                     <li><a href="{{route('live.registerd')}}"><span class="icon-plus-circle"></span> @lang('live.my_auctions')</a></li>
-                    <li><a href="#"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
+                    <li><a href="{{route('live.my_favorite',auth()->guard('members')->id())}}"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
                     <li><a href="{{route('live.contact-us')}}"><span class="icon-message-circle"></span> @lang('live.my_msg') <span class="num">0</span></a></li>
                     <li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> @lang('live.about_as')</a></li>
                     <li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a></li>

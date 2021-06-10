@@ -340,4 +340,10 @@ class Profile extends BaseController
         }
     }
 
+    public function Myfavorite($id){
+        $member   = Member::find($id);
+        $my_fav   = Favorite::with('auction')->where('member_id',$member->id)->orderBy('id','DESC')->get();
+        return view('online.favorite',compact('my_fav'));
+    }
+
 }

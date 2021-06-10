@@ -68,6 +68,7 @@ Route::group(
 
             //Favorite
             Route::post('/add-favorite/{id}', 'Profile@add_favorite')->name('add_favorite');
+            Route::get('/my-favorite/{id}', 'Profile@Myfavorite')->name('my_favorite');
 
             //Common Questions
             Route::get('/common-questions', 'SettingController@commonQuestions')->name('common-questions');

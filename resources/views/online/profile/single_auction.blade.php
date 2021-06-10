@@ -15,7 +15,7 @@
                           @endforeach
                         @endif
                     </div>
-                    <div class="expiry_date">الإنتهاء {{$auction->end_data}}</div>
+                    <div class="expiry_date">@lang('live.ended') {{$auction->end_data}}</div>
                     <script>
                     $('#product-images').owlCarousel({
                         items: 1,
@@ -34,29 +34,29 @@
             </div>
             <div class="col-sm-6">
                 <div class="product-detials">
-                    <p class="time">23 سبتمبر 2021  <span>منذ 50:04</span></p>
+                    <p class="time">{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $auction->start_data)->format('Y-m-d') }} <span>@lang('live.ago') {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $auction->start_data)->format('H:i') }}</span></p>
                     <h3 class="product-name">{{$auction->auction_title}}</h3>
                     <div class="timer"><span class="icon-alarm"></span> <p id="timer-id09"></p></div>
-                    <p class="opening_price">السعر الإفتتاحي <strong>{{$auction->price_opining}} درهم</strong></p>
+                    <p class="opening_price">@lang('live.opining_pice') <strong>{{$auction->price_opining}} @lang('live.dirhams')</strong></p>
                     <div>
                         <table class="table table-bordered">
                             <tr>
-                                <td>أعلى سعر مزاد</td>
-                                <td class="text-right text-cred"><strong>{{$auction->price}} درهم</strong></td>
+                                <td>@lang('live.hight_price')</td>
+                                <td class="text-right text-cred"><strong>{{$auction->price}} @lang('live.dirhams')</strong></td>
                             </tr>
                             <tr>
                                 <td>أقل سعر مزاد</td>
-                                <td class="text-right"><strong>{{$auction->price_opining}} درهم</strong> <span class="icon-info"></span></td>
+                                <td class="text-right"><strong>{{$auction->price_opining}} @lang('live.dirhams')</strong> <span class="icon-info"></span></td>
                             </tr>
                         </table>
                     </div>
                     @if(Auth::guard('members')->user()->id == $auction->member_id)
-                        <button type="button" disabled title="@lang('live.can_not_auction')" class="btn btn-danger btn-lg btn-block"> مزادك</button>
+                        <button type="button" disabled title="@lang('live.can_not_auction')" class="btn btn-danger btn-lg btn-block"> @lang('live.your_auction')</button>
                      @elseif(Auth::guard('members')->check())
                      @if ($auction->is_finished == 1)
-                        <button type="button" disabled title="مزاد منتهي" class="btn btn-danger btn-lg btn-block">مزايدة منتهي</button>
+                        <button type="button" disabled title="@lang('live.finish_auction')" class="btn btn-danger btn-lg btn-block"> @lang('live.finish_auction')</button>
                      @else
-                        <button type="button" id="bid_now" onclick="$('#form-bid_now').toggleClass('hide'); $(this).toggleClass('hide')" class="btn btn-primary btn-lg btn-block">مزايدة الآن</button>
+                        <button type="button" id="bid_now" onclick="$('#form-bid_now').toggleClass('hide'); $(this).toggleClass('hide')" class="btn btn-primary btn-lg btn-block">@lang('live.auction_now')</button>
                      @endif
                     @endif
 
@@ -66,28 +66,28 @@
                         @method('POST')
                         @csrf
                         <div id="form-bid_now" class="hide">
-                            <div class="form-title"><h3><span class="icon-wallet"></span> قيمة المزايدة</h3></div>
-                            <input type="text" id="price" name="price" value="{{ old('price') }}" placeholder="أكتب قيمة المزايدة" id="input-bid" class="form-control">
+                            <div class="form-title"><h3><span class="icon-wallet"></span> @lang('live.bid_value')</h3></div>
+                            <input type="text" id="price" name="price" value="{{ old('price') }}" placeholder="@lang('live.write_bid')" id="input-bid" class="form-control">
                             {{-- <input value="{{$auction->id}}" id="aucation_id" class="hide"> --}}
-                            <p class="alert_text">يرجى العلم ان الحد الادنى للمزايدة هو <span>{{$auction->price_opining}} </span></p>
-                            <div class="form-title"><h3><span class="icon-wallet"></span> مصاريف الإشتراك</h3></div>
+                            <p class="alert_text">@lang('live.min_bid')<span>{{$auction->price_opining}} </span></p>
+                            <div class="form-title"><h3><span class="icon-wallet"></span> @lang('live.sub_fees')</h3></div>
                             <div class="subscription_fee">
                                 <div class="sub_fee_text">
-                                    <p>الإشتراك في المزايدة</p>
-                                    <b>سيتم خصم</b>
+                                    <p>@lang('live.parti_bid')</p>
+                                    <b>@lang('live.deducted')</b>
                                 </div>
                                 <div class="sub_value">
-                                    <p>35 <span>درهم</span></p>
+                                    <p>35 <span>@lang('live.dirhams')</span></p>
                                 </div>
                             </div>
                             <div class="terms_conditions">
-                                <p>الموافقة على الشروط والاحكام</p>
+                                <p>@lang('live.accept_terms')</p>
                                 <input value="" type="checkbox" id="terms-input" name="terms-input" class="terms-input" checked>
-                                <label for="terms-input" title="الموافقة على الشروط والاحكام">
+                                <label for="terms-input" title="@lang('live.accept_terms')">
                                     <span class="fa fa-toggle-on"></span>
                                 </label>
                             </div>
-                            <button type="submit" id="add_now" class="btn btn-primary btn-lg btn-block">أشترك الآن</button>
+                            <button type="submit" id="add_now" class="btn btn-primary btn-lg btn-block">@lang('live.sub_now')</button>
                         </div>
                     </form>
                 </div>
@@ -96,7 +96,7 @@
             <div class="col-sm-6">
                 <div class="product-about">
                     <div class="text-title">
-                        <h3>وصف المعلن</h3>
+                        <h3>@lang('live.adv_desc')</h3>
                     </div>
                     <div class="content">
                         <p>{{$auction->desc_ar}}</p>
@@ -107,7 +107,7 @@
             <div class="col-sm-6">
                 <div class="product-owner">
                     <div class="text-title">
-                        <h3>مواصفات المعلن للإعلان</h3>
+                        <h3>@lang('live.ad_speci_adver')</h3>
                     </div>
                     <div class="content">
                         <div class="box-detials">
@@ -154,19 +154,19 @@
             <div class="col-sm-6">
                 <div class="tenders">
                     <div class="head-title">
-                        <h3>أحدث المزايدات</h3>
-                        <p>إجمالي {{$auction->tenders()->count()}}</p>
+                        <h3>@lang('live.latest_bids')</h3>
+                        <p>@lang('live.total_bids') {{$auction->tenders()->count()}}</p>
                     </div>
-                    <a class="count-tenders">جميع المزايدات</a>
+                    <a class="count-tenders">@lang('live.all_bids')</a>
                     <div class="tenders-boxs">
                         @if($auction->tenders()->count() > 0)
                           @foreach ($auction->tenders()->get() as $tender )
                         <div class="tender-box">
                             <p class="name">{{$tender->member->username}}</p>
                             <div class="detials">
-                                <div class="bid-id">رقم المزايدة<p>{{$tender->id}}</p></div>
+                                <div class="bid-id">@lang('live.bid_number')<p>{{$tender->id}}</p></div>
                                 <div class="bid-value">
-                                    <p>قيمة المزايدة</p>
+                                    <p>@lang('live.bid_value')</p>
                                     <strong>{{$tender->price}}</strong>
                                 </div>
                             </div>
