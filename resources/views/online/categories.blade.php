@@ -1,7 +1,7 @@
 <div class="container">
     <div class="head-title">
-        <h3>تصفح الأقسام</h3>
-        <p>أختر القسم الذي تريدة</p>
+        <h3>@lang('live.browes_sec')</h3>
+        <p>@lang('live.choose_sec')</p>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
@@ -13,15 +13,15 @@
                             <span class="count">{{ $cat->subcategory()->count()}}</span>
                             <img src="{{asset('uploads/category/'.$cat->img) }}" class="img-responsive" />
                         </div>
-                        <p>{{$cat->category_name_ar}}</p>
+                        <p>{{$cat->name}}</p>
                     </a>
                 </div>
                 @endforeach
-            
-           
-        
+
+
+
             </div>
         </div>
-   
+
     </div>
 </div>

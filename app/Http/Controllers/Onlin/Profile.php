@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers\Onlin;
 
-use App\Http\Controllers\API\BaseController as BaseController;
-use App\Models\Auction;
-use App\Models\AuctionDetials;
-use App\Models\AuctionImage;
-use App\Models\AuctionType;
-use App\Models\Category;
-use App\Models\Governorate;
-use App\Models\Member;
-use App\Models\selectParams;
-use App\Models\Tender;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use LaravelLocalization;
+
 use Str;
+use Auth;
+use Carbon\Carbon;
+use App\Models\Member;
+use App\Models\Tender;
+use App\Models\Auction;
+use App\Models\Country;
+use App\Models\Category;
+use App\Models\Favorite;
+use LaravelLocalization;
+use App\Models\AuctionType;
+use App\Models\Governorate;
+use App\Models\AuctionImage;
+use App\Models\catParameter;
+use App\Models\selectParams;
+use Illuminate\Http\Request;
+use App\Models\AuctionDetials;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\API\BaseController as BaseController;
 
 class Profile extends BaseController
 {
@@ -57,9 +64,8 @@ class Profile extends BaseController
     public function add_auctions(Request $request)
     {
         if ($request->session()->exists('member')) {
-            $data['categories'] = Category::select('id', 'category_name_' . LaravelLocalization::getCurrentLocale() . ' as name', )->where('parent_id', 0)
-                ->with(['subcategory'])
-                ->get();
+            $data['categories'] = Category::select('id', 'category_name_' . LaravelLocalization::getCurrentLocale() . ' as name', )->where('parent_id', '!=' ,0)
+                                    ->get();
             $data['types'] = AuctionType::select('id', 'type_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
             $data['governorate'] = Governorate::select('id', 'governorate_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
             return view('online.profile.addauctions')->with($data);
@@ -73,7 +79,7 @@ class Profile extends BaseController
         $gover = Governorate::find($gover_id);
         $cities = $gover->cities()->select('id', 'city_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
         $total_row = $cities->count();
-     
+
         if ($total_row > 0) {
             $output = '<option disabled="disabled" value="-"> اختر المدينة</option>';
             foreach ($cities as $index => $row) {
@@ -102,7 +108,11 @@ class Profile extends BaseController
                 if(LaravelLocalization::getCurrentLocale()=="ar"){
                     $param_value = $pram->param_name_ar;
                 }else{
+
                     $param_value = $pram->param_name_en;  
+
+                    $param_value = $pram->param_name_en;
+
                 }
                 if ($pram->type == 1) {
                     $output .= '<div class="form-group">
@@ -122,7 +132,10 @@ class Profile extends BaseController
                             if(LaravelLocalization::getCurrentLocale()=="ar"){
                                 $p_param_value = $single->param_name_ar;
                             }else{
-                                $p_param_value = $single->param_name_en;  
+             $p_param_value = $single->param_name_en;  
+
+                                $p_param_value = $single->param_name_en;
+
                             }
                             $output .= '<option value="' . $single->id . '">' . $p_param_value . '</option>';
                         }
@@ -142,7 +155,6 @@ class Profile extends BaseController
         if ($request->session()->exists('member')) {
             $data = $request->validate([
                 'auction_title' => ['required', 'string', 'max:255'],
-                'price' => ['required'],
                 'address' => ['required'],
                 'price_opining' => ['required'],
                 'price_closing' => ['required'],
@@ -163,7 +175,6 @@ class Profile extends BaseController
             ],
                 [
                     'auction_title.required' => __("auctions.auction_title"),
-                    'price.required' => __("auctions.price"),
                     'address.required' => __("auctions.address"),
                     'price_opining.required' => __("auctions.price_opining"),
                     'price_closing.required' => __("auctions.price_closing"),
@@ -177,6 +188,7 @@ class Profile extends BaseController
                 ]
             );
             $data['member_id'] = $request->session()->get('member')->id;
+            $data['price']     = 0;
             if ($request->type_id == 1) {
                 $data['start_data'] = Carbon::now();
             }
@@ -192,6 +204,7 @@ class Profile extends BaseController
                     ]);
                 }
             }
+
         
             //auction_detials part
             if ($request['auction_detials']!=null) {
@@ -210,6 +223,27 @@ class Profile extends BaseController
                     }
                 }
               
+
+
+            //auction_detials part
+            if ($request['auction_detials']!=null) {
+              //   dd($request['auction_detials']);
+                foreach ($request['auction_detials'] as $key => $auction_detials) {
+
+                    if ($auction_detials['type_id'] === null) {
+                        $auction_detials['auction_id'] = $object->id;
+                        $auction_detials['cat_id'] = $object->cat_id;
+                        AuctionDetials::create($auction_detials);
+                    } elseif ($auction_detials['type_id'] != null) {
+                        $auction_detials['auction_id']  = $object->id;
+                        $auction_detials['cat_id']      = $object->cat_id;
+                        $auction_detials['param_value'] = null;
+                        AuctionDetials::create($auction_detials);
+                     //   dd($auction_detials);
+
+                    }
+                }
+
             }
             session()->flash('success', __('auctions.auction_success'));
             return redirect()->back();
@@ -218,6 +252,7 @@ class Profile extends BaseController
             return redirect('live/login');
         }
     }
+}
 
     public function single_auction($id)
     {
@@ -227,52 +262,45 @@ class Profile extends BaseController
 
     }
 
-    public function add_tender(Request $request)
-    {
+    public function add_tender(Request $request,$aucation_id)
+    {  $validatedData = $request->validate([
+            'price' => 'required',
+        ],[
+            'price.required'  => 'يرجي ادخال السعر',
+        ]);
         //dd($request->all() );
         $member = Member::find(auth()->guard('members')->id());
-        if (!empty($member->id)) {
-            //update price in aucation and add tender
-            $auction = Auction::find($request->aucation_id);
-            $expcted = ($auction->price) + ($request->price);
-            //dd($expcted,'price');
-            if (($expcted) >= ($auction->price_closing)) {
-                //close auction
-                $auction->update(['is_finished' => true,
-                    'price' => $expcted]);
-                //create Tender
-                $t = Tender::create(['member_id' => $member->id,
-                    'auction_id' => $auction->id,
-                    'price' => $request->price,
-                    'is_winner' => true]);
-                return response()->json([
-                    'msg' => "success",
-                    'price' => $request->price,
-                    'id' => $t->id,
 
-                ]);
-            } else {
-                //update price only
-                $auction->update(['price' =>
-                    $expcted]);
-                $t = Tender::create(['member_id' => $member->id,
-                    'auction_id' => $auction->id,
-                    'price' => $request->price,
-                    'is_winner' => true]);
-                return response()->json([
-                    'msg' => "success",
-                    'price' => $request->price,
-                    'id' => $t->id,
-
-                ]);
-            }
-
-        } else {
-            return response()->json([
-                'msg' => "error",
-
-            ]);
+        //update price in aucation and add tender
+        $auction = Auction::find($aucation_id);
+        $tender  = new Tender;
+        $tender->member_id  = $member->id;
+        $tender->auction_id = $auction->id;
+        if($request->price < $auction->price_opining){
+            session()->flash('error', "السعر غير صحيح");
+            return redirect()->back();
         }
+        $tender->price      = $request->price;
+
+        if($request->price > $auction->price_closing){
+            $tender->is_winner    = 1;
+            $auction->is_finished = 1;
+        }else {
+            $tender->is_winner = 0;
+        }
+        if($request->price > $auction->price){
+            $auction->price = $request->price;
+        }
+        $auction->save();
+        $tender->save();
+
+        if($tender->is_winner = 0){
+
+            session()->flash('success', "تم اضافه المزاديه بنجاح");
+        }else{
+            session()->flash('success', "لقد حصلت علي المزاد");
+        }
+        return redirect()->back();
     }
     public function save_img($filles,$path){
         $type = array(
@@ -311,12 +339,127 @@ class Profile extends BaseController
             "xls"=>"document",
             "xlsx"=>"document"
         );
-       
+
         $file_name= time() . Str::random(10) . '.' . $filles->getClientOriginalExtension();
-      
+
             $filles->move(public_path($path), $file_name);
-                return $path.'/'.$file_name;
-      
+                return $file_name;
+
     }
+
+    public function add_favorite(Request $request){
+    
+        $member = Member::find(auth()->guard('members')->id());
+        $auction = Auction::find($request->auction_id);
+        $old_fav = Favorite::where('member_id',$member->id)->where('auction_id',$auction->id)->first();
+        if($old_fav){
+            $old_fav->delete();
+            return response()->json([
+                'favorite' => $old_fav,
+                'status'   => true,
+                'msg'      => 'تم الحذف من المفضله',
+            ]);
+        }else{
+            $favorite = new Favorite;
+            $favorite->member_id  = $member->id;
+            $favorite->auction_id = $auction->id;
+            $favorite->is_like    = 1;
+            $favorite->save();
+            return response()->json([
+                'favorite' => $favorite,
+                'status'   => true,
+                'msg'      => 'تم الاضافه الي المفضله',
+            ]);
+        }
+    }
+
+    public function Myfavorite($id){
+        $member   = Member::find($id);
+        $my_fav   = Favorite::with('auction')->where('member_id',$member->id)->orderBy('id','DESC')->get();
+        return view('online.favorite',compact('my_fav'));
+    }
+
+
+    /**
+     * ====================================================================================================================
+     * ========================================= Edit Profile =============================================================
+     * ====================================================================================================================
+     */
+
+     public function editProfile(){
+        $member    = Auth::guard('members')->user();
+        $countries = Country::select("id","country_name_" .app()->getLocale() . ' as country_name')->get();
+
+        return view('online.profile.editProfile',compact('member','countries'));
+     }
+
+     public function editNormal(Request $request){
+        $member    = Auth::guard('members')->user();
+        $data = $request->validate([
+            'username'            => 'required',
+            'date_of_birth'       => 'required|date|before:-15 years',
+            'country_id'          => 'required',
+            'email'              => 'required|max:255|unique:members,email,'.$member->id,
+        ],
+        [
+            'username.required'            => __("user.username"),
+            'date_of_birth.required'       => __("user.date_of_birth"),
+            'date_of_birth.before'         => __("user.before"),
+            'country_id.required'          => __("user.nationality"),
+            'email.required'               => __("user.email"),
+            'email.unique'                 => __("user.unique_email"),
+        ]
+        );
+
+        if ($request->img) {
+            Image::make($request->img)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/members/' . $request->img->hashName()));
+
+            $data['img'] = $request->img->hashName();
+
+        }//end of if
+        $member->update($data);
+        session()->flash('success', __('user.infoupdate'));
+        return redirect()->back();
+     }
+
+
+
+     public function editCommercial(Request $request){
+        $member    = Auth::guard('members')->user();
+        $data = $request->validate([
+                'commercial_record'   => 'required|unique:members,commercial_record,'.$member->id,
+                'date_of_birth'       => 'required',
+                'id_number'           => 'required|unique:members,id_number,'.$member->id,
+                'email'               => 'required|max:255|unique:members,email,'.$member->id,
+            ],
+            [
+                'commercial_record.required'   => __("user.commercial_record"),
+                'commercial_record.unique'     => __("user.commercial_exist"),
+                'date_of_birth.required'       => __("user.date_of_birth"),
+                'id_number.required'           => __("user.id_number"),
+                'id_number.unique'             => __("user.unique_id_number"),
+                'email.required'               => __("user.email"),
+                'email.unique'                 => __("user.unique_email"),
+            ]
+        );
+
+        if ($request->img) {
+            Image::make($request->img)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/members/' . $request->img->hashName()));
+
+            $data['img'] = $request->img->hashName();
+
+        }//end of if
+        $member->update($data);
+        session()->flash('success', __('user.infoupdate'));
+        return redirect()->back();
+     }
 
 }

@@ -37,6 +37,10 @@ class Auction extends Model
         return $this->belongsTo(Governorate::class,'gover_id');
     }
 
+    public function favorites(){
+        return $this->hasMany(Favorite::class,'auction_id');
+    }
+
     // public function setDateAttribute( $value ) {
     //     $this->attributes['date'] = (new Carbon($value))->format('y/m/d/h-i-s');
     //   }

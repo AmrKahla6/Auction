@@ -1,48 +1,92 @@
 <?php
 
 namespace App\Http\Controllers\Onlin;
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use Validator;
+use Carbon\Carbon;
 use App\Models\Member;
 use App\Models\Auction;
-use Carbon\Carbon;
+use App\Models\Country;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 class Register extends Controller
 {
 
 
     public function register()
     {
-        return view('online.auth.register');
+        $data['countries'] = Country::select("id","country_name_" .app()->getLocale() . ' as country_name')->get();
+        return view('online.auth.register')->with($data);
     }
 
     public function register_post(Request $request)
     {
         $data = $request->validate([
-            'username' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
-            'date_of_birth' => ['required'], 
-            'phone' => ['required', 'string','unique:members'],
-            'password' => ['required', 'string', 'min:8'], 
-            'commercial_record' => [], 
-            'nationality' => [], 
-            'id_number' => [], 
-            'type' => [], 
-             
-         ]);
+            'username'            => 'required',
+            'phone'               => 'required|unique:members',
+            'date_of_birth'       => 'required|date|before:-15 years',
+            'country_id'          => 'required',
+            'email'               => 'required|unique:members',
+            'password'            => 'required|min:6',
+        ],
+        [
+            'username.required'            => __("user.username"),
+            'phone.required'               => __("user.phone"),
+            'phone.unique'                 => __("user.unique_phone"),
+            'date_of_birth.required'       => __("user.date_of_birth"),
+            'date_of_birth.before'         => __("user.before"),
+            'country_id.required'          => __("user.nationality"),
+            'email.required'               => __("user.email"),
+            'email.unique'                 => __("user.unique_email"),
+            'password.required'            => __("user.password"),
+            'password.min'                 => __("user.max_password"),
+        ]
+    );
          $data['password'] = bcrypt($request->password);
+         $data['type']     = 1;
          $member = Member::create($data);
          session()->flash('success', __('site.added_successfully'));
         return redirect()->route('live.login');
-  
-        
     }
 
 
-    
+
+    public function commercialRegister(Request $request)
+    {
+        $data = $request->validate([
+            'commercial_record'   => 'required|unique:members',
+            'phone'               => 'required|unique:members',
+            'date_of_birth'       => 'required',
+            'id_number'           => 'required|unique:members',
+            'email'               => 'required|unique:members',
+            'password'            => 'required|min:6',
+        ],
+        [
+            'commercial_record.required'   => __("user.commercial_record"),
+            'commercial_record.unique'     => __("user.commercial_exist"),
+            'phone.required'               => __("user.phone"),
+            'phone.unique'                 => __("user.unique_phone"),
+            'date_of_birth.required'       => __("user.date_of_birth"),
+            'id_number.required'           => __("user.id_number"),
+            'id_number.unique'             => __("user.unique_id_number"),
+            'email.required'               => __("user.email"),
+            'email.unique'                 => __("user.unique_email"),
+            'password.required'            => __("user.password"),
+            'password.min'                 => __("user.max_password"),
+        ]
+    );
+         $data['password'] = bcrypt($request->password);
+         $data['type']     = 0;
+         $member = Member::create($data);
+         session()->flash('success', __('site.added_successfully'));
+        return redirect()->route('live.login');
+    }
+
+
+
 
     public function login()
     {
@@ -50,7 +94,7 @@ class Register extends Controller
         return view('online.auth.login');
     }else{
         $data['auctions_active']  = Auction::where('member_id',$member->id)->where('is_finished',false)->with('images')->get();
-        $data['auctions_dis']  = Auction::where('member_id',$member->id)->where('is_finished',true)->with('images')->get();
+        $data['auctions_dis']     = Auction::where('member_id',$member->id)->where('is_finished',true)->with('images')->get();
         // return redirect('live/registerd');
          return redirect()->route('live.registerd');
 
@@ -60,9 +104,9 @@ class Register extends Controller
     public function login_post(Request $request)
     {
         $data = $request->validate([
-            'phone' => ['required'], 
-            'password' => ['required'], 
-             
+            'phone'    => ['required'],
+            'password' => ['required'],
+
          ]);
         // $remember_token = $request->get('remember_token')==1?true:false;
          if(auth()->guard('members')->attempt([
@@ -76,7 +120,7 @@ class Register extends Controller
              }else{
                // session()->flash('success', __('site.updated_successfully'));
                  session()->flash('error', __('site.incorrect_info'));
-                 return redirect()->back();  
+                 return redirect()->back();
              }
      }
 
@@ -95,18 +139,18 @@ class Register extends Controller
         dd($request->all());
     }
 
-    public function aboute(){
-        return view('online.static.aboute');
-    }
+    // public function aboute(){
+    //     return view('online.static.aboute');
+    // }
 
     public function terms(){
         return view('online.static.terms');
     }
-    
+
     public function repetedquestions(){
         return view('online.static.repetedquestions');
     }
 
 
-    
+
 }

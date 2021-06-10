@@ -28,6 +28,12 @@ class AuctionDetials extends Model
         return $this->belongsTo(selectParams::class,'param_value_id','id');
     }*/
 
+
+    public function type(){
+        return $this->belongsTo(selectParams::class,'type_id');
+    }
+
+
     public function type(){
         return $this->belongsTo(selectParams::class,'type_id','id');
     }

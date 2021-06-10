@@ -12,6 +12,20 @@ class Favorite extends Model
     }
 
     public function auction(){
-        return $this->belongsTo(Auction::class);
+        return $this->belongsTo(Auction::class)->with('images');
+    }
+
+    public static   function is_favorite($auction_id){
+      $member_id =  Member::find(auth()->guard('members')->id());
+     // dd($member_id);
+     $ucation = Auction::find($auction_id);
+     $count = $ucation->favorites()->get()->count();
+       
+      if($count > 0){
+        return true;
+      }else{
+         return false;
+      }
+
     }
 }

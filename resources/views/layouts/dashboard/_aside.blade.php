@@ -27,7 +27,7 @@
 
             @if(auth()->user()->hasPermission('read_users'))
                 <li class="nav-item {{is_active('users')}}">
-                    <a href="{{ route('dashboard.users.index') }}"><i class="fa fa-users"></i><span>المشروفين</span></a>
+                    <a href="{{ route('dashboard.users.index') }}"><i class="fa fa-users"></i><span>المشرفين</span></a>
                 </li>
             @endif
 

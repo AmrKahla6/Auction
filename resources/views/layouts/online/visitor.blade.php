@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>MAZAD KW | تسجيل دخول</title>
+        <title>MAZAD KW | @lang('live.login')</title>
 		<link href="{{ asset('online/images/icon.ico')}}" rel="icon">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -11,10 +11,14 @@
             ================================================== -->
 			<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,300' rel='stylesheet' type='text/css'>
 			<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
-	
+
 			<!-- Bootstrap -->
 			<script src="{{ asset('online/js/jquery-2.1.1.min.js')}}" type="text/javascript"></script>
-			<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
+    		@if (app()->getLocale() == 'ar')
+            <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap-a.css')}}">
+    		@else
+    		<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/bootstrap.css')}}">
+    		@endif
 			<link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/font-awesome/css/font-awesome.css')}}">
 			<link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/font.css')}}">
 			<link rel="stylesheet" type="text/css" href="{{ asset('online/fonts/style.css')}}">
@@ -23,9 +27,15 @@
 			<script src="{{ asset('online/js/owl-carousel/owl.carousel.js')}}" type="text/javascript"></script>
 			<!-- Stylesheet
 				================================================== -->
-			<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
+
+    		@if (app()->getLocale() == 'ar')
+            <link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style-ar.css')}}">
+    		@else
+    		<link rel="stylesheet" type="text/css"  href="{{ asset('online/css/style.css')}}">
+    		@endif
+
 			<link rel="stylesheet" href="{{ asset('dashboard/plugins/noty/noty.css') }}">
-			<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script> 
+			<script src="{{ asset('dashboard/plugins/noty/noty.min.js') }}"></script>
     </head>
     <body class="wsmenucontainer clearfix">
         <div class="overlapblackbg"></div>
@@ -37,16 +47,22 @@
 						<a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
 						<a href="{{route('live.myonline')}}" class="logo"><img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW"></a>
 					</div>
-					<div class="col-sm-4 col-xs-6">
+					<div class="col-sm-3 col-xs-6">
 						<div id="search" class="input-group">
-							<input type="text" name="search" value="" placeholder="عن ماذا تبحث ..؟" class="">
+							<input type="text" name="search" value="" placeholder="@lang('live.search')" class="">
 							<button type="button" class=""><span class="icon-search1"></span></button>
 						</div>
 					</div>
-					<div class="col-sm-4 hidden-xs">
-						<div class="links">
-							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a>
-							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> تسجيل</a>
+					<div class="col-sm-5 hidden-xs">
+						<div class="links dropdown">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <a class="btn btn-language" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                    <span class="icon-earth"></span>
+                                    {{ $properties['native'] }}
+                                </a>
+                            @endforeach
+							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
+							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>
 						</div>
 					</div>
 				</div>
@@ -57,11 +73,16 @@
 			<div class="sub-nav-content">
 				<div class="content-menu">
 					<ul>
-						<li><a href="{{route('live.login')}}"><span class="icon-user1"></span> الدخول</a></li>
-						<li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> التسجيل</a></li>
-						<li><a href="{{route('live.aboute')}}"><span class="icon-info"></span> من نحن</a></li>
-						<li><a href="{{route('live.repetedquestions')}}"><span class="icon-help-circle"></span> الاسئلة المتكررة</a></li>
-						<li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> شروط الاستخدام</a></li>
+                        <li><a href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a></li>
+                        <li><a href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a></li>
+                        <li><a href="{{route('live.aboute')}}"><span class="icon-info"></span>@lang('live.about_as')</a></li>
+                        <li><a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span>@lang('live.comm_question')</a></li>
+                        <li><a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span>  @lang('live.terms')</a></li>
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <li><a rel="alternate"  hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                <span class="icon-earth"></span> {{ $properties['native'] }}</a>
+                            </li>
+                        @endforeach
 					</ul>
 				</div>
 			</div>
@@ -70,7 +91,7 @@
 	       @yield('content')
 		   @include('partials._session')
 		  <!-- end of content -->
-		
+
 		<div class="footer">
 			<div class="container">
 				<div class="row">
@@ -108,12 +129,12 @@
 		</div>
 		<div class="footer-copyright">جميع الحقوق محفوظة لمزاد©</div>
         <!-- Latest compiled and minified JavaScript -->
-		<script src="{{ asset('online/js/bootstrap.min.js')}}"></script>   
+		<script src="{{ asset('online/js/bootstrap.min.js')}}"></script>
 
 
-		
+
 <script>
-	
+
 //in case js in turned off
    $(window).on('load', function () {
         $("body").removeClass("h-fixed")
@@ -144,8 +165,8 @@ $(document).ready(function() {
     });
 });
 </script>
-		
-		
+
+
     </body>
 
-</html> 
+</html>
