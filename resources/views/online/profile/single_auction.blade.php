@@ -50,7 +50,7 @@
                             </tr>
                         </table>
                     </div>
-                    @if(Auth::guard('members')->user()->id == $auction->member_id)
+                    @if(Auth::guard('members')->user() && Auth::guard('members')->user()->id == $auction->member_id)
                         <button type="button" disabled title="@lang('live.can_not_auction')" class="btn btn-danger btn-lg btn-block"> @lang('live.your_auction')</button>
                      @elseif(Auth::guard('members')->check())
                      @if ($auction->is_finished == 1)

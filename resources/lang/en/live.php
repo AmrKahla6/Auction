@@ -114,5 +114,11 @@ return [
       'ago'            => 'Ago',
 
 
+      //Edit Profile
+    'edit_profile'   => 'Edit Profile',
+    'chang_pass'     => 'Change Password',
+    'edit_acc'       => 'Edit Account Informations',
+
+
 
 ];

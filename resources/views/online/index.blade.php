@@ -43,7 +43,9 @@
 				<div class="row">
 					<div class="col-sm-3 col-xs-6">
 						<a title="" class="sub-nav-menu"><span class="icon-menu1"></span></a>
-						<a href="{{route('live.myonline')}}" class="logo"><img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW"></a>
+						<a href="{{route('live.myonline')}}" class="logo">
+                            <img src="{{ asset('online/images/logo-header.png')}}" class="img-responsive" alt="MAZAD KW">
+                        </a>
 					</div>
 				@include('layouts.online.search')
 					<div class="col-sm-5 hidden-xs">

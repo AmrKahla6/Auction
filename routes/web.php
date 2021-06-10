@@ -77,6 +77,10 @@ Route::group(
             Route::get('/contact-us', 'SettingController@contactUs')->name('contact-us');
             Route::post('/contact-us/store', 'SettingController@storeContactUs')->name('store-contact-us');
 
+            //Edit Profile
+            Route::get('/setting', 'Profile@editProfile')->name('edit-profile');
+            Route::put('/setting/normal', 'Profile@editNormal')->name('edit-normal-profile');
+            Route::put('/setting/commercial', 'Profile@editCommercial')->name('edit-commercial-profile');
         });
     });
 

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Onlin;
 
+
 use Str;
+use Auth;
 use Carbon\Carbon;
 use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
+use App\Models\Country;
 use App\Models\Category;
 use App\Models\Favorite;
 use LaravelLocalization;
@@ -17,6 +20,8 @@ use App\Models\catParameter;
 use App\Models\selectParams;
 use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 class Profile extends BaseController
@@ -345,5 +350,88 @@ class Profile extends BaseController
         $my_fav   = Favorite::with('auction')->where('member_id',$member->id)->orderBy('id','DESC')->get();
         return view('online.favorite',compact('my_fav'));
     }
+
+
+    /**
+     * ====================================================================================================================
+     * ========================================= Edit Profile =============================================================
+     * ====================================================================================================================
+     */
+
+     public function editProfile(){
+        $member    = Auth::guard('members')->user();
+        $countries = Country::select("id","country_name_" .app()->getLocale() . ' as country_name')->get();
+
+        return view('online.profile.editProfile',compact('member','countries'));
+     }
+
+     public function editNormal(Request $request){
+        $member    = Auth::guard('members')->user();
+        $data = $request->validate([
+            'username'            => 'required',
+            'date_of_birth'       => 'required|date|before:-15 years',
+            'country_id'          => 'required',
+            'email'              => 'required|max:255|unique:members,email,'.$member->id,
+        ],
+        [
+            'username.required'            => __("user.username"),
+            'date_of_birth.required'       => __("user.date_of_birth"),
+            'date_of_birth.before'         => __("user.before"),
+            'country_id.required'          => __("user.nationality"),
+            'email.required'               => __("user.email"),
+            'email.unique'                 => __("user.unique_email"),
+        ]
+        );
+
+        if ($request->img) {
+            Image::make($request->img)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/members/' . $request->img->hashName()));
+
+            $data['img'] = $request->img->hashName();
+
+        }//end of if
+        $member->update($data);
+        session()->flash('success', __('user.infoupdate'));
+        return redirect()->back();
+     }
+
+
+
+     public function editCommercial(Request $request){
+        $member    = Auth::guard('members')->user();
+        $data = $request->validate([
+                'commercial_record'   => 'required|unique:members,commercial_record,'.$member->id,
+                'date_of_birth'       => 'required',
+                'id_number'           => 'required|unique:members,id_number,'.$member->id,
+                'email'               => 'required|max:255|unique:members,email,'.$member->id,
+            ],
+            [
+                'commercial_record.required'   => __("user.commercial_record"),
+                'commercial_record.unique'     => __("user.commercial_exist"),
+                'date_of_birth.required'       => __("user.date_of_birth"),
+                'id_number.required'           => __("user.id_number"),
+                'id_number.unique'             => __("user.unique_id_number"),
+                'email.required'               => __("user.email"),
+                'email.unique'                 => __("user.unique_email"),
+            ]
+        );
+
+        if ($request->img) {
+            Image::make($request->img)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/members/' . $request->img->hashName()));
+
+            $data['img'] = $request->img->hashName();
+
+        }//end of if
+        $member->update($data);
+        session()->flash('success', __('user.infoupdate'));
+        return redirect()->back();
+     }
 
 }

@@ -115,4 +115,11 @@ return [
     'ago'            => 'منذ',
 
 
+    //Edit Profile
+    'edit_profile'   => 'تعديل البيانات',
+    'chang_pass'     => 'تعديل كلمه المرور',
+    'edit_acc'       => 'تعديل بيانات الحساب',
+
+
+
 ];

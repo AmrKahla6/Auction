@@ -5,7 +5,7 @@
                 @if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
                     <li><a href="{{route("live.profile")}}"><span class="icon-user1"></span> @lang('live.my_acc')</a></li>
                     <li><a href="{{route("live.myonline")}}"><span class="icon-settings"></span> @lang('live.main')</a></li>
-                    <li><a href="#"><span class="icon-settings"></span> @lang('live.setting')</a></li>
+                    <li><a href="{{route('live.edit-profile')}}"><span class="icon-settings"></span> @lang('live.setting')</a></li>
                     <li><a href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a></li>
                     <li><a href="{{route('live.registerd')}}"><span class="icon-plus-circle"></span> @lang('live.my_auctions')</a></li>
                     <li><a href="{{route('live.my_favorite',auth()->guard('members')->id())}}"><span class="icon-heart1"></span> @lang('live.my_fav') </a></li>
