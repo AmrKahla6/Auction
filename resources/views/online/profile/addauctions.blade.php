@@ -53,25 +53,16 @@
 
                     <div class="col-md-12 form-group">
                         <label>تاريخ الاغلاق</label>
-                        <input type="date"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
-                    </div>
-                    </div>
-                    <div class="row">
-                        <label> تفاصيل </label>
-                  <div class="col-md-12 form-group">
-                        <textarea type="text"  required="required" name="detials" placeholder="تفاصيل"  class="form-control"></textarea>
-
-                        <label>  @lang('live.date_close')</label>
-                        <input type="date"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="@lang('live.date_close')"  class="form-control">
-                    </div>
+                        <input type="datetime-local"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
                     </div>
                     <div class="row">
+                    <div class="col-md-12 form-group">
                         <label> @lang('live.detials')</label>
                         <div class="col-md-12 form-group">
                             <textarea type="text"  required="required" name="detials" placeholder="@lang('live.detials')"  class="form-control"></textarea>
                         </div>
                     </div>
-
+                </div>
 
 
                     <div class="row">
@@ -186,7 +177,7 @@
            // alert($("#type_id option:selected").val());
         $("#Stat_Date").html('<div class="col-md-12 form-group">\
          <label>تاريخ البدء</label>\
-         <input type="date" name="start_data" onchange="check_date()" id="start_data" class="form-control"value="" placeholder="تاريخ الافتتاح"  class="form-control">\
+         <input type="datetime-local" name="start_data" onchange="check_date()" id="start_data" class="form-control"value="" placeholder="تاريخ الافتتاح"  class="form-control">\
                     </div>');
                     $("#start_data").date({
 
@@ -201,21 +192,21 @@
     }
 
 
-    //end date 
+    //end date
 $(document).ready(function() {
  get_Cites();
 Get_Params();
 const today = new Date();
  const tomorrow = new Date(today);
-  $("#end_data").date({  
+  $("#end_data").date({
     minDate: new Date() ,
   	dateFormat: 'dd/mm/yy',
 	changeYear:true,
 	changeMonth:true,
     changeDay:true,
   });
-  
-  
+
+
 });
 
     //end date
@@ -245,7 +236,7 @@ if($('#start_data').val()!="" && $('#end_data').val()!=""){
 	}
 }
 
-  
+
 }
 </script>
 

@@ -192,6 +192,8 @@ class Profile extends BaseController
             $data['price']     = 0;
             if ($request->type_id == 1) {
                 $data['start_data'] = Carbon::now();
+            }else {
+                $data['start_data'] = $request->start_data;
             }
             $object = Auction::create($data);
             //image parts
