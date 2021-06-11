@@ -98,11 +98,11 @@
 								<div class="addtofavorite">
 									<input value="" type="checkbox" id="add-favorite-id01" name="add-favorite-id01" class="favorite-input">
 									<label for="add-favorite-id01" title="@lang('live.add_favorit')">
-										@if(App\Models\Favoriteis::is_favorite($auction->id)==true?dd(App\Models\Favoriteis::is_favorite($auction->id)):App\Models\Favoriteis::is_favorite($auction->id))@endif
+										@if(App\Models\Favorite::is_favorite($auction->id)==true?dd(App\Models\Favorite::is_favorite($auction->id)):App\Models\Favorite::is_favorite($auction->id))@endif
 										<i class="fa fa-heart-o">
 
 										</i>
-										
+
 									</label>
 								</div>
 							</div>

@@ -119,6 +119,13 @@ return [
     'chang_pass'     => 'Change Password',
     'edit_acc'       => 'Edit Account Informations',
 
+     //changepass
+     'old_pass'      => 'Old Password',
+     'new_pass'      => 'New Password',
+     'con-password'  => 'Confirm Password',
+     'new_password'  => 'New Password is required',
+     'confirmed'     => 'Confirmed New Password',
+
 
 
 ];

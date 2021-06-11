@@ -85,6 +85,10 @@ Route::group(
             Route::get('/setting', 'Profile@editProfile')->name('edit-profile');
             Route::put('/setting/normal', 'Profile@editNormal')->name('edit-normal-profile');
             Route::put('/setting/commercial', 'Profile@editCommercial')->name('edit-commercial-profile');
+
+            //Change Password
+            Route::get('/setting/change-pass', 'Profile@changePass')->name('change-password');
+            Route::put('/setting/save-pass', 'Profile@savePass')->name('save-change-password');
         });
     });
 

@@ -20,6 +20,7 @@ use App\Models\catParameter;
 use App\Models\selectParams;
 use Illuminate\Http\Request;
 use App\Models\AuctionDetials;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -109,7 +110,7 @@ class Profile extends BaseController
                     $param_value = $pram->param_name_ar;
                 }else{
 
-                    $param_value = $pram->param_name_en;  
+                    $param_value = $pram->param_name_en;
 
                     $param_value = $pram->param_name_en;
 
@@ -132,7 +133,7 @@ class Profile extends BaseController
                             if(LaravelLocalization::getCurrentLocale()=="ar"){
                                 $p_param_value = $single->param_name_ar;
                             }else{
-             $p_param_value = $single->param_name_en;  
+             $p_param_value = $single->param_name_en;
 
                                 $p_param_value = $single->param_name_en;
 
@@ -205,7 +206,7 @@ class Profile extends BaseController
                 }
             }
 
-        
+
             //auction_detials part
             if ($request['auction_detials']!=null) {
               //   dd($request['auction_detials']);
@@ -219,10 +220,10 @@ class Profile extends BaseController
                         $auction_detials['cat_id'] = $object->cat_id;
                         AuctionDetials::create($auction_detials);
                      //   dd($auction_detials);
-                       
+
                     }
                 }
-              
+
 
 
             //auction_detials part
@@ -348,7 +349,7 @@ class Profile extends BaseController
     }
 
     public function add_favorite(Request $request){
-    
+
         $member = Member::find(auth()->guard('members')->id());
         $auction = Auction::find($request->auction_id);
         $old_fav = Favorite::where('member_id',$member->id)->where('auction_id',$auction->id)->first();
@@ -460,6 +461,34 @@ class Profile extends BaseController
         $member->update($data);
         session()->flash('success', __('user.infoupdate'));
         return redirect()->back();
+     }
+
+     public function changePass(){
+         return view('online.auth.change-pass');
+     }
+
+     public function savePass(Request $request){
+         $member    = Auth::guard('members')->user();
+
+         $data = $request->validate([
+             'password'              => 'required|min:6',
+             'new_password'          => 'required|min:6',
+             'password_confirmation' => 'required|same:new_password|min:6'
+            ],
+            [
+                'password.required'      => __("user.password"),
+                'new_password.required'  => __("live.new_password"),
+                'new_password.confirmed' => __("live.confirmed"),
+                ]
+            );
+
+        if (Hash::check($request->password, $member->password)) {
+                $member->password = Hash::make($request->new_password);
+                $member->save();
+                session()->flash('success', __('user.infoupdate'));
+                return redirect()->back();
+        }
+
      }
 
 }
