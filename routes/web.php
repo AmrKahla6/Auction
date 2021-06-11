@@ -183,3 +183,5 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     Route::get('/setting/trems', 'SettingController@trems')->name('setting-trems');
     Route::put('/setting/trems/{id}/edit', 'SettingController@tremsEdit')->name('setting-trems-edit');
   });
+
+
