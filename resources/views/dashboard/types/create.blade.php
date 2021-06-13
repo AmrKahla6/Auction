@@ -27,6 +27,7 @@
                 <div class="box-body">
 
                     @include('partials._errors')
+                    @include('partials._session')
                     <form action="{{ route('dashboard.auction-type.store') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="form-group">

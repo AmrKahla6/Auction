@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Onlin;
 use Auth;
 use App\Models\Term;
 use App\Models\About;
+use App\Models\Phone;
 use App\Models\Contact;
 use App\Models\Privicy;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class SettingController extends Controller
     }
 
     public function contactUs(){
-        return view('online.contacts');
+        $data['phones'] = Phone::select('id','number')->orderBy('id','DESC')->get();
+        return view('online.contacts')->with($data);
     }
 
     public function storeContactUs(Request $request){

@@ -108,6 +108,7 @@
                         @if(auth()->user()->hasPermission('read_terms'))
                             <li><a href="{{route('dashboard.setting-trems')}}">  الشروط و الاحكام   </a></li>
                         @endif
+                        <li><a href="{{route('dashboard.setting-get-phone')}}">  ارقام الشركه   </a></li>
                     </ul>
                 </li>
             @endif

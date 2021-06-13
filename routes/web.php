@@ -182,6 +182,12 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     //trems
     Route::get('/setting/trems', 'SettingController@trems')->name('setting-trems');
     Route::put('/setting/trems/{id}/edit', 'SettingController@tremsEdit')->name('setting-trems-edit');
+
+    //Phone
+    Route::get('/setting/phone', 'SettingController@getPhone')->name('setting-get-phone');
+    Route::post('/setting/phone/store', 'SettingController@storePhone')->name('setting-store-phone');
+    Route::put('/setting/phone/edit', 'SettingController@editPhone')->name('setting-edit-phone');
+    Route::delete('/setting/phone/{id}/delete', 'SettingController@deletePhone')->name('setting-delete-phone');
   });
 
 

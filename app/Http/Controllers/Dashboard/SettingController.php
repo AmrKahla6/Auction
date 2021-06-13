@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Term;
 use App\Models\About;
+use App\Models\Phone;
 use App\Models\Contact;
 use App\Models\Privicy;
 use Illuminate\Http\Request;
@@ -129,5 +130,63 @@ class SettingController extends Controller
              session()->flash('success', __('site.updated_successfully'));
 
              return redirect()->route('dashboard.setting-trems');
+         }
+
+         /**
+          * ===========================================================================================================
+          * ============================================== Company Phones =============================================
+          * ===========================================================================================================
+          */
+
+         public function getPhone(Request $request){
+            $data['phones'] = Phone::when($request->search , function ($q) use ($request){
+                return $q->where('number' , 'like' , '%'. $request->search. '%');
+            })->latest()->paginate(5);
+
+            return view('dashboard.phone.index')->with($data);
+         }
+
+         public function storePhone(Request $request){
+            $request->validate([
+                'number' => 'required|unique:phones',
+            ],[
+                'number.required'     => 'يرجي ادخال  الرقم',
+                'number.required'     => 'الرقم موجود بالفعل',
+            ]);
+
+            Phone::create([
+                'number' => $request->number,
+            ]);
+
+            session()->flash('success', __('site.added_successfully'));
+
+            return redirect()->route('dashboard.setting-get-phone');
+         }
+
+         public function editPhone(Request $request){
+            $id = $request->id;
+
+            $this->validate($request, [
+                'number' => 'required|max:255|unique:phones,number,'.$id,
+            ],[
+                'number.required'     => 'يرجي ادخال  الرقم',
+                'number.required'     => 'الرقم موجود بالفعل',
+            ]);
+
+            $phone = Phone::find($id);
+            $phone->update([
+                'number' => $request->number,
+            ]);
+
+            session()->flash('success', __('site.updated_successfully'));
+
+            return redirect()->route('dashboard.setting-get-phone');
+         }
+
+
+         public function deletePhone($id){
+            Phone::findOrFail($id)->delete();
+            session()->flash('success', __('site.deleted_successfully'));
+            return redirect()->route('dashboard.setting-get-phone');
          }
 }

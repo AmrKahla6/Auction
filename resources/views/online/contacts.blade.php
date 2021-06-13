@@ -23,15 +23,11 @@
     <h3>@lang('live.contact_with')</h3>
     <div class="phone-numbers">
         <ul>
-            <li>
-                <h3><span class="icon-phone"></span> 0123456789 <a href="tel:0123456789"><span class="icon-phone"></span></a></h3>
-            </li>
-            <li>
-                <h3><span class="icon-phone"></span> 0123456789 <a href="tel:0123456789"><span class="icon-phone"></span></a></h3>
-            </li>
-            <li>
-                <h3><span class="icon-phone"></span> 0123456789 <a href="tel:0123456789"><span class="icon-phone"></span></a></h3>
-            </li>
+            @foreach ($phones as $item)
+                <li>
+                    <h3><span class="icon-phone"></span> {{$item->number}}<a href="tel:{{$item->number}}"><span class="icon-phone"></span></a></h3>
+                </li>
+            @endforeach
         </ul>
     </div>
 </div>
