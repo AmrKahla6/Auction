@@ -11,6 +11,7 @@
         'unique_email'      => 'Email Address is already exist',
         'password'          => 'Password is required',
         'max_password'      => 'The min Password is 6 liters',
+        'before'            => 'Invalid date of birth',
         'regist_success'    => 'successfully registered',
         'username'          => 'User Name is required',
         'nationality'       => 'Nationality is required',

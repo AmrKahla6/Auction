@@ -51,8 +51,8 @@ Route::group(
             /* end of auth route //online part */
             /*genderal pages routes */
             Route::get('/aboute', 'SettingController@about')->name('aboute');
-            Route::get('/terms', 'Register@terms')->name('terms');
-            route::get('/repetedquestions', 'Register@repetedquestions')->name('repetedquestions');
+            Route::get('/terms', 'SettingController@terms')->name('terms');
+            // route::get('/repetedquestions', 'Register@repetedquestions')->name('repetedquestions');
 
             /*end of genderal pages routes */
 

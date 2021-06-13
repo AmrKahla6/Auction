@@ -126,6 +126,10 @@ return [
      'new_password'  => 'New Password is required',
      'confirmed'     => 'Confirmed New Password',
 
+    //Terms
+    'terms_uses'     => 'Terms Of Use',
+    'read_terms'     => 'Please read all terms and conditions to avoid problems...',
+
 
 
 ];

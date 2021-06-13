@@ -23,7 +23,7 @@
 								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
 								<p class="price">{{$auction->price}} @lang('live.dirhams')</p>
-								<div class="addtofavorite">
+								{{-- <div class="addtofavorite">
 									@if(App\Models\favorite::is_favorite($auction->id)==true)
 									<input value="" type="checkbox" id="add-favorite-{{$auction->id}}" name="add-favorite-{{$auction->id}}" class="favorite-input" checked>
 										<label for="add-favorite-{{$auction->id}}"  title="@lang('live.add_favorit')">
@@ -34,7 +34,7 @@
 										<i class="fa fa-heart-o" ></i>
 									</label>
 									@endif
-								</div>
+								</div> --}}
 							</div>
                             <div class="product-detials">
 								<p class="time">{{$auction->start_data}} <span>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $auction->created_at)->diffForHumans()}}</span></p>
@@ -95,7 +95,7 @@
 								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif
 								<p class="price">{{$auction->price}} @lang('live.dirhams')</p>
-								<div class="addtofavorite">
+								{{-- <div class="addtofavorite">
 									<input value="" type="checkbox" id="add-favorite-id01" name="add-favorite-id01" class="favorite-input">
 									<label for="add-favorite-id01" title="@lang('live.add_favorit')">
 										@if(App\Models\Favorite::is_favorite($auction->id)==true?dd(App\Models\Favorite::is_favorite($auction->id)):App\Models\Favorite::is_favorite($auction->id))@endif
@@ -104,7 +104,7 @@
 										</i>
 
 									</label>
-								</div>
+								</div> --}}
 							</div>
 							<div class="product-detials">
 								<p class="time">{{$auction->start_data}} <span>{{Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $auction->created_at)->diffForHumans()}}</span></p>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Onlin;
 
 use Auth;
+use App\Models\Term;
 use App\Models\About;
 use App\Models\Contact;
 use App\Models\Privicy;
@@ -42,5 +43,10 @@ class SettingController extends Controller
         $contacts->save();
         session()->flash('success', __('live.succss_contact'));
         return redirect()->route('live.contact-us');
+    }
+
+    public function terms(){
+        $term  = Term::select("term_" .app()->getLocale() . ' as term')->first();
+        return view('online.static.terms',compact('term'));
     }
 }

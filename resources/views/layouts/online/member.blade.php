@@ -93,7 +93,7 @@
 							<h5>@lang('live.infos')</h5>
 							<ul class="list-unstyled">
 							  <li><a href="{{route('live.aboute')}}">@lang('live.about_as')</a></li>
-							  <li><a href="mainfaq.html">@lang('live.comm_question')</a></li>
+							  <li><a href="{{route('live.common-questions')}}">@lang('live.comm_question')</a></li>
 							  <li><a href="{{route('live.terms')}}">@lang('live.terms')</a></li>
 							</ul>
 						</div>

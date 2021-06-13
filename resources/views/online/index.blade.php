@@ -145,7 +145,11 @@
 										<input value="" type="checkbox" id="add-favorite-{{$auction->id}}" onclick="Toggle({{$auction->id}})" name="is_like" class="favorite-input" checked>
 										<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
 										<label for="add-favorite-{{$auction->id}}" title="@lang('live.add_favorit')">
-											<i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
+                                            @if (App\Models\Favorite::is_favorite($auction->id) == $auction->id)
+											    <i id="heart-{{$auction->id}}" class="fa fa-heart-o checked"></i>
+                                            @else
+                                                <i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
+                                            @endif
 										</label>
 									</div>
 								    @else
@@ -319,14 +323,9 @@ $(document).ready(function() {
 					if($("#add-favorite-"+auction_id).prop("checked")==true){
 						$("#add-favorite-"+auction_id).removeAttr("checked");
 					}else{
-						$("#add-favorite-"+auction_id).attr("checked","checked");
+						// $("#add-favorite-"+auction_id).attr("checked","checked");
+                        $("#add-favorite-"+auction_id).prop('checked', true);
 					}
-                    if(data.favorite.is_like == 1){
-
-					                    }else{
-
-					}
-
 				}
             }
         })
