@@ -61,7 +61,7 @@
                     </form>
 
 					<div class="col-sm-5 hidden-xs">
-						<div class="links dropdown">
+						<div class="links">
 							@include('layouts.online.language')
 						@if(!empty(App\Models\Member::find(auth()->guard('members')->id())))
 

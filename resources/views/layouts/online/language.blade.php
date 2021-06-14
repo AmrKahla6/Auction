@@ -1,17 +1,11 @@
-<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    اللغه
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-        <a rel="alternate" hreflang="{{ $localeCode }}" class="btn btn-language dropdown-item" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-            <span class="icon-earth"></span>
-            {{ $properties['native'] }}
-        </a>
-    @endforeach
-  </div>
-
-  <script>
-        $('.dropdown').click(function(){
-            $('.dropdown-menu').toggleClass('show');
-        });
-  </script>
+@if (App::isLocale('en'))
+<a class="btn btn-language"  href="{{changeLang()}}">
+    <span class="icon-earth"></span>
+    عربي
+</a>
+@else
+<a class="btn btn-language" rel="alternate" hreflang="#" href="{{changeLang()}}">
+    <span class="icon-earth"></span>
+    English
+</a>
+@endif

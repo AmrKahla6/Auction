@@ -49,13 +49,12 @@
 					</div>
 				@include('layouts.online.search')
 					<div class="col-sm-5 hidden-xs">
-						<div class="links dropdown">
-                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            <a class="btn btn-language" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                <span class="icon-earth"></span>
-                                {{ $properties['native'] }}
-                            </a>
-                            @endforeach
+						<div class="links">
+                            @include('layouts.online.language')
+                            @if (auth()->guard('members')->id())
+                                <a class="btn btn-add" href="{{route('live.add_auctions')}}"><span class="icon-plus-circle"></span> @lang('live.add_auction')</a>
+                                <a class="btn btn-default" href="{{route('live.myonline')}}"><span class="icon-settings"></span> @lang('live.main')</a>
+                            @endif
 							@if(empty(App\Models\Member::find(auth()->guard('members')->id())))
 							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
 							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>

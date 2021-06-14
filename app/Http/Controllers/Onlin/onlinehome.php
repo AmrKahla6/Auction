@@ -62,7 +62,7 @@ class onlinehome extends Controller
         //الأقسام الفرعية والمزادات الخاصة بيها
         $data['categories'] = Category::where('parent_id',$parent_id)->select('id','category_name_ar','category_name_en')->with(['auctions','auctions.images'])->get();
        if(empty( $data['categories'])){
-      $data['categories'] = Category::where('id',$parent_id)->select('id','category_name_ar','category_name_en')->with(['auctions','auctions.images'])->get();
+            $data['categories'] = Category::where('id',$parent_id)->select('id','category_name_ar','category_name_en')->with(['auctions','auctions.images'])->get();
         }
         return view('online.sub_categories')->with($data);
     }

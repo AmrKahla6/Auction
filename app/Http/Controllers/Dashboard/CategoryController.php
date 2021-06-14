@@ -55,12 +55,13 @@ class CategoryController extends Controller
         $validatedData = $request->validate([
             'category_name_ar' => 'required|unique:categories|max:255',
             'category_name_en' => 'required|unique:categories|max:255',
-            'img'              => 'nullable',
+            'img'              => 'required',
         ],[
             'category_name_ar.required'  => 'يرجي ادخال اسم القسم بالعربيه',
             'category_name_ar.unique'    => 'اسم القسم بالعربيه مسجل مسبقا',
             'category_name_en.required'  => 'يرجي ادخال اسم القسم بالانجليزيه',
             'category_name_en.unique'    => 'اسم القسم بالانجليزيه مسجل مسبقا',
+            'img.required'               => 'يرجي ادخال صوره القسم',
         ]);
 
         $data = $request->except(['parent_id', 'img']);
