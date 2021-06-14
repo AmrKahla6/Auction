@@ -16,7 +16,6 @@ class DetialsResource extends JsonResource
     public function toArray($request)
     {
 
-
         $cat_parameters = catParameter::where('id',$this->param->id)->first();
         if($request->lang == "en"){
             $cat_name =  $cat_parameters->param_name_en;

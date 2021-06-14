@@ -12,30 +12,27 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label>  @lang('live.auction_name') </label>
-                        <input type="text"  required="required" name="auction_title" value="" placeholder="@lang('live.auction_name')"  class="form-control">
+                            <input type="text"  required="required" name="auction_title" value="" placeholder="@lang('live.auction_name')"  class="form-control">
                        </div>
+
                        <div class="col-md-6">
-                        <label>  @lang('live.price') </label>
-                        <input type="number"  required="required" name="price" value="" placeholder="@lang('live.price') "  class="form-control">
-                    </div>
+                           <label>  @lang('live.address')</label>
+                           <input type="text" name="address"  required="required" value="" placeholder="@lang('live.address') "  class="form-control">
+                       </div>
                     </div>
 
                     <div class="row">
-                    <div class="col-md-6">
-                        <label>  @lang('live.address')</label>
-                        <input type="text" name="address"  required="required" value="" placeholder="@lang('live.address') "  class="form-control">
-                    </div>
                     <div class="col-md-6">
                         <label>  @lang('live.open_price')</label>
                         <input type="number"  required="required" name="price_opining" value="" placeholder=" @lang('live.open_price')"  class="form-control">
                     </div>
-                    </div>
-
-                    <div class="row">
-                    <div class="col-md-12 form-group ">
+                    <div class="col-md-6 form-group ">
                         <label>  @lang('live.close_price')</label>
                         <input type="number"  required="required" name="price_closing" value="" placeholder=" @lang('live.close_price')"  class="form-control">
                     </div>
+                    </div>
+
+                    <div class="row">
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
@@ -52,7 +49,7 @@
                     <div class="row">
 
                     <div class="col-md-12 form-group">
-                        <label>تاريخ الاغلاق</label>
+                        <label>@lang('live.date_close')</label>
                         <input type="datetime-local"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
                     </div>
                     <div class="row">
@@ -176,8 +173,8 @@
         if($("#type_id option:selected").val() > 1){
            // alert($("#type_id option:selected").val());
         $("#Stat_Date").html('<div class="col-md-12 form-group">\
-         <label>تاريخ البدء</label>\
-         <input type="datetime-local" name="start_data" onchange="check_date()" id="start_data" class="form-control"value="" placeholder="تاريخ الافتتاح"  class="form-control">\
+         <label>@lang('live.date_start')</label>\
+         <input type="datetime-local" name="start_data" onchange="check_date()" id="start_data" class="form-control"value="" placeholder="@lang('live.date_start')"  class="form-control">\
                     </div>');
                     $("#start_data").date({
 

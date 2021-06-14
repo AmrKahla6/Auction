@@ -33,6 +33,7 @@ return [
     'close_price'     => 'Closeing Price',
     'show_type'       => 'Show Type',
     'date_close'      => 'Date Closeing',
+    'date_start'      => 'Date Starting',
     'detials'         => 'Detials',
     'governorate'     => 'Governorate',
     'city'            => 'City',
@@ -107,7 +108,7 @@ return [
       'no_auctions'     => 'There are no auctions listed',
       'add_favorit'     => 'Add to favorites',
       'not_login'       => 'Sign in',
-      'dirhams'         => 'Dirhams',
+      'dirhams'         => 'Dinar',
 
       //single_auction
       'ended'          => 'Finish',
@@ -131,5 +132,11 @@ return [
     'read_terms'     => 'Please read all terms and conditions to avoid problems...',
 
 
-
+    //Tenders
+    'price_exist'    => 'You have bid the same price before',
+    'incorr_price'   => 'The price is not correct',
+    'succes_auct'    => 'Auction has been successfully added',
+    'winner_auct'    => 'You got the auction',
+    'delete_favo'    => 'Removed from favourites',
+    'add_fav'        => 'Added to favourites',
 ];

@@ -3,7 +3,7 @@
 <div class="container">
     <div id="profile-page">
         <div class="profile-head">
-            <a class="link-setting" href="setting.html"><span class="icon-settings"></span></a>
+            <a class="link-setting" href="{{route('live.edit-profile')}}"><span class="icon-settings"></span></a>
             <div class="about">
                 <div class="image">
                     @if ($member->img)
@@ -40,13 +40,13 @@
         <div class="profile-links">
             <a href="{{route('live.my_tenders')}}"><span class="icon-activity"></span> @lang('live.my_tenders')</a>
             <a href="{{route('live.registerd')}}"><span class="icon-share"></span> @lang('live.my_auctions')</a>
-            <a href="#"><span class="icon-heart1"></span> @lang('live.my_fav')</a>
+            <a href="{{route('live.my_favorite',Auth::guard('members')->user())}}"><span class="icon-heart1"></span> @lang('live.my_fav')</a>
             <a href="#"><span class="icon-bell1"></span> @lang('live.notification') <span class="num">0</span></a>
-            <a href="contactus.html"><span class="icon-headphones"></span> @lang('live.call')</a>
-            <a href="about.html"><span class="icon-info"></span> @lang('live.about_as')</a>
-            <a href="mainfaq.html"><span class="icon-help-circle"></span> @lang('live.comm_question')</a>
-            <a href="terms.html"><span class="icon-alert-triangle"></span> @lang('live.terms')</a>
-            <a class="btn-logout" href="#"><span class="icon-power"></span> @lang('live.logout') </a>
+            <a href="{{route('live.contact-us')}}"><span class="icon-headphones"></span> @lang('live.call')</a>
+            <a href="{{route('live.aboute')}}"><span class="icon-info"></span> @lang('live.about_as')</a>
+            <a href="{{route('live.common-questions')}}"><span class="icon-help-circle"></span> @lang('live.comm_question')</a>
+            <a href="{{route('live.terms')}}"><span class="icon-alert-triangle"></span> @lang('live.terms')</a>
+            <a class="btn-logout" href="{{route('live.logout')}}"><span class="icon-power"></span> @lang('live.logout') </a>
         </div>
     </div>
 

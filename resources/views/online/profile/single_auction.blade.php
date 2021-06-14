@@ -99,8 +99,7 @@
                         <h3>@lang('live.adv_desc')</h3>
                     </div>
                     <div class="content">
-                        <p>{{$auction->desc_ar}}</p>
-
+                        <p>{{$auction->detials}}</p>
                     </div>
                 </div>
             </div>

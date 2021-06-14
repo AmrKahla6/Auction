@@ -13,7 +13,7 @@ class AuctionDetials extends Model
         return $this->belongsTo(Auction::class,'auction_id');
     }
     public function cat_parm(){
-        return $this->belongsTo(catParameter::class,'param_value_id','id');
+        return $this->belongsTo(catParameter::class,'param_value_id');
     }
     public function category(){
         return $this->belongsTo(Category::class,'cat_id');
@@ -24,15 +24,14 @@ class AuctionDetials extends Model
         return $this->belongsTo(Auction::class,'auction_id')->with('images');
     }
 
- /*   public function param(){
-        return $this->belongsTo(selectParams::class,'param_value_id','id');
-    }*/
-
-
     public function type(){
         return $this->belongsTo(selectParams::class,'type_id');
     }
 
+
+    public function param(){
+        return $this->belongsTo(selectParams::class,'param_value_id');
+    }
 
 
 

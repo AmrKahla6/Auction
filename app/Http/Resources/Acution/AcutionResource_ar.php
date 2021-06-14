@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Acution;
 
+use App\Http\Resources\Acution\DetialsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AcutionResource_ar extends JsonResource
@@ -34,7 +35,7 @@ class AcutionResource_ar extends JsonResource
             'cat_id'          => $this->cat_id,
             'cat_name'        => $this->category->category_name_ar,
             'created_at'      => $this->created_at,
-            'cat_detidals'    => DetialsResource::collection($this->more_detials),
+            'cat_details'     => DetialsResource::collection($this->more_detials),
             'images'          => ImageResource::collection($this->images),
         ];
     }

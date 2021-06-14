@@ -216,13 +216,10 @@ class Profile extends BaseController
                     if ($auction_detials['type_id'] === null) {
                         $auction_detials['auction_id'] = $object->id;
                         $auction_detials['cat_id'] = $object->cat_id;
-                        AuctionDetials::create($auction_detials);
                     } elseif ($auction_detials['type_id'] != null) {
                         $auction_detials['auction_id'] = $object->id;
                         $auction_detials['cat_id'] = $object->cat_id;
-                        AuctionDetials::create($auction_detials);
-                     //   dd($auction_detials);
-
+                        //   dd($auction_detials);
                     }
                 }
 
@@ -266,45 +263,56 @@ class Profile extends BaseController
     }
 
     public function add_tender(Request $request,$aucation_id)
-    {  $validatedData = $request->validate([
+    {
+        $validatedData = $request->validate([
             'price' => 'required',
         ],[
-            'price.required'  => 'يرجي ادخال السعر',
+            'price.required'  => __("user.price"),
         ]);
-        //dd($request->all() );
-        $member = Member::find(auth()->guard('members')->id());
 
-        //update price in aucation and add tender
+        $member = Member::find(auth()->guard('members')->id());
+        $oldTenders = Tender::where('is_winner',0)->get();
+        foreach($oldTenders as $old){
+            if($old->member_id == $member->id && $old->price == $request->price){
+                session()->flash('error', __("live.price_exist"));
+                return redirect()->back();
+            }
+        }
+
         $auction = Auction::find($aucation_id);
         $tender  = new Tender;
         $tender->member_id  = $member->id;
         $tender->auction_id = $auction->id;
         if($request->price < $auction->price_opining){
-            session()->flash('error', "السعر غير صحيح");
+            session()->flash('error', __("live.incorr_price"));
             return redirect()->back();
         }
-        $tender->price      = $request->price;
-
-        if($request->price > $auction->price_closing){
+        if($request->price >= $auction->price_closing){
             $tender->is_winner    = 1;
             $auction->is_finished = 1;
-        }else {
+         }else {
             $tender->is_winner = 0;
         }
+
         if($request->price > $auction->price){
             $auction->price = $request->price;
         }
+
+        $tender->price      = $request->price;
+
         $auction->save();
         $tender->save();
 
-        if($tender->is_winner = 0){
+        if($tender->is_winner == 0){
 
-            session()->flash('success', "تم اضافه المزاديه بنجاح");
+            session()->flash('success', __('live.succes_auct'));
         }else{
-            session()->flash('success', "لقد حصلت علي المزاد");
+            session()->flash('success', __('live.winner_auct'));
         }
         return redirect()->back();
     }
+
+
     public function save_img($filles,$path){
         $type = array(
             "jpg"=>"image",
@@ -360,7 +368,7 @@ class Profile extends BaseController
             return response()->json([
                 'favorite' => $old_fav,
                 'status'   => true,
-                'msg'      => 'تم الحذف من المفضله',
+                'msg'      => __('live.delete_favo'),
             ]);
         }else{
             $favorite = new Favorite;
@@ -371,7 +379,7 @@ class Profile extends BaseController
             return response()->json([
                 'favorite' => $favorite,
                 'status'   => true,
-                'msg'      => 'تم الاضافه الي المفضله',
+                'msg'      => __('live.add_fav'),
             ]);
         }
     }

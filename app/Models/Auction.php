@@ -22,7 +22,7 @@ class Auction extends Model
     }
 
     public function more_detials(){
-        return $this->hasMany(AuctionDetials::class);
+        return $this->hasMany(AuctionDetials::class,'auction_id');
     }
 
     public function tenders(){

@@ -509,7 +509,8 @@ class AuctionController extends BaseController
 
 
     public function getAll(Request $request){
-        $aucs = Auction::where('status',0)->get();
+        $aucs = Auction::get();
+        return $aucs->more_detials;
         if($aucs){
             if($request->lang == "en"){
                 $auctions = AcutionResource_en::collection(Auction::where('status',0)->get());
@@ -523,6 +524,7 @@ class AuctionController extends BaseController
 
     public function getAcution(Request $request){
         $auc = Auction::where('id', $request->auction_id)->where('status',0)->first();
+
         if($auc){
             if($request->lang == "en"){
                 $auction = new AcutionResource_en(Auction::where('id', $request->auction_id)->first());

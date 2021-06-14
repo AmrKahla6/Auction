@@ -32,6 +32,7 @@ return [
     'close_price'     => 'سعر الإغلاق',
     'show_type'       => 'نوع العرض',
     'date_close'      => 'تاريخ الاغلاق',
+    'date_start'      => 'تاريخ البدء',
     'detials'         => 'تفاصيل',
     'governorate'     => 'المحافظة',
     'city'            => 'المدينة',
@@ -108,7 +109,7 @@ return [
     'no_auctions'    => 'ليس هناك مزادات قائمة',
     'add_favorit'    => 'أضف للمفضلة',
     'not_login'      => 'قم بتسجيل الدخول',
-    'dirhams'        => 'درهم',
+    'dirhams'        => 'دينار',
 
     //single_auction
     'ended'          => 'الإنتهاء',
@@ -134,5 +135,11 @@ return [
     'read_terms'     => 'يرجى قراءة كافة الشروط لتفادي المشاكل...',
 
 
-
+    //Tenders
+    'price_exist'    => 'لقد قمت بالمزاديه بنفس السعر من قبل',
+    'incorr_price'   => 'السعر غير صحيح',
+    'succes_auct'    => 'تم اضافه المزاد بنجاح',
+    'winner_auct'    => 'لقد حصلت علي المزاد',
+    'delete_favo'    => 'تم الحذف من المفضله',
+    'add_fav'        => 'تم الاضافه الي المفضله'
 ];
