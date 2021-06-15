@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Storage;
 class Register extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('guest:members');
+    }
 
     public function register()
     {
@@ -29,7 +33,7 @@ class Register extends Controller
             'phone'               => 'required|unique:members',
             'date_of_birth'       => 'required|date|before:-15 years',
             'country_id'          => 'required',
-            'email'               => 'required|unique:members',
+            'email'               => 'required|email|unique:members',
             'password'            => 'required|min:6',
         ],
         [
@@ -61,7 +65,7 @@ class Register extends Controller
             'phone'               => 'required|unique:members',
             'date_of_birth'       => 'required',
             'id_number'           => 'required|unique:members',
-            'email'               => 'required|unique:members',
+            'email'               => 'required|email|unique:members',
             'password'            => 'required|min:6',
         ],
         [
@@ -156,12 +160,12 @@ class Register extends Controller
           session()->flash('success', __('site.changed_password_successfully'));
           return redirect()->back();
          }else{
-            session()->flash('error', __('site.passwords_not_valid'));  
+            session()->flash('error', __('site.passwords_not_valid'));
             return redirect()->back();
          }
         }
-        
-    
+
+
 
     // public function aboute(){
     //     return view('online.static.aboute');

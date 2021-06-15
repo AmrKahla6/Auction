@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Member extends Authenticatable implements JWTSubject
+class Member extends Authenticatable implements JWTSubject,MustVerifyEmail
 {
     use Notifiable;
 

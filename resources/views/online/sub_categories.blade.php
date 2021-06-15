@@ -2,11 +2,29 @@
 @extends('layouts.online.member')
 		<div class="sub-categories">
 			<div class="container">
-				<ul>
-                    @foreach ($categories as $cat)
-					<li class=>
-						<a target="_blank" href="{{route('live.sub_categories',$cat->id)}}">{{$cat->category_name_ar}}</a>
-					</li>
+				<ul class="mb-3 nav nav-pills" id="pills-tab" role="tablist">
+                    @foreach ($categories as $index=>  $cat)
+					   @if($index < 1)
+                            <li class="nav-item active">
+                                <a class="nav-link active" id="pills-{{$cat->id}}-tab" data-toggle="pill" href="#pills-{{$cat->id}}" role="tab" aria-controls="pills-{{$cat->id}}" aria-selected="true">
+                                    @if (App::isLocale('en'))
+                                        {{$cat->category_name_en}}
+                                    @else
+                                        {{$cat->category_name_ar}}
+                                    @endif
+                                </a>
+                            </li>
+					    @else
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-{{$cat->id}}-tab" data-toggle="pill" href="#pills-{{$cat->id}}" role="tab" aria-controls="pills-{{$cat->id}}"  aria-selected="false">
+                                @if (App::isLocale('en'))
+                                    {{$cat->category_name_en}}
+                                @else
+                                    {{$cat->category_name_ar}}
+                                @endif
+                            </a>
+                        </li>
+					   @endif
                     @endforeach
 
 				</ul>
@@ -14,8 +32,14 @@
 		</div>
 		<div class="products">
 			<div class="container">
-				<div class="row">
-					@foreach ($categories as $cat)
+		  <div class="row">
+		    <div class="tab-content" id="pills-tabContent">
+				@foreach ($categories as $index =>  $cat)
+					@if($index< 1)
+					    <div class="tab-pane fade show active in" id="pills-{{$cat->id}}" role="tabpanel" aria-labelledby="pills-{{$cat->id}}-tab">
+					@else
+					    <div class="tab-pane fade show" id="pills-{{$cat->id}}" role="tabpanel" aria-labelledby="pills-{{$cat->id}}-tab">
+					@endif
                       @foreach ($cat->auctions()->get() as $auction )
 					  <div class="col-md-4 col-sm-6 col-xs-12">
 						<a href="{{route('live.single_auction',$auction->id)}}" id="product-id{{$auction->id}}" class="product">
@@ -69,9 +93,10 @@
 							</div>
 						</a>
 					</div>
-                        @endforeach
-						@endforeach
-
+					@endforeach
+			      </div>
+				  @endforeach
+		  </div>
 
 				</div>
 			</div>

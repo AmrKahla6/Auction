@@ -47,6 +47,11 @@ Route::group(
             Route::get('/forgetpassword2', 'Register@forgetpassword2')->name('forgetpassword2');
             Route::post('/forgetpassword_post', 'Register@forgetpassword_post')->name('forgetpassword_post');
 
+            //Verify Email
+            Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+            Route::get('email/verify', 'VerificationController@show')->name('verification.notice');
+            Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
+
 
             /* end of auth route //online part */
             /*genderal pages routes */

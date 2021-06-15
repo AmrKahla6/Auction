@@ -80,5 +80,7 @@
         'member_id'         => 'Member is required',
         'old_password'      => 'Old password is required',
         'password'          => 'New password is required',
+        'requir_new_pass'   => 'New password is required',
+        'exist'             => 'User Exist',
     ];
 ?>

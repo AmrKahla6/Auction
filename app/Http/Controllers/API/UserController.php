@@ -189,10 +189,61 @@ class UserController extends BaseController
             return $this -> returnError('',__('user.wrangs'));
         }
     }
+    /**
+     * Chack phone is exist
+     */
+
+     public function chackPhoneExist(Request $request){
+        $validator = Validator::make(
+        $request->all(),
+            [
+                'phone'           => 'required',
+            ],[
+                'phone.required'  => __('user.phone'),
+            ]);
+
+            $user = Member::where('phone', $request->phone)->first();
+            if($user){
+                $successmessage = __('user.exist');
+                return $this->returnData('success',$successmessage);
+            }else{
+                $errormessage = __('user.notexist');
+                return $this -> returnError('',$errormessage);
+            }
+     }
+
+    /**
+  * Member forgetpassword process By Phone
+  */
+  public function forgetChangePass(Request $request)
+  {
+    $validator = Validator::make(
+        $request->all(),
+        [
+            'phone'           => 'required',
+            'new_password'    => 'required',
+        ],[
+            'phone.required'        => __('user.phone'),
+            'new_password.required' => __('user.requir_new_pass')
+        ]
+    );
+
+      $user = Member::where('phone', $request->phone)->first();
+      if($user){
+          $user->password = Hash::make($request['new_password']);
+          $user->save();
+          $successmessage = __('user.new_pass');
+          return $this->returnData('success',$successmessage);
+      }else{
+        $errormessage = __('user.notexist');
+        return $this -> returnError('',$errormessage);
+      }
+  }
+
 
 
  /**
-  * Member forgetpassword process
+  * Member forgetpassword process By Email
   */
  public function forgetpassword(Request $request)
  {

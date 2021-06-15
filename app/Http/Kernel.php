@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'changeLanguage'          => \App\Http\Middleware\changeLanguage::class,
         'auth.guard'              => \App\Http\Middleware\AssignGuard::class,
+        'verified'                => \App\Http\Middleware\EnsureEmailIsVerified::class,
     ];
 }

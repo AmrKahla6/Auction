@@ -21,8 +21,8 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('login', 'UserController@login');
             Route::post('forgetpassword', 'UserController@forgetpassword');
             Route::post('activcode', 'UserController@activcode');
-
-
+            Route::post('forgetpass', 'UserController@forgetChangePass');
+            Route::post('checkphone', 'UserController@chackPhoneExist');
             //Get Main Category
             Route::post('main-category','CategoyController@mainCategory');
             //Get Sub Category
