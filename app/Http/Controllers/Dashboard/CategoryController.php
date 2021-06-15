@@ -64,7 +64,7 @@ class CategoryController extends Controller
             'img.required'               => 'يرجي ادخال صوره القسم',
         ]);
 
-        $data = $request->except(['parent_id', 'img']);
+        $data = $request->except(['parent_id', 'img','price']);
 
         if ($request->img) {
             Image::make($request->img)->resize(300, null, function ($constraint) {
@@ -80,6 +80,12 @@ class CategoryController extends Controller
             $data['parent_id'] = $request->parent_id;
         }else{
             $data['parent_id'] = 0;
+        }
+
+        if ($data['parent_id'] == 0) {
+            $data['price']  = $request->price;
+        }else{
+            $data['price']  = null;
         }
         $cat = Category::create($data);
 
@@ -141,6 +147,12 @@ class CategoryController extends Controller
             $data['parent_id'] = 0;
         }else{
             $data['parent_id'] = $request->parent_id;
+        }
+
+        if ($data['parent_id'] == 0) {
+            $data['price']  = $request->price;
+        }else{
+            $data['price']  = null;
         }
         $category->update($data);
 

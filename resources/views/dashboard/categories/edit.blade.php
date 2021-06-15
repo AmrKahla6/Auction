@@ -43,13 +43,24 @@
 
                             <div class="form-group">
                                 <label>القسم</label>
-                                <select name="parent_id" id="" class="form-control">
+                                <select name="parent_id" id="" class="form-control catSelect">
                                     <option value="">اختر القسم (قسم اساسي)</option>
                                     @foreach ($cats as $cat)
                                         <option value="{{$cat->id}}" {{(old('parent_id', $category->parent_id) == $cat->id ? 'selected' : '')}} >{{$cat->category_name_ar}}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            @if (empty($category->price))
+                                <div class="form-group changePrice" style="display: none">
+                                    <label>السعر</label>
+                                    <input type="number" name="price" placeholder="السعر" class="form-control" value="{{ $category->price }}" >
+                                </div>
+                            @else
+                                <div class="form-group changePrice">
+                                    <label>السعر</label>
+                                    <input type="number" name="price" placeholder="السعر" class="form-control" value="{{ $category->price }}" >
+                                </div>
+                            @endif
 
                             <div class="form-group">
                                 <label>الصوره</label>
@@ -73,5 +84,18 @@
         </section><!-- end of content -->
 
     </div><!-- end of content wrapper -->
+
+    @section('scripts')
+    <script>
+        $( ".catSelect" ).change(function() {
+            let catValue =  $(this).children(":selected").attr("value");
+            if(catValue == 0){
+                $(".changePrice").show();
+            }else{
+                $(".changePrice").hide();
+            }
+        });
+    </script>
+@endsection
 
 @endsection

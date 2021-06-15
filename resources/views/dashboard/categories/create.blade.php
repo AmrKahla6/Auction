@@ -41,8 +41,8 @@
 
                         <div class="form-group">
                             <label>القسم</label>
-                            <select name="parent_id" id="" class="form-control">
-                                <option value="" selected>اختر القسم (قسم اساسي)</option>
+                            <select name="parent_id" id="" class="form-control catSelect">
+                                <option id="catValue" value="0" selected>اختر القسم (قسم اساسي)</option>
                                 @foreach ($cats as $cat)
                                     <option value="{{$cat->id}}">{{$cat->category_name_ar}}</option>
                                 @endforeach
@@ -71,5 +71,16 @@
         </section><!-- end of content -->
 
     </div><!-- end of content wrapper -->
-
+    @section('scripts')
+        <script>
+            $( ".catSelect" ).change(function() {
+                let catValue =  $(this).children(":selected").attr("value");
+                if(catValue == 0){
+                    $(".changePrice").show();
+                }else{
+                    $(".changePrice").hide();
+                }
+            });
+        </script>
+    @endsection
 @endsection
