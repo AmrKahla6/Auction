@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Onlin;
 use Str;
 use Auth;
 use Carbon\Carbon;
+use App\Models\DaysOF;
 use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
@@ -69,6 +70,9 @@ class Profile extends BaseController
                                     ->get();
             $data['types'] = AuctionType::select('id', 'type_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
             $data['governorate'] = Governorate::select('id', 'governorate_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
+            // $days        = DaysOF::select('id','days_of')->get();
+            $data['date']   = date('Y-m-d');
+            $data['exist']  = DaysOF::where('days_of', $data['date'])->exists();
             return view('online.profile.addauctions')->with($data);
         } else {
             return redirect('live/login');

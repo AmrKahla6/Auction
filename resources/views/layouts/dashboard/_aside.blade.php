@@ -64,6 +64,10 @@
                 </li>
             @endif
 
+            <li class="nav-item {{is_active('auction')}}">
+                <a href="{{route('dashboard.get-days-of')}}"><i class="fa fa-calendar-check-o"></i><span>ايام العطله</span></a>
+            </li>
+
             @if(auth()->user()->hasPermission('read_auctions'))
                 <li class="nav-item {{is_active('auction')}}">
                     <a href="{{route('dashboard.auction.index')}}"><i class="fa fa-handshake-o"></i><span>المزادات</span></a>

@@ -131,7 +131,7 @@ class Register extends Controller
      public function logout()
      {
          auth()->guard('members')->logout();
-         return redirect('live/login');
+         return redirect(route('live.login'));
      }
     public function forgetpassword()
     {

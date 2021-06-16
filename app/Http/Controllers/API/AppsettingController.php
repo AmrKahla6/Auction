@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Validator;
 use App\Models\Term;
 use App\Models\About;
+use App\Models\Phone;
 use App\Models\Member;
 use App\Models\Slider;
 use App\Models\Contact;
@@ -95,5 +96,10 @@ class AppsettingController extends BaseController
       public function advertisement(Request $request){
         $ads = AdvertisementResource::collection(Advertisement::get());
         return $this->returnData('success', $ads);
+      }
+
+      public function getPhone(){
+        $phone = Phone::select('id','number')->get();
+        return $this->returnData('success', $phone);
       }
 }

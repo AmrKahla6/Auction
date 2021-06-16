@@ -173,8 +173,8 @@ class AuctionController extends BaseController
 
         //return $auction_details;
 
-      $auctions = [];
-        $ids =[];
+        $auctions = [];
+        $ids      = [];
         foreach ($auction_details as $key => $auction_detail) {
             if(in_array($auction_detail->auction->id ,$ids) ) {
                 continue;
@@ -510,7 +510,6 @@ class AuctionController extends BaseController
 
     public function getAll(Request $request){
         $aucs = Auction::get();
-        return $aucs->more_detials;
         if($aucs){
             if($request->lang == "en"){
                 $auctions = AcutionResource_en::collection(Auction::where('status',0)->get());

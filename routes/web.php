@@ -48,9 +48,9 @@ Route::group(
             Route::post('/forgetpassword_post', 'Register@forgetpassword_post')->name('forgetpassword_post');
 
             //Verify Email
-            Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
-            Route::get('email/verify', 'VerificationController@show')->name('verification.notice');
-            Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
+            // Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+            // Route::get('email/verify', 'VerificationController@show')->name('verification.notice');
+            // Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
 
 
             /* end of auth route //online part */
@@ -193,6 +193,13 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middlewa
     Route::post('/setting/phone/store', 'SettingController@storePhone')->name('setting-store-phone');
     Route::put('/setting/phone/edit', 'SettingController@editPhone')->name('setting-edit-phone');
     Route::delete('/setting/phone/{id}/delete', 'SettingController@deletePhone')->name('setting-delete-phone');
+
+
+    //Days Off
+    Route::get('/days-of', 'DaysOfController@getDaysOf')->name('get-days-of');
+    Route::post('/days-of/store', 'DaysOfController@postDaysOf')->name('post-days-of');
+    Route::put('/days-of/update', 'DaysOfController@updateDaysOf')->name('update-days-of');
+    Route::delete('/days-of/{id}/delete', 'DaysOfController@deleteDayOf')->name('delete-days-of');
   });
 
 

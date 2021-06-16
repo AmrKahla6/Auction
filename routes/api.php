@@ -83,6 +83,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Get slider  Auctions
             Route::post('slider-acutions', 'AuctionController@acutionSlider');
 
+                //Get Phones
+                Route::get('get-phone', 'AppsettingController@getPhone');
+
 
             //Latest Acutions
             Route::post('latest-acutions', 'AuctionController@latestAcutions');
@@ -136,6 +139,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
 
                 //my watting auctions
                 Route::post('my-watting-auction', 'AuctionController@myWattingAuctions');
+
+
+
 
             });
         });

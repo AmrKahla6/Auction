@@ -6,117 +6,124 @@
         <div class="login-box">
             @include('partials._errors')
             @include('partials._session')
-                <form action="{{route('live.post_auctions')}}" id="myform" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('post')
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>  @lang('live.auction_name') </label>
-                            <input type="text"  required="required" name="auction_title" value="" placeholder="@lang('live.auction_name')"  class="form-control">
-                       </div>
 
-                       <div class="col-md-6">
-                           <label>  @lang('live.address')</label>
-                           <input type="text" name="address"  required="required" value="" placeholder="@lang('live.address') "  class="form-control">
-                       </div>
-                    </div>
-
-                    <div class="row">
+            @if (!$exist)
+            <form action="{{route('live.post_auctions')}}" id="myform" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('post')
+                <div class="row">
                     <div class="col-md-6">
-                        <label>  @lang('live.open_price')</label>
-                        <input type="number"  required="required" name="price_opining" value="" placeholder=" @lang('live.open_price')"  class="form-control">
-                    </div>
-                    <div class="col-md-6 form-group ">
-                        <label>  @lang('live.close_price')</label>
-                        <input type="number"  required="required" name="price_closing" value="" placeholder=" @lang('live.close_price')"  class="form-control">
-                    </div>
-                    </div>
-
-                    <div class="row">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label> @lang('live.show_type') </label>
-                        <select name="type_id" id="type_id" onchange="Stat_Date_option()" required="required" class="form-control">
-                            @foreach ($types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    </div>
-                    <div class="row"  id="Stat_Date">
-                        </div>
-                    <div class="row">
-
-                    <div class="col-md-12 form-group">
-                        <label>@lang('live.date_close')</label>
-                        <input type="datetime-local"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
-                    </div>
-                    <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label> @lang('live.detials')</label>
-                        <div class="col-md-12 form-group">
-                            <textarea type="text"  required="required" name="detials" placeholder="@lang('live.detials')"  class="form-control"></textarea>
-                        </div>
-                    </div>
+                        <label>  @lang('live.auction_name') </label>
+                        <input type="text"  required="required" name="auction_title" value="" placeholder="@lang('live.auction_name')"  class="form-control">
                 </div>
 
+                <div class="col-md-6">
+                    <label>  @lang('live.address')</label>
+                    <input type="text" name="address"  required="required" value="" placeholder="@lang('live.address') "  class="form-control">
+                </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>  @lang('live.governorate') </label>
-                        <select name="gover_id"  required="required" id="gover_id" class="form-control"  onchange="get_Cites()">
-                            <option disabled="disabled" value="-1"> @lang('live.governorate')</option>
-                            @foreach ($governorate as $gov)
-                            <option value="{{$gov->id}}">{{$gov->name}}</option>
-                            @endforeach
-                        </select>
-                      </div>
-                        <div class="col-md-6 form-group">
-                            <label>  @lang('live.city') </label>
-                        <select name="city_id"  required="required" class="form-control" id="city_id">
-                        </select>
-                    </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 form-group">
-                            <label>    @lang('live.images')  </label>
-                        <input type="file"  required="required" onchange="loadPreview(this)" id="file-input" class="form-control" name="auction_images[]" multiple="true" accept="image/*" >
-                        @if ($errors->has('files'))
-                          @foreach ($errors->get('files') as $error)
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $error }}</strong>
-                          </span>
-                          @endforeach
-                        @endif
-                        <div id="thumb-output"></div>
-                        <br>
-                    </div>
-                    </div>
-                    <div class="row">
-                     <div class="col-md-12 form-group">
-                        <label>   @lang('live.category')  </label>
-                        <select name="cat_id" id="cat_id" class="form-control" onchange="Get_Params()" required="required">
-                            <option disabled="disabled"  value="-1"> @lang('live.category')  </option>
-                            @foreach ($categories as $cat)
-                            <option value="{{$cat->id}}">{{$cat->name}}</option>
-                         @foreach ($cat->subcategory()->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name',)->get() as $sub)
-                             <option value="{{$sub->id}}">{{$sub->name}}</option>
-                             @endforeach
-                            @endforeach
-                        </select>
-                    </div>
-                    </div>
+                <div class="row">
+                <div class="col-md-6">
+                    <label>  @lang('live.open_price')</label>
+                    <input type="number"  required="required" name="price_opining" value="" placeholder=" @lang('live.open_price')"  class="form-control">
+                </div>
+                <div class="col-md-6 form-group ">
+                    <label>  @lang('live.close_price')</label>
+                    <input type="number"  required="required" name="price_closing" value="" placeholder=" @lang('live.close_price')"  class="form-control">
+                </div>
+                </div>
 
-                   <div id="ParamsHouse"></div>
-
-                    <div class="login-box-footer">
-                        <button  type="submit"id="add_build"  class="btn btn-block btn-lg btn-primary">  @lang('live.save_auction') </button>
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label> @lang('live.show_type') </label>
+                    <select name="type_id" id="type_id" onchange="Stat_Date_option()" required="required" class="form-control">
+                        @foreach ($types as $type)
+                        <option value="{{$type->id}}">{{$type->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                </div>
+                <div class="row"  id="Stat_Date">
                     </div>
-                </form>
+                <div class="row">
+
+                <div class="col-md-12 form-group">
+                    <label>@lang('live.date_close')</label>
+                    <input type="datetime-local"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
+                </div>
+                <div class="row">
+                <div class="col-md-12 form-group">
+                    <label> @lang('live.detials')</label>
+                    <div class="col-md-12 form-group">
+                        <textarea type="text"  required="required" name="detials" placeholder="@lang('live.detials')"  class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>  @lang('live.governorate') </label>
+                    <select name="gover_id"  required="required" id="gover_id" class="form-control"  onchange="get_Cites()">
+                        <option disabled="disabled" value="-1"> @lang('live.governorate')</option>
+                        @foreach ($governorate as $gov)
+                        <option value="{{$gov->id}}">{{$gov->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                    <div class="col-md-6 form-group">
+                        <label>  @lang('live.city') </label>
+                    <select name="city_id"  required="required" class="form-control" id="city_id">
+                    </select>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>    @lang('live.images')  </label>
+                    <input type="file"  required="required" onchange="loadPreview(this)" id="file-input" class="form-control" name="auction_images[]" multiple="true" accept="image/*" >
+                    @if ($errors->has('files'))
+                    @foreach ($errors->get('files') as $error)
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $error }}</strong>
+                    </span>
+                    @endforeach
+                    @endif
+                    <div id="thumb-output"></div>
+                    <br>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>   @lang('live.category')  </label>
+                    <select name="cat_id" id="cat_id" class="form-control" onchange="Get_Params()" required="required">
+                        <option disabled="disabled"  value="-1"> @lang('live.category')  </option>
+                        @foreach ($categories as $cat)
+                        <option value="{{$cat->id}}">{{$cat->name}}</option>
+                    @foreach ($cat->subcategory()->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name',)->get() as $sub)
+                        <option value="{{$sub->id}}">{{$sub->name}}</option>
+                        @endforeach
+                        @endforeach
+                    </select>
+                </div>
+                </div>
+
+            <div id="ParamsHouse"></div>
+
+                <div class="login-box-footer">
+                    <button  type="submit"id="add_build"  class="btn btn-block btn-lg btn-primary">  @lang('live.save_auction') </button>
+                </div>
+            </form>
+            @else
+                <center>
+                    <h1>
+                        @lang('live.day_of')
+                    </h1>
+                </center>
+            @endif
+        </div>
     </div>
-            </div>
-            </div>
+</div>
 
 
 

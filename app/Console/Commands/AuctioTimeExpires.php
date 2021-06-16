@@ -45,9 +45,7 @@ class AuctioTimeExpires extends Command
         }])->where('end_data','<',  Carbon::now()->format('Y-m-d'))->where('is_finished',0)->get();
 
         foreach ($auctions as $auction) {
-             $tender = $auction->tenders->first();
-
-
+            $tender = $auction->tenders->first();
             $tender->update(['is_winner' => 1]);
         }
     }

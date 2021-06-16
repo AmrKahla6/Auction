@@ -82,5 +82,6 @@
         'password'          => 'New password is required',
         'requir_new_pass'   => 'New password is required',
         'exist'             => 'User Exist',
+        'day_of'            => 'Day Of',
     ];
 ?>

@@ -18,6 +18,7 @@ class MainCategoryResource_en extends JsonResource
             'id'            => $this->id,
             'category_name' => $this->category_name_en,
             'img'           => asset('uploads/category/'.$this->img),
+            'price'         => $this->price,
         ];
     }
 }
