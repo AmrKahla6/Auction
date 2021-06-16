@@ -83,9 +83,11 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Get slider  Auctions
             Route::post('slider-acutions', 'AuctionController@acutionSlider');
 
-                //Get Phones
-                Route::get('get-phone', 'AppsettingController@getPhone');
+            //Get Phones
+            Route::get('get-phone', 'AppsettingController@getPhone');
 
+            //Day Of
+            Route::post('get-days-of', 'AppsettingController@daysOf');
 
             //Latest Acutions
             Route::post('latest-acutions', 'AuctionController@latestAcutions');

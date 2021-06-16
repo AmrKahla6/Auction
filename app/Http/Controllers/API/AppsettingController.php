@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use Validator;
+use Carbon\Carbon;
 use App\Models\Term;
 use App\Models\About;
 use App\Models\Phone;
+use App\Models\DaysOF;
 use App\Models\Member;
 use App\Models\Slider;
 use App\Models\Contact;
@@ -101,5 +103,10 @@ class AppsettingController extends BaseController
       public function getPhone(){
         $phone = Phone::select('id','number')->get();
         return $this->returnData('success', $phone);
+      }
+
+      public function daysOf(Request $request){
+        $days    = DaysOF::select('id','days_of as day')->get();
+        return $this->returnData('success', $days);
       }
 }
