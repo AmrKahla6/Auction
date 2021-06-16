@@ -139,4 +139,5 @@ return [
     'winner_auct'    => 'You got the auction',
     'delete_favo'    => 'Removed from favourites',
     'add_fav'        => 'Added to favourites',
+    'balance'        => 'Balance is required',
 ];

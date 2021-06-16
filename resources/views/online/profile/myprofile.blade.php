@@ -2,6 +2,8 @@
 @section('content')
 <div class="container">
     <div id="profile-page">
+        @include('partials._errors')
+        @include('partials._session')
         <div class="profile-head">
             <a class="link-setting" href="{{route('live.edit-profile')}}"><span class="icon-settings"></span></a>
             <div class="about">
@@ -32,9 +34,11 @@
             <div class="balance">
                 <div class="content">
                     <p>@lang('live.wallet')</p>
-                    <b>350 درهم</b>
+                    <b>{{isset($member->balance) ? $member->balance : 0}}</b>
                 </div>
-                <button type="button" class="btn btn-balance" data-toggle="modal" data-target="#buy_credit_modal">@lang('live.buy')</button>
+                <button type="button" class="btn btn-balance" data-id="{{ $member->id }}" data-balance="{{ $member->balance }}" data-toggle="modal" data-target="#buy_credit_modal">
+                    @lang('live.buy')
+                </button>
             </div>
         </div>
         <div class="profile-links">
@@ -50,31 +54,45 @@
         </div>
     </div>
 
-<div class="modal fade" id="buy_credit_modal" tabindex="-1" role="dialog" aria-labelledby="buy_credit_modalTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title" id="buy_credit_modalTitle">@lang('live.wallet')
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  <span class="icon-x"></span>
-</button>
-</h5>
-</div>
-<div class="modal-body">
-  <h3><span class="icon-wallet"></span> رصيد محفظتي</h3>
-  <div class="mycredit">
-      <p>رصيدي المتاح</p>
-      <b>35 درهم</b>
-  </div>
-  <h3>شحن محفظتي</h3>
-  <input type="text" name="add_credit" value="" placeholder="اكتب قيمة الشحن" id="add_credit" class="form-control">
-  <button type="button" class="btn btn-primary">شحن</button>
-</div>
-</div>
-</div>
+    <div class="modal fade" id="buy_credit_modal" tabindex="-1" role="dialog" aria-labelledby="buy_credit_modalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="buy_credit_modalTitle">@lang('live.wallet')
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="icon-x"></span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <h3><span class="icon-wallet"></span> رصيد محفظتي</h3>
+                    <div class="mycredit">
+                        <p>رصيدي المتاح</p>
+                        <b>{{isset($member->balance) ? $member->balance : 0}}</b>
+                    </div>
+                        <h3>شحن محفظتي</h3>
+                        <form action="profile/update-balance" method="post">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="id" value="{{$member->id}}">
+                            <input type="text" name="balance" value="" placeholder="اكتب قيمة الشحن" id="add_credit" class="form-control">
+                            <button type="submit" class="btn btn-primary">شحن</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-
-</div>
+<script>
+    //Edit Catgeoy
+    $('#buy_credit_modal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var balance = button.data('balance')
+        var modal = $(this)
+        modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #add_credit').val(balance);
+    })
+</script>
 @endsection

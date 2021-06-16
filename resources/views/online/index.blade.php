@@ -56,8 +56,8 @@
                                 <a class="btn btn-default" href="{{route('live.myonline')}}"><span class="icon-settings"></span> @lang('live.main')</a>
                             @endif
 							@if(empty(App\Models\Member::find(auth()->guard('members')->id())))
-							<a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
-							<a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>
+                                <a class="btn btn-login" href="{{route('live.login')}}"><span class="icon-user1"></span> @lang('live.l-login')</a>
+                                <a class="btn btn-register" href="{{route('live.register')}}"><span class="icon-user-plus1"></span> @lang('live.register')</a>
 							@endif
 						</div>
 					</div>

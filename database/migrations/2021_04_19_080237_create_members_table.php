@@ -25,6 +25,7 @@ class CreateMembersTable extends Migration
             $table->string('commercial_record')->nullable();
             $table->string('id_number')->nullable();
             $table->string('type')->nullable();
+            $table->double('balance')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('forgetcode')->nullable();

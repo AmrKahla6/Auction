@@ -50,6 +50,13 @@
 
                     </div>
 
+                    <div class="col-md-8">
+                        <div class="form-group col-md-6">
+                            <label>  الرصيد الحالي  </label>
+                            <span  class="form-control">{{isset($member->balance) ? $member->balance : 0}}</span>
+                        </div>
+                    </div>
+
                     <div class="col-md-12">
 
                         <div class="form-group col-md-6">

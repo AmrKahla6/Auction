@@ -56,6 +56,11 @@
                             <label>صوره </label><br>
                             <img src="{{asset('uploads/members/'.$member->img)}}" width="200" height="200" alt="" srcset="">
                         </div>
+
+                        <div class="form-group col-md-6">
+                            <label>  الرصيد الحالي  </label>
+                            <span  class="form-control">{{isset($member->balance) ? $member->balance : 0}}</span>
+                        </div>
                     </div>
 
 

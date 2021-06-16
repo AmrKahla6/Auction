@@ -94,6 +94,9 @@ Route::group(
             //Change Password
             Route::get('/setting/change-pass', 'Profile@changePass')->name('change-password');
             Route::put('/setting/save-pass', 'Profile@savePass')->name('save-change-password');
+
+            //Edit Balance
+            Route::put('profile/update-balance', 'Profile@updateBalance')->name('profiles-update-balance');
         });
     });
 

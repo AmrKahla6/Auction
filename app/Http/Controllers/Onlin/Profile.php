@@ -505,4 +505,25 @@ class Profile extends BaseController
 
      }
 
+
+
+    public function updateBalance(Request $request){
+         $id = Auth::guard('members')->user()->id;
+
+        $this->validate($request, [
+            'balance' => 'required|numeric',
+        ],[
+            'balance.required' => __('live.balance'),
+        ]);
+
+        $balance = Member::find($id);
+
+        $balance->balance = $request->balance;
+        $balance->save();
+
+        session()->flash('success', __('user.infoupdate'));
+        return redirect()->back();
+
+    }
+
 }

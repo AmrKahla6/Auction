@@ -130,8 +130,10 @@ class Register extends Controller
 
      public function logout()
      {
+        if(!empty($member = Member::find(auth()->guard('members')->id()))){
          auth()->guard('members')->logout();
-         return redirect(route('live.login'));
+        }
+         return redirect('live/login');
      }
     public function forgetpassword()
     {
