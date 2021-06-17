@@ -64,7 +64,7 @@
                 </li>
             @endif
 
-            <li class="nav-item {{is_active('auction')}}">
+            <li class="nav-item {{is_active('days-of')}}">
                 <a href="{{route('dashboard.get-days-of')}}"><i class="fa fa-calendar-check-o"></i><span>ايام العطله</span></a>
             </li>
 
