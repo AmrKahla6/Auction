@@ -6,8 +6,6 @@
         <div class="login-box">
             @include('partials._errors')
             @include('partials._session')
-
-            @if (!$exist)
             <form action="{{route('live.post_auctions')}}" id="myform" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('post')
@@ -114,13 +112,6 @@
                     <button  type="submit"id="add_build"  class="btn btn-block btn-lg btn-primary">  @lang('live.save_auction') </button>
                 </div>
             </form>
-            @else
-                <center>
-                    <h1>
-                        @lang('live.day_of')
-                    </h1>
-                </center>
-            @endif
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Acution;
 
+use App\Models\Favorite;
 use App\Http\Resources\Acution\DetialsResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,6 +16,12 @@ class AcutionResource_ar extends JsonResource
      */
     public function toArray($request)
     {
+        $favorit = Favorite::where('member_id', $request->member_id)->where('auction_id',$this->id)->exists();
+        if($favorit){
+            $is_like =  true;
+        }else{
+            $is_like =  false;
+        }
         return [
             'id'              => $this->id,
             'member_id'       => $this->member_id,
@@ -34,6 +41,7 @@ class AcutionResource_ar extends JsonResource
             'detials'         => $this->detials,
             'cat_id'          => $this->cat_id,
             'cat_name'        => $this->category->category_name_ar,
+            'is_like'         => $is_like,
             'created_at'      => $this->created_at,
             'cat_details'     => DetialsResource::collection($this->more_detials),
             'images'          => ImageResource::collection($this->images),

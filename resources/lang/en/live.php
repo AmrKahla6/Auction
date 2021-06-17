@@ -140,4 +140,5 @@ return [
     'delete_favo'    => 'Removed from favourites',
     'add_fav'        => 'Added to favourites',
     'balance'        => 'Balance is required',
+    'low_price'      => 'Lowest Auction Price',
 ];

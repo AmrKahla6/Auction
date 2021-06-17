@@ -45,7 +45,7 @@
                                 <td class="text-right text-cred"><strong>{{$auction->price}} @lang('live.dirhams')</strong></td>
                             </tr>
                             <tr>
-                                <td>أقل سعر مزاد</td>
+                                <td>@lang('live.low_price')</td>
                                 <td class="text-right"><strong>{{$auction->price_opining}} @lang('live.dirhams')</strong> <span class="icon-info"></span></td>
                             </tr>
                         </table>
@@ -87,7 +87,11 @@
                                     <span class="fa fa-toggle-on"></span>
                                 </label>
                             </div>
-                            <button type="submit" id="add_now" class="btn btn-primary btn-lg btn-block">@lang('live.sub_now')</button>
+                            @if (!$exist)
+                                <button type="submit" id="add_now" disabled="disabled" class="btn btn-primary btn-lg btn-block">@lang('live.sub_now')</button>
+                            @else
+                                <button type="submit"  disabled="disabled" class="btn btn-primary btn-lg btn-block"> يوم عطله </button>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -180,11 +184,22 @@
     </div>
 </div>
 
+<script>
+    $('#terms-input').click(function() {
+        if (!this.checked) {
+            $('#add_now').prop('disabled', false); // If checked enable item
+        } else {
+            $('#add_now').prop('disabled', true); // If checked disable item
+        }
+    });
+</script>
+
 <script type="text/javascript">
     function myPhoneNum() {
       var x = 0123456789;
       document.getElementById("phone-num").innerHTML = x;
     }
+
     </script>
     {{-- <script type="text/javascript">
     $(document).ready(function() {

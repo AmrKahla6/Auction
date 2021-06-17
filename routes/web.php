@@ -107,7 +107,7 @@ Route::group(
  */
 
 
-Route::prefix('dashboard')->name('dashboard.')->namespace('dashboard')->middleware('auth')->group(function () {
+Route::prefix('dashboard')->name('dashboard.')->namespace('Dashboard')->middleware('auth')->group(function () {
     Route::get('/index', 'DashboardController@index')->name('index');
 
     // User Routes

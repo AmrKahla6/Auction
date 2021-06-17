@@ -68,30 +68,40 @@
                                     <td>{{ $index +1 }}</td>
                                     <td>{{ $type->type_name_ar }}</td>
                                     <td>{{ $type->type_name_en }}</td>
-                                    <td>
-                                        @if(auth()->user()->hasPermission('update_auction_types'))
-                                            <a class="btn btn-info btn-sm"
-                                               href="{{route('dashboard.auction-type.edit' , $type->id)}}"><i
-                                                        class="fa fa-edit"></i>تعديل</a>
-                                        @else
+                                    @if ($type->id != 1)
+                                        <td>
+                                            @if(auth()->user()->hasPermission('update_auction_types'))
+                                                <a class="btn btn-info btn-sm"
+                                                href="{{route('dashboard.auction-type.edit' , $type->id)}}"><i
+                                                            class="fa fa-edit"></i>تعديل</a>
+                                            @else
+                                                <a class="btn btn-info btn-sm" href="#" disabled><i
+                                                            class="fa fa-edit"></i>تعديل</a>
+                                            @endif
+                                            @if(auth()->user()->hasPermission('delete_auction_types'))
+                                                <form method="post"
+                                                    action="{{route('dashboard.auction-type.destroy' , $type->id)}}"
+                                                    style="display: inline-block">
+                                                    @csrf()
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger btn-sm delete"><i
+                                                                class="fa fa-trash"></i>حذف</button>
+                                                </form>
+                                            @else
+                                                <button type="submit" class="btn btn-danger btn-sm" disabled><i
+                                                            class="fa fa-trash"></i>حذف</button>
+                                            @endif
+                                        </td>
+                                    @else
+                                        <td>
                                             <a class="btn btn-info btn-sm" href="#" disabled><i
                                                         class="fa fa-edit"></i>تعديل</a>
-                                        @endif
-                                        @if(auth()->user()->hasPermission('delete_auction_types'))
-                                            <form method="post"
-                                                  action="{{route('dashboard.auction-type.destroy' , $type->id)}}"
-                                                  style="display: inline-block">
-                                                @csrf()
-                                                @method('delete')
-                                                <button type="submit" class="btn btn-danger btn-sm delete"><i
-                                                            class="fa fa-trash"></i>حذف</button>
-                                            </form>
-                                        @else
+
                                             <button type="submit" class="btn btn-danger btn-sm" disabled><i
                                                         class="fa fa-trash"></i>حذف</button>
+                                        </td>
                                         @endif
-                                    </td>
-                                </tr>
+                                    </tr>
                             @endforeach
                             </tbody>
 

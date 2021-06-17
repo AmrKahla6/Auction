@@ -509,6 +509,21 @@ class AuctionController extends BaseController
 
 
     public function getAll(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'member_id' => 'required'
+            ],[
+                'member_id.required' => __('user.member_id'),
+            ]
+        );
+
+        if ($validator->fails()) {
+            $code = $this->returnCodeAccordingToInput($validator);
+            return $this->returnValidationError($code, $validator);
+        }
+
+
         $aucs = Auction::get();
         if($aucs){
             if($request->lang == "en"){
@@ -516,6 +531,8 @@ class AuctionController extends BaseController
             }else{
                 $auctions = AcutionResource_ar::collection(Auction::where('status',0)->get());
             }
+
+
             return $this->returnData('success', $auctions);
         }
             return $this->returnError('error', __('user.no_auctions'));
@@ -556,6 +573,7 @@ class AuctionController extends BaseController
             $code = $this->returnCodeAccordingToInput($validator);
             return $this->returnValidationError($code, $validator);
         }
+
         $member = Member::where('id',$request->member_id)->first();
         if($member){
             $auction = Auction::where('id',$request->auction_id)->first();

@@ -70,9 +70,7 @@ class Profile extends BaseController
                                     ->get();
             $data['types'] = AuctionType::select('id', 'type_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
             $data['governorate'] = Governorate::select('id', 'governorate_name_' . LaravelLocalization::getCurrentLocale() . ' as name')->get();
-            // $days        = DaysOF::select('id','days_of')->get();
-            $data['date']   = date('Y-m-d');
-            $data['exist']  = DaysOF::where('days_of', $data['date'])->exists();
+
             return view('online.profile.addauctions')->with($data);
         } else {
             return redirect('live/login');
@@ -261,6 +259,8 @@ class Profile extends BaseController
     public function single_auction($id)
     {
         $data['auction'] = Auction::where('id', $id)->with(['more_detials', 'more_detials.cat_parm', 'tenders', 'images'])->first();
+        $data['date']   = date('Y-m-d');
+        $data['exist']  = DaysOF::where('days_of', $data['date'])->exists();
         //dd( $data['auction'] );
         return view('online.profile.single_auction')->with($data);
 
