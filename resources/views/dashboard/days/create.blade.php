@@ -4,8 +4,6 @@
             <div class="modal-header">
                 <h6 class="modal-title">اضف قسم</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
             </div>
-            @include('partials._errors')
-            @include('partials._session')
             <div class="modal-body">
             <form action="{{route('dashboard.post-days-of')}}" method="post" autocomplete="off">
                 @csrf

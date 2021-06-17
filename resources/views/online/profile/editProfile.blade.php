@@ -47,9 +47,13 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <input type="file" name="img" class="form-control image">
+                                </div>
+
+                                <div class="form-group">
                                     @if ($member->img)
                                         <img src="{{ asset('uploads/members/'.$member->img) }}"
-                                        class="img-thumbnail image-preview" style="width: 100px;">
+                                         class="img-thumbnail image-preview" style="width: 100px;">
                                     @else
 
                                         <img src="{{ asset('uploads/members/default.png') }}"
@@ -117,4 +121,23 @@
 			</div>
 		</div>
 
+        <script>
+            // image preview
+            $(".image").change(function () {
+
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.image-preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(this.files[0]);
+            }
+
+            });
+
+        </script>
  @endsection
+
+

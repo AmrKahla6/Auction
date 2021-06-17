@@ -34,7 +34,7 @@ class UserController extends BaseController
                 [
                     'commercial_record'   => 'required|unique:members',
                     'phone'               => 'required|unique:members',
-                    'date_of_birth'       => 'required',
+                    'date_of_birth'       => 'required|before:-18 years',
                     'id_number'           => 'required|unique:members',
                     'email'               => 'required|unique:members',
                     'password'            => 'required|min:6',
@@ -45,6 +45,7 @@ class UserController extends BaseController
                     'phone.required'               => __("user.phone"),
                     'phone.unique'                 => __("user.unique_phone"),
                     'date_of_birth.required'       => __("user.date_of_birth"),
+                    'date_of_birth.before'         => __('user.before'),
                     'id_number.required'           => __("user.id_number"),
                     'id_number.unique'             => __("user.unique_id_number"),
                     'email.required'               => __("user.email"),
@@ -87,7 +88,7 @@ class UserController extends BaseController
                 [
                     'username'            => 'required',
                     'phone'               => 'required|unique:members',
-                    'date_of_birth'       => 'required',
+                    'date_of_birth'       => 'required|before:-18 years',
                     'country_id'          => 'required',
                     'email'               => 'required|unique:members',
                     'password'            => 'required|min:6',
@@ -97,6 +98,7 @@ class UserController extends BaseController
                     'phone.required'               => __("user.phone"),
                     'phone.unique'                 => __("user.unique_phone"),
                     'date_of_birth.required'       => __("user.date_of_birth"),
+                    'date_of_birth.before'         => __('user.before'),
                     'country_id.required'          => __("user.nationality"),
                     'email.required'               => __("user.email"),
                     'email.unique'                 => __("user.unique_email"),

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Onlin;
 
+use Auth;
 use App\Models\Member;
 use App\Models\Auction;
-use LaravelLocalization;
 use App\Models\Category;
+use App\Models\Favorite;
+use LaravelLocalization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +20,7 @@ class onlinehome extends Controller
         $data['categories'] = Category::where('parent_id',0)->select('id','category_name_' . LaravelLocalization::getCurrentLocale() . ' as name','img')->with(['auctions','auctions.images'])->get();
         // $data['auctions']   = Auction::with('images')->orderBy('id', 'desc')->take(8)->get();
 
-         $data['auctions'] = Auction::whereHas('member', function ($query) use ($request) {
+          $data['auctions'] = Auction::whereHas('member', function ($query) use ($request) {
             $query->where('username', 'like', "%{$request->search}%")
             ->orWhere('email' , 'like' , '%'. $request->search. '%')
             ->orWhere('auction_title' , 'like' , '%'. $request->search. '%')

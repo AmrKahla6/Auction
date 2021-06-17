@@ -43,6 +43,9 @@
 
                     </form>
                 </div>
+
+                @include('partials._errors')
+                @include('partials._session')
                 <div class="box-body">
 
                     @if($days->count() > 0)

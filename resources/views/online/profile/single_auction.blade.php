@@ -77,7 +77,7 @@
                                     <b>@lang('live.deducted')</b>
                                 </div>
                                 <div class="sub_value">
-                                    <p>35 <span>@lang('live.dirhams')</span></p>
+                                    <p> {{$main_cats->price}} <span>@lang('live.dirhams')</span></p>
                                 </div>
                             </div>
                             <div class="terms_conditions">

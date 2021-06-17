@@ -22,8 +22,8 @@
                     <label>النوع</label>
                     <select name="type" id="" class="form-control">
                         <option value="" selected disabled>اختر النوع</option>
-                        <option value="1">Input</option>
-                        <option value="2">Select</option>
+                        <option value="1">حقل نص</option>
+                        <option value="2">اختيار متعدد</option>
                     </select>
                 </div>
 

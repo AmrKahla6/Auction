@@ -13,8 +13,8 @@
                     <thead>
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>المدينه بالعربيه</th>
-                        <th>المدينه بالانجليزيه</th>
+                        <th>الخاصيه بالعربيه</th>
+                        <th>الخاصيه بالانجليزيه</th>
                         <th>@lang('site.action')</th>
                     </tr>
                     </thead>
@@ -30,6 +30,10 @@
                                     <a class="btn btn-primary btn-sm"
                                          href="{{route('dashboard.cats.params-selected-index',$param->id)}}"><i
                                          class="fa fa-linode"></i>خصائص</a>
+                                @else
+                                    <button class="btn btn-primary btn-sm" disabled="disabled">
+                                        <i class="fa fa-linode"></i> خصائص
+                                    </button>
                                 @endif
                                 <form method="post"
                                     action="{{route('dashboard.cats.params-destroy' , ['category'=>$param->category->id,'params'=>$param->id])}}"
@@ -54,3 +58,5 @@
     </div>
 
 </section><!-- end of content -->
+
+

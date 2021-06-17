@@ -248,7 +248,7 @@ class Profile extends BaseController
 
             }
             session()->flash('success', __('auctions.auction_success'));
-            return redirect()->back();
+            return redirect('live/registerd');
 
         } else {
             return redirect('live/login');
@@ -258,10 +258,10 @@ class Profile extends BaseController
 
     public function single_auction($id)
     {
-        $data['auction'] = Auction::where('id', $id)->with(['more_detials', 'more_detials.cat_parm', 'tenders', 'images'])->first();
+        $data['auction']   = Auction::with('category')->where('id', $id)->with(['more_detials', 'more_detials.cat_parm', 'tenders', 'images'])->first();
+        $data['main_cats'] = Category::select('id','price')->where('id',$data['auction']->category->parent_id)->first();
         $data['date']   = date('Y-m-d');
         $data['exist']  = DaysOF::where('days_of', $data['date'])->exists();
-        //dd( $data['auction'] );
         return view('online.profile.single_auction')->with($data);
 
     }
@@ -412,9 +412,9 @@ class Profile extends BaseController
         $member    = Auth::guard('members')->user();
         $data = $request->validate([
             'username'            => 'required',
-            'date_of_birth'       => 'required|date|before:-15 years',
+            'date_of_birth'       => 'required|date|before:-18 years',
             'country_id'          => 'required',
-            'email'              => 'required|max:255|unique:members,email,'.$member->id,
+            'email'               => 'required|max:255|unique:members,email,'.$member->id,
         ],
         [
             'username.required'            => __("user.username"),
@@ -447,14 +447,15 @@ class Profile extends BaseController
         $member    = Auth::guard('members')->user();
         $data = $request->validate([
                 'commercial_record'   => 'required|unique:members,commercial_record,'.$member->id,
-                'date_of_birth'       => 'required',
-                'id_number'           => 'required|unique:members,id_number,'.$member->id,
+                'date_of_birth'       => 'required|date|before:-18 years',
+                'id_number'           => 'required|min:12|unique:members,id_number,'.$member->id,
                 'email'               => 'required|max:255|unique:members,email,'.$member->id,
             ],
             [
                 'commercial_record.required'   => __("user.commercial_record"),
                 'commercial_record.unique'     => __("user.commercial_exist"),
                 'date_of_birth.required'       => __("user.date_of_birth"),
+                'date_of_birth.before'         => __("user.before"),
                 'id_number.required'           => __("user.id_number"),
                 'id_number.unique'             => __("user.unique_id_number"),
                 'email.required'               => __("user.email"),

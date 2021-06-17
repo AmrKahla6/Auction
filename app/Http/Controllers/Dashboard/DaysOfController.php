@@ -18,10 +18,11 @@ class DaysOfController extends Controller
 
     public function postDaysOf(Request $request){
         $validatedData = $request->validate([
-            'days_of' => 'required|unique:days_o_f_s|date',
+            'days_of' => 'required|unique:days_o_f_s|date|before:-1 years',
         ],[
             'days_of.required'  => 'يرجي ادخال تاريخ العطله',
             'days_of.unique'    => 'تاريخ العطله مسجل مسبقا',
+            'days_of.before'    => 'لا يمكن اختيار تاريخ قديم للعطله',
         ]);
         $data = $request->all();
         $day  = DaysOF::create($data);
@@ -36,10 +37,11 @@ class DaysOfController extends Controller
         $id = $request->id;
 
         $this->validate($request, [
-            'days_of' => 'required|max:255|date|unique:days_o_f_s,days_of,'.$id,
+            'days_of' => 'required|max:255|date|before:-1 years|unique:days_o_f_s,days_of,'.$id,
         ],[
             'days_of.required'  => 'يرجي ادخال تاريخ العطله',
             'days_of.unique'    => 'تاريخ العطله مسجل مسبقا',
+            'days_of.before'    => 'لا يمكن اختيار تاريخ قديم للعطله',
         ]);
 
         $phone = DaysOF::find($id);

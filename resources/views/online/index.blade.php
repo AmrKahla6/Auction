@@ -139,34 +139,34 @@
 
 								<p class="price">{{$auction->price_opining}} @lang('live.dirhams')</p>
 								@if (Auth::guard('members')->user())
-								@if(App\Models\Favorite::is_favorite($auction->id)==true)
-									<div class="addtofavorite" data-id="{{ $auction->id}}">
-										<input value="" type="checkbox" id="add-favorite-{{$auction->id}}" onclick="Toggle({{$auction->id}})" name="is_like" class="favorite-input" checked>
-										<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
-										<label for="add-favorite-{{$auction->id}}" title="@lang('live.add_favorit')">
-                                            @if (App\Models\Favorite::is_favorite($auction->id) == $auction->id)
-											    <i id="heart-{{$auction->id}}" class="fa fa-heart-o checked"></i>
-                                            @else
+                                    @if(App\Models\Favorite::is_favorite($auction->id)==true)
+                                        <div class="addtofavorite" data-id="{{ $auction->id}}">
+                                            <input value="" type="checkbox" id="add-favorite-{{$auction->id}}" onclick="Toggle({{$auction->id}})" name="is_like" class="favorite-input" checked>
+                                            <input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
+                                            <label for="add-favorite-{{$auction->id}}" title="@lang('live.add_favorit')">
+                                                @if (App\Models\Favorite::is_favorite($auction->id) == $auction->id)
+                                                    <i id="heart-{{$auction->id}}" class="fa fa-heart-o checked"></i>
+                                                @else
+                                                    <i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
+                                                @endif
+                                            </label>
+                                        </div>
+                                        @else
+                                        <div class="addtofavorite" data-id="{{ $auction->id}}">
+                                            <input value="" type="checkbox" id="add-favorite-{{$auction->id}}" name="is_like" class="favorite-input">
+                                            <input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
+                                            <label for="add-favorite-{{$auction->id}}" title="@lang('live.add_favorit')">
                                                 <i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
-                                            @endif
-										</label>
-									</div>
-								    @else
-									<div class="addtofavorite" data-id="{{ $auction->id}}">
-										<input value="" type="checkbox" id="add-favorite-{{$auction->id}}" name="is_like" class="favorite-input">
-										<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
-										<label for="add-favorite-{{$auction->id}}" title="@lang('live.add_favorit')">
-											<i id="heart-{{$auction->id}}" class="fa fa-heart-o"></i>
-										</label>
-									</div>
-									@endif
-								@else
-									<div class="addtofavorite">
-										<input value="" type="checkbox" disabled class="favorite-input">
-										<label disabled title="@lang('live.not_login')">
-											<i disabled class="fa fa-heart-o"></i>
-										</label>
-									</div>
+                                            </label>
+                                        </div>
+                                        @endif
+                                    @else
+                                        <div class="addtofavorite">
+                                            <input value="" type="checkbox" disabled class="favorite-input">
+                                            <label disabled title="@lang('live.not_login')">
+                                                <i disabled class="fa fa-heart-o"></i>
+                                            </label>
+                                        </div>
 								@endif
 							</div>
 							<div class="product-detials">

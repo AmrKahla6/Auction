@@ -31,7 +31,7 @@ class Register extends Controller
         $data = $request->validate([
             'username'            => 'required',
             'phone'               => 'required|unique:members',
-            'date_of_birth'       => 'required|date|before:-15 years',
+            'date_of_birth'       => 'required|date|before:-18 years',
             'country_id'          => 'required',
             'email'               => 'required|email|unique:members',
             'password'            => 'required|min:6',
@@ -63,8 +63,8 @@ class Register extends Controller
         $data = $request->validate([
             'commercial_record'   => 'required|unique:members',
             'phone'               => 'required|unique:members',
-            'date_of_birth'       => 'required',
-            'id_number'           => 'required|unique:members',
+            'date_of_birth'       => 'required|date|before:-18 years',
+            'id_number'           => 'required|min:12|unique:members',
             'email'               => 'required|email|unique:members',
             'password'            => 'required|min:6',
         ],
@@ -74,6 +74,7 @@ class Register extends Controller
             'phone.required'               => __("user.phone"),
             'phone.unique'                 => __("user.unique_phone"),
             'date_of_birth.required'       => __("user.date_of_birth"),
+            'date_of_birth.before'         => __("user.before"),
             'id_number.required'           => __("user.id_number"),
             'id_number.unique'             => __("user.unique_id_number"),
             'email.required'               => __("user.email"),
@@ -128,13 +129,14 @@ class Register extends Controller
              }
      }
 
-     public function logout()
-     {
-        if(!empty($member = Member::find(auth()->guard('members')->id()))){
-         auth()->guard('members')->logout();
-        }
-         return redirect('live/login');
-     }
+    //  public function logout()
+    //  {
+    //     if(!empty($member = Member::find(auth()->guard('members')->id()))){
+    //      auth()->guard('members')->logout();
+    //     }
+
+    //      return redirect('live/login');
+    //  }
     public function forgetpassword()
     {
         return view('online.auth.forgetpassword');

@@ -20,7 +20,7 @@ class Favorite extends Model
      // dd($member_id);
      $ucation = Auction::find($auction_id);
      $count = $ucation->favorites()->get()->count();
-       
+
       if($count > 0){
         return true;
       }else{
