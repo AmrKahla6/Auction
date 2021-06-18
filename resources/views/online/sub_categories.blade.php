@@ -50,7 +50,10 @@
 
 									<p class="price">{{$auction->price_opining}} @lang('live.dirhams')</p>
 									@if (Auth::guard('members')->user())
-									@if(App\Models\Favorite::is_favorite($auction->id)==true)
+                                        @php
+                                            $count = App\Models\Favorite::where('member_id',Auth::guard('members')->user()->id)->where('auction_id',$auction->id)->get()->count();
+                                        @endphp
+									@if($count > 0)
 										<div class="addtofavorite" data-id="{{ $auction->id}}">
 											<input value="" type="checkbox" id="add-favorite-{{$auction->id}}" onclick="Toggle({{$auction->id}})" name="is_like" class="favorite-input" checked>
 											<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
@@ -135,7 +138,10 @@
 
 									<p class="price">{{$auction->price_opining}} @lang('live.dirhams')</p>
 									@if (Auth::guard('members')->user())
-									@if(App\Models\favorite::is_favorite($auction->id)==true)
+                                        @php
+                                            $count = App\Models\Favorite::where('member_id',Auth::guard('members')->user()->id)->where('auction_id',$auction->id)->get()->count();
+                                        @endphp
+									@if($count > 0)
 										<div class="addtofavorite" data-id="{{ $auction->id}}">
 											<input value="" type="checkbox" id="add-favorite-{{$auction->id}}" onclick="Toggle({{$auction->id}})" name="is_like" class="favorite-input" checked>
 											<input type="hidden" id="member_id" name="member_id" value="{{isset(Auth::guard('members')->user()->id) ? Auth::guard('members')->user()->id : ""}}">
