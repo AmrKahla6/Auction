@@ -91,12 +91,12 @@
                                     <td>{{$dayName }}</td>
                                     <td>{{$day->days_of }}</td>
                                     <td>
-                                        <a class="modal-effect btn btn-info btn-sm" data-effect="effect-scale"
+                                        {{-- <a class="modal-effect btn btn-info btn-sm" data-effect="effect-scale"
                                             data-id="{{ $day->id }}" data-day="{{ $day->days_of }}"
                                             data-toggle="modal"
                                             href="#exampleModal2" title="تعديل"><i class="fa fa-edit"></i>
                                             تعديل
-                                        </a>
+                                        </a> --}}
                                             <form method="post"
                                                   action="{{route('dashboard.delete-days-of' , $day->id)}}"
                                                   style="display: inline-block">

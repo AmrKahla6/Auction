@@ -66,6 +66,14 @@ class DaysOfController extends Controller
 
      public function deleteDayOf($id){
         $day = DaysOF::findOrFail($id);
+        $auctions = Auction::where('is_finished', 0)->get();
+       foreach ($auctions as $key => $auction) {
+          $aut_date =  explode(" ", $auction->end_data)[0];
+            if($day->days_of < $aut_date){
+                $auction->end_data = date("Y-m-d H:i:s", strtotime('-24 hours', strtotime($auction->end_data)));
+                $auction->save();
+            }
+       }
         $day->delete();
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->back();
