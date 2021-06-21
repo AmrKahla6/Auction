@@ -212,6 +212,12 @@ Route::prefix('dashboard')->name('dashboard.')->namespace('Dashboard')->middlewa
     Route::post('/days-of/store', 'DaysOfController@postDaysOf')->name('post-days-of');
     Route::put('/days-of/update', 'DaysOfController@updateDaysOf')->name('update-days-of');
     Route::delete('/days-of/{id}/delete', 'DaysOfController@deleteDayOf')->name('delete-days-of');
+
+
+    //Static Days Of
+    Route::get('/static-days-of', 'StaticDayOFController@index')->name('get-static-days-of');
+    Route::post('/static-days-of/store', 'StaticDayOFController@store')->name('post-static-days-of');
+    Route::delete('/static-days-of{id}/delete', 'StaticDayOFController@destroy')->name('delete-static-days-of');
   });
 
 

@@ -81,7 +81,7 @@
 							<div class="form-group">
 								<input type="password"  required="required" name="password"  placeholder="@lang('live.password')" id="input-password" class="form-control">
 							</div>
-							<input type="hidden" name="type" value="1">
+
 							<div class="login-box-footer">
 								<button type="submit" class="btn btn-block btn-lg btn-primary">@lang('live.register')</button>
 								<div class="text-hr"><span>@lang('live.or')</span></div>

@@ -85,6 +85,7 @@ class Register extends Controller
     );
          $data['password'] = bcrypt($request->password);
          $data['type']     = 0;
+        //  return $data;
          $member = Member::create($data);
          session()->flash('success', __('site.added_successfully'));
         return redirect()->route('live.login');

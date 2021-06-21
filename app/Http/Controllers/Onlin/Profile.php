@@ -16,6 +16,7 @@ use App\Models\Favorite;
 use LaravelLocalization;
 use App\Models\AuctionType;
 use App\Models\Governorate;
+use App\Models\StaticDayOF;
 use App\Models\AuctionImage;
 use App\Models\catParameter;
 use App\Models\selectParams;
@@ -258,10 +259,14 @@ class Profile extends BaseController
 
     public function single_auction($id)
     {
-        $data['auction']   = Auction::with('category')->where('id', $id)->with(['more_detials', 'more_detials.cat_parm', 'tenders', 'images'])->first();
-        $data['main_cats'] = Category::select('id','price')->where('id',$data['auction']->category->parent_id)->first();
-        $data['date']   = date('Y-m-d');
-        $data['exist']  = DaysOF::where('days_of', $data['date'])->exists();
+        $data['auction']      = Auction::with('category')->where('id', $id)->with(['more_detials', 'more_detials.cat_parm', 'tenders', 'images'])->first();
+        $data['main_cats']    = Category::select('id','price')->where('id',$data['auction']->category->parent_id)->first();
+        $data['date']         = date('Y-m-d');
+        $data['exist']        = DaysOF::where('days_of', $data['date'])->exists();
+        $today                = Carbon::now();
+        $today_name           = Carbon::parse($today)->format('l');
+        $data['static_days']  = StaticDayOF::where('day', $today_name)->exists();
+
         return view('online.profile.single_auction')->with($data);
 
     }

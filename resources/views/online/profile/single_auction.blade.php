@@ -87,10 +87,10 @@
                                     <span class="fa fa-toggle-on"></span>
                                 </label>
                             </div>
-                            @if (!$exist)
-                                <button type="submit" id="add_now" disabled="disabled" class="btn btn-primary btn-lg btn-block">@lang('live.sub_now')</button>
-                            @else
+                            @if ($exist or $static_days)
                                 <button type="submit"  disabled="disabled" class="btn btn-primary btn-lg btn-block"> يوم عطله </button>
+                            @else
+                                <button type="submit" id="add_now" disabled="disabled" class="btn btn-primary btn-lg btn-block">@lang('live.sub_now')</button>
                             @endif
                         </div>
                     </form>
