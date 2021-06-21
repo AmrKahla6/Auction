@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Carbon\Carbon;
 use App\Models\DaysOF;
 use App\Models\Auction;
+use App\Models\StaticDayOF;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -25,18 +27,24 @@ class DaysOfController extends Controller
             'days_of.unique'    => 'تاريخ العطله مسجل مسبقا',
             'days_of.after'     => 'لا يمكن اختيار تاريخ قديم للعطله',
         ]);
-        $data = $request->all();
-        $day  = DaysOF::create($data);
+        $dayname   = Carbon::parse($request->days_of)->format('l');
+        $stat_days = StaticDayOF::where('day',$dayname)->exists();
+        if($stat_days){
+            session()->flash('error', ('بالفعل هو اجازه ثابته'));
 
-       $auctions = Auction::where('is_finished', 0)->get();
+            return redirect()->back();
+        }
+        $data     = $request->all();
+        $day      = DaysOF::create($data);
+    //     $auctions = Auction::where('is_finished', 0)->get();
 
-       foreach ($auctions as $key => $auction) {
-          $aut_date =  explode(" ", $auction->end_data)[0];
-            if($day->days_of < $aut_date){
-                $auction->end_data = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($auction->end_data)));
-                $auction->save();
-            }
-       }
+    //    foreach ($auctions as $key => $auction) {
+    //       $aut_date =  explode(" ", $auction->end_data)[0];
+    //         if($day->days_of < $aut_date){
+    //             $auction->end_data = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($auction->end_data)));
+    //             $auction->save();
+    //         }
+    //    }
         session()->flash('success', __('site.added_successfully'));
 
         return redirect()->back();
