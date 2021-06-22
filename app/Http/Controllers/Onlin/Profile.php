@@ -192,6 +192,20 @@ class Profile extends BaseController
                 ]
             );
             $data['member_id'] = $request->session()->get('member')->id;
+            $sub_cat  = Category::where('id',$data['cat_id'])->first();
+            $main_cat = Category::where('id',$sub_cat->parent_id)->first();
+            $member   = Member::where('id',$request->session()->exists('member'))->first();
+
+            if($member->balance < $main_cat->price){
+                session()->flash('error', __('user.balance_price'));
+                return redirect()->back();
+            }else{
+                $member->balance = $member->balance - $main_cat->price;
+                $member->save();
+            }
+
+
+            if($member)
             $data['price']     = 0;
             if ($request->type_id == 1) {
                 $data['start_data'] = Carbon::now();

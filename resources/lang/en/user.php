@@ -83,5 +83,6 @@
         'requir_new_pass'   => 'New password is required',
         'exist'             => 'User Exist',
         'day_of'            => 'Day Of',
+        'balance_price'     => 'Your balance does not meet the minimum amount to complete the auction',
     ];
 ?>

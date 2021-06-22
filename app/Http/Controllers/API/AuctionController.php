@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Models\Tender;
 use App\Models\Auction;
 use App\Models\Country;
+use App\Models\Category;
 use App\Models\AuctionType;
 use App\Models\Governorate;
 use App\Models\AuctionImage;
@@ -285,6 +286,17 @@ class AuctionController extends BaseController
                 $code = $this->returnCodeAccordingToInput($validator);
                 return $this->returnValidationError($code, $validator);
             }
+
+            $sub_cat  = Category::where('id',$request['cat_id'])->first();
+            $main_cat = Category::where('id',$sub_cat->parent_id)->first();
+
+            if($user->balance < $main_cat->price){
+                return $this -> returnError('',__('user.balance_price'));
+            }else{
+                $user->balance = $user->balance - $main_cat->price;
+                $user->save();
+            }
+
             $newauction                     = new Auction;
             $newauction->auction_title      = $request['auction_title'];
             $newauction->address            = $request['address'];
