@@ -21,7 +21,7 @@
 							<div class="image">
 								@if($auction->images()->count() > 0)
 
-								    <img src="{{asset('uploads/acution/'.$auction->images()->first()->img)}}" class="img-responsive" />
+								    <img style="background-image: url({{ URL::asset('uploads/acution/default.png') }});" src="{{asset('uploads/acution/'.$auction->images()->first()->img)}}" class="img-responsive" />
 								@else
 								    <img src="{{ asset('online/images/Upload/img-1.jpg')}}" class="img-responsive" />
 								@endif

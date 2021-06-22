@@ -27,7 +27,7 @@ return [
     'address'         => 'العنوان',
     'open_price'      => 'سعر الافتتاح',
     'opining_pice'    => 'السعر الإفتتاحي',
-    'hight_price'     => 'أعلى سعر مزاد',
+    'hight_price'     => 'أعلى سعر مزايده',
     'your_auction'    => 'مزادك',
     'close_price'     => 'سعر الإغلاق',
     'show_type'       => 'نوع العرض',

@@ -47,11 +47,11 @@
                 <div class="row"  id="Stat_Date">
                     </div>
                 <div class="row">
-
+{{--
                 <div class="col-md-12 form-group">
                     <label>@lang('live.date_close')</label>
                     <input type="datetime-local"  required="required" onchange="check_date()" id="end_data" name="end_data" value="" placeholder="end_data"  class="form-control">
-                </div>
+                </div> --}}
                 <div class="row">
                 <div class="col-md-12 form-group">
                     <label> @lang('live.detials')</label>

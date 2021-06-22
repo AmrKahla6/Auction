@@ -42,7 +42,12 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td>@lang('live.hight_price')</td>
-                                <td class="text-right text-cred"><strong>{{$auction->price}} @lang('live.dirhams')</strong></td>
+                                @if ($auction->price == 0)
+                                    <td class="text-right text-cred"><strong>{{$auction->price_opining}} @lang('live.dirhams')</strong></td>
+                                @else
+
+                                    <td class="text-right text-cred"><strong>{{$auction->price}} @lang('live.dirhams')</strong></td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>@lang('live.low_price')</td>

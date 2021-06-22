@@ -24,8 +24,11 @@ class AcutionResource_en extends JsonResource
         return [
             'id'              => $this->id,
             'member_id'       => $this->member_id,
-            'auction_title'   => $this->auction_title,
             'member_name'     => $this->member->username,
+            'member_phone'    => $this->member->phone,
+            'member_email'    => $this->member->email,
+            'member_image'    => $this->member->image,
+            'auction_title'   => $this->auction_title,
             'address'         => $this->address,
             'gover_id'        => $this->gover_id,
             'governorate'     => $this->governorate->governorate_name_en,
@@ -43,6 +46,7 @@ class AcutionResource_en extends JsonResource
             'is_like'         => $is_like,
             'created_at'      => $this->created_at,
             'cat_detidals'    => DetialsResource::collection($this->more_detials),
+            'img_default'     => asset('uploads/acution/default.png'),
             'images'          => ImageResource::collection($this->images),
         ];
     }

@@ -163,7 +163,7 @@ class Profile extends BaseController
                 'price_opining' => ['required'],
                 'price_closing' => ['required'],
                 //   'start_data' => ['required'],
-                'end_data' => ['required'],
+                // 'end_data' => ['required'],
                 'detials' => ['required'],
                 'cat_id' => ['required'],
                 'type_id' => ['required'],
@@ -182,7 +182,7 @@ class Profile extends BaseController
                     'address.required' => __("auctions.address"),
                     'price_opining.required' => __("auctions.price_opining"),
                     'price_closing.required' => __("auctions.price_closing"),
-                    'end_data.required' => __("auctions.end_data"),
+                    // 'end_data.required' => __("auctions.end_data"),
                     'detials.required' => __("auctions.detials"),
 
                     'cat_id.required' => __("auctions.cat_id"),
@@ -198,6 +198,8 @@ class Profile extends BaseController
             }else {
                 $data['start_data'] = $request->start_data;
             }
+
+            $data['end_data']  = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($data['start_data'])));
             $object = Auction::create($data);
             //image parts
             if ($request->hasfile('auction_images')) {
@@ -225,8 +227,6 @@ class Profile extends BaseController
                         //   dd($auction_detials);
                     }
                 }
-
-
 
             //auction_detials part
             if ($request['auction_detials']!=null) {
@@ -273,6 +273,7 @@ class Profile extends BaseController
 
     public function add_tender(Request $request,$aucation_id)
     {
+        $auction = Auction::find($aucation_id);
         $validatedData = $request->validate([
             'price' => 'required',
         ],[
@@ -280,7 +281,7 @@ class Profile extends BaseController
         ]);
 
         $member = Member::find(auth()->guard('members')->id());
-        $oldTenders = Tender::where('is_winner',0)->get();
+        $oldTenders = Tender::where('is_winner',0)->where('auction_id',$auction->id)->get();
         foreach($oldTenders as $old){
             if($old->member_id == $member->id && $old->price == $request->price){
                 session()->flash('error', __("live.price_exist"));
@@ -288,7 +289,11 @@ class Profile extends BaseController
             }
         }
 
-        $auction = Auction::find($aucation_id);
+        if($auction->price > $request->price){
+            session()->flash('error', __("live.incorr_price"));
+            return redirect()->back();
+        }
+
         $tender  = new Tender;
         $tender->member_id  = $member->id;
         $tender->auction_id = $auction->id;

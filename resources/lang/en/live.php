@@ -27,7 +27,7 @@ return [
     'address'         => 'Address',
     'open_price'      => 'Opening Price',
     'opining_pice'    => 'Opining Price',
-    'hight_price'     => 'Highest Auction Price',
+    'hight_price'     => 'Highest Bide Price',
     'your_auction'    => 'Your Auction',
     'auction_now'     => 'Bid now',
     'close_price'     => 'Closeing Price',

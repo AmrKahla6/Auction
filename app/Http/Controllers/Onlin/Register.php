@@ -7,8 +7,8 @@ use App\Models\Member;
 use App\Models\Auction;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -85,7 +85,18 @@ class Register extends Controller
     );
          $data['password'] = bcrypt($request->password);
          $data['type']     = 0;
-        //  return $data;
+         $phone            = $data['phone'];
+
+        //  $randomcode               = substr(str_shuffle("0123456789"), 0, 6);
+        //  $data['activation_code']  = $randomcode;
+        //  $newphone         = "+965" . substr($phone, 1);
+        //  if(App::isLocale('ar')){
+        //     $url = 'https://smsq8.com/api/sms.php?username=moi&password=moi12345&mobile=' . $newphone . '&sender=smsq8.com&message=' . 'كود التفعيل الخاص بك هو ' . $data['activation_code'] . '&language='.app()->getLocale();
+        //      return response()->json($url, 200);
+        //  }else{
+        //     $url = 'https://smsq8.com/api/sms.php?username=moi&password=moi12345&mobile='  . $newphone . '&sender=smsq8.com&message='. 'Your Verification code is ' . $data['activation_code'] . '&language='.app()->getLocale();
+        //     return response()->json($url, 200);
+        //  }
          $member = Member::create($data);
          session()->flash('success', __('site.added_successfully'));
         return redirect()->route('live.login');
