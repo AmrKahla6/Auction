@@ -287,25 +287,26 @@ class Profile extends BaseController
 
     public function add_tender(Request $request,$aucation_id)
     {
-        $auction = Auction::find($aucation_id);
         $validatedData = $request->validate([
             'price' => 'required',
         ],[
             'price.required'  => __("user.price"),
         ]);
 
-        $member = Member::find(auth()->guard('members')->id());
+        $auction = Auction::find($aucation_id);
+        $member  = Member::find(auth()->guard('members')->id());
 
+        // IF Balance Of Member < Balance Of main Category
         $sub_cat  = Category::where('id',$auction->cat_id)->first();
         $main_cat = Category::where('id',$sub_cat->parent_id)->first();
-        $member   = Member::where('id',$request->session()->exists('member'))->first();
-
         if($member->balance < $main_cat->price){
             session()->flash('error', __('user.balance_price'));
             return redirect()->back();
-        }else{
-            $member->balance = $member->balance - $main_cat->price;
-            $member->save();
+        }
+
+        if($auction->price > $request->price or $request->price < $auction->price_opining){
+            session()->flash('error', __("live.incorr_price"));
+            return redirect()->back();
         }
 
         $oldTenders = Tender::where('is_winner',0)->where('auction_id',$auction->id)->get();
@@ -316,36 +317,45 @@ class Profile extends BaseController
             }
         }
 
-        if($auction->price > $request->price){
-            session()->flash('error', __("live.incorr_price"));
-            return redirect()->back();
-        }
-
         $tender  = new Tender;
-        $tender->member_id  = $member->id;
-        $tender->auction_id = $auction->id;
-        if($request->price < $auction->price_opining){
-            session()->flash('error', __("live.incorr_price"));
-            return redirect()->back();
-        }
+
+        //If Win Bide
         if($request->price >= $auction->price_closing){
             $tender->is_winner    = 1;
             $auction->is_finished = 1;
-         }else {
-            $tender->is_winner = 0;
+
+            //return price to member bide
+            $old_tender = Tender::with('member')->select('id','member_id')->where('auction_id',$aucation_id)->get()->unique('member_id');
+            foreach($old_tender as $old_t){
+                $balance = $old_t->member->balance + $main_cat->price;
+                $old_t->member->update(array("balance" => $balance));
+            }
+            // Return price to auction owner
+            $auctiom_owner = Member::where('id',$auction->member_id)->first();
+            $auctiom_owner->balance = $auctiom_owner->balance + $main_cat->price;
+            $auctiom_owner->save();
+        }else{
+            return 0;
+            $tender->is_winner    = 0;
+            $exists = Tender::where('auction_id',$aucation_id)->exists();
+            if(!$exists){
+                $member->balance      = $member->balance - $main_cat->price;
+                $member->save();
+            }
         }
 
+        //If Price Of Bide > Price Auction store it in Price Auction this is the hight price of auction
         if($request->price > $auction->price){
             $auction->price = $request->price;
         }
-
         $tender->price      = $request->price;
+        $tender->member_id  = $member->id;
+        $tender->auction_id = $auction->id;
 
         $auction->save();
         $tender->save();
 
         if($tender->is_winner == 0){
-
             session()->flash('success', __('live.succes_auct'));
         }else{
             session()->flash('success', __('live.winner_auct'));
