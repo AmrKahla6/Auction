@@ -543,9 +543,8 @@ class AuctionController extends BaseController
             }else{
                 $auctions = AcutionResource_ar::collection(Auction::where('status',0)->get());
             }
-
-
-            return $this->returnData('success', $auctions);
+            $data = $this->paginate($auctions);
+            return $this->returnData('success', $data);
         }
             return $this->returnError('error', __('user.no_auctions'));
         }
@@ -663,8 +662,8 @@ class AuctionController extends BaseController
              }else{
                 $auction = AcutionResource_ar::collection(Auction::where('is_finished',1)->get());
              }
-
-             return $this->returnData('success', $auction);
+             $data = $this->paginate($auction);
+             return $this->returnData('success', $data);
          }else{
             return $this->sendError('success', __("user.notendedacutions"));
          }
@@ -684,7 +683,8 @@ class AuctionController extends BaseController
                  }else{
                     $auction = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->get());
                  }
-                 return $this->returnData('success', $auction);
+                 $data = $this->paginate($auction);
+                 return $this->returnData('success', $data);
             }else{
                 return $this->sendError('success', __("user.notendedacutions"));
             }
@@ -703,7 +703,8 @@ class AuctionController extends BaseController
             $tenders = Tender::get();
             if(count($tenders) > 0){
                 $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',1)->get());
-                return $this->returnData('success', $tender);
+                $data = $this->paginate($tender);
+                return $this->returnData('success', $data);
             }else{
                 return $this->sendError('success', __("user.notwinnercutions"));
             }
@@ -721,8 +722,9 @@ class AuctionController extends BaseController
         if($member){
             $tenders = Tender::get();
             if(count($tenders) > 0){
-                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->get());
-                return $this->returnData('success', $tender);
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->get(10));
+                $data = $this->paginate($tender);
+                return $this->returnData('success', $data);
             }else{
                 return $this->sendError('success', __("user.notwattingcutions"));
             }
@@ -782,7 +784,8 @@ class AuctionController extends BaseController
         }else{
             $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get());
         }
-        return $this->returnData('success', $auctions);
+        $data = $this->paginate($auctions);
+        return $this->returnData('success', $data);
        }
 
        /**

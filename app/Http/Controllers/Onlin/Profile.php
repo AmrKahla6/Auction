@@ -304,11 +304,13 @@ class Profile extends BaseController
             return redirect()->back();
         }
 
+        //if auction price > member input price or member input price < auction price opining
         if($auction->price > $request->price or $request->price < $auction->price_opining){
             session()->flash('error', __("live.incorr_price"));
             return redirect()->back();
         }
 
+        //IF member repate price to the same auction
         $oldTenders = Tender::where('is_winner',0)->where('auction_id',$auction->id)->get();
         foreach($oldTenders as $old){
             if($old->member_id == $member->id && $old->price == $request->price){
@@ -335,7 +337,6 @@ class Profile extends BaseController
             $auctiom_owner->balance = $auctiom_owner->balance + $main_cat->price;
             $auctiom_owner->save();
         }else{
-            return 0;
             $tender->is_winner    = 0;
             $exists = Tender::where('auction_id',$aucation_id)->exists();
             if(!$exists){

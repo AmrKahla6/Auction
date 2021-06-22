@@ -16,12 +16,14 @@ class AcutionResource_ar extends JsonResource
      */
     public function toArray($request)
     {
+
         $favorit = Favorite::where('member_id', $request->member_id)->where('auction_id',$this->id)->exists();
         if($favorit){
             $is_like =  true;
         }else{
             $is_like =  false;
         }
+
         return [
             'id'              => $this->id,
             'member_id'       => $this->member_id,
