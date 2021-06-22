@@ -295,6 +295,19 @@ class Profile extends BaseController
         ]);
 
         $member = Member::find(auth()->guard('members')->id());
+
+        $sub_cat  = Category::where('id',$auction->cat_id)->first();
+        $main_cat = Category::where('id',$sub_cat->parent_id)->first();
+        $member   = Member::where('id',$request->session()->exists('member'))->first();
+
+        if($member->balance < $main_cat->price){
+            session()->flash('error', __('user.balance_price'));
+            return redirect()->back();
+        }else{
+            $member->balance = $member->balance - $main_cat->price;
+            $member->save();
+        }
+
         $oldTenders = Tender::where('is_winner',0)->where('auction_id',$auction->id)->get();
         foreach($oldTenders as $old){
             if($old->member_id == $member->id && $old->price == $request->price){

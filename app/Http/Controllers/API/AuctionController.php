@@ -587,8 +587,17 @@ class AuctionController extends BaseController
         }
 
         $member = Member::where('id',$request->member_id)->first();
+
         if($member){
             $auction = Auction::where('id',$request->auction_id)->first();
+            $sub_cat  = Category::where('id',$auction->cat_id)->first();
+            $main_cat = Category::where('id',$sub_cat->parent_id)->first();
+            if($member->balance < $main_cat->price){
+                return $this->sendError('success', __("user.balance_price"));
+            }else{
+                $member->balance = $member->balance - $main_cat->price;
+                $member->save();
+            }
             // $newStartDate = Carbon::now();
             // if (Carbon::now()->isSameDay($newStartDate) > $auction->end_data) {
             //     $auction->is_finished = 1;
