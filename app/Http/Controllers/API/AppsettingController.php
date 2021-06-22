@@ -12,6 +12,7 @@ use App\Models\Member;
 use App\Models\Slider;
 use App\Models\Contact;
 use App\Models\Privicy;
+use App\Models\StaticDayOF;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
 use App\Http\Controllers\Controller;
@@ -107,6 +108,11 @@ class AppsettingController extends BaseController
 
       public function daysOf(Request $request){
         $days    = DaysOF::select('id','days_of as day')->get();
+        return $this->returnData('success', $days);
+      }
+
+      public function staticDaysOf(){
+        $days    = StaticDayOF::select('id','day as days')->get();
         return $this->returnData('success', $days);
       }
 }

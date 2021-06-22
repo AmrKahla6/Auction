@@ -261,7 +261,7 @@ class AuctionController extends BaseController
                     'price_opining'      => 'required',
                     'price_closing'      => 'nullable',
                     'start_data'         => 'required',
-                    'end_data'           => 'required',
+                    // 'end_data'           => 'required',
                     'detials'            => 'required',
                     'cat_id'             => 'required',
                     'type_id'            => 'required',
@@ -274,7 +274,7 @@ class AuctionController extends BaseController
                     'city_id.required'             => __("user.city_id"),
                     'price_opining.required'       => __("user.price_opining"),
                     'start_data.required'          => __("user.start_data"),
-                    'end_data.required'            => __("user.end_data"),
+                    // 'end_data.required'            => __("user.end_data"),
                     'cat_id.required'              => __("user.cat_id"),
                     'type_id.required'             => __("user.type_id"),
                     'imagesarr.required'           => __("user.imagesarr"),
@@ -302,7 +302,7 @@ class AuctionController extends BaseController
             $newauction->start_data    = $startdate;
             $endDateTime               = $request['end_data'];
             $enddate                   = date('y/m/d/H-i-s', strtotime($endDateTime));
-            $newauction->end_data      = $enddate;
+            $newauction->end_data      = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($startDateTime)));
 
             $newauction->detials            = $request['detials'];
             $newauction->cat_id             = $request['cat_id'];
@@ -377,7 +377,7 @@ class AuctionController extends BaseController
                 'price_opining'      => 'required',
                 'price_closing'      => 'nullable',
                 'start_data'         => 'required',
-                'end_data'           => 'required',
+                // 'end_data'           => 'required',
                 'start_time'         => 'required',
                 'end_time'           => 'required',
                 'detials'            => 'required',
@@ -391,7 +391,7 @@ class AuctionController extends BaseController
                 'city_id.required'             => __("user.city_id"),
                 'price_opining.required'       => __("user.price_opining"),
                 'start_data.required'          => __("user.start_data"),
-                'end_data.required'            => __("user.end_data"),
+                // 'end_data.required'            => __("user.end_data"),
                 'start_time.required'          => __("user.start_time"),
                 'end_time.required'            => __("user.end_time"),
                 'cat_id.required'              => __("user.cat_id"),
@@ -417,7 +417,7 @@ class AuctionController extends BaseController
                 $upAcution->price_opining = $request->price_opining;
                 $upAcution->price_closing = $request->price_closing;
                 $upAcution->start_data    = $request->start_data;
-                $upAcution->end_data      = $request->end_data;
+                $upAcution->end_data      = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($request->start_data)));
                 $upAcution->start_time    = $request->start_time;
                 $upAcution->end_time      = $request->end_time;
                 $upAcution->detials       = $request->detials;

@@ -89,6 +89,9 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             //Day Of
             Route::post('get-days-of', 'AppsettingController@daysOf');
 
+            //Static Days Of
+            Route::get('get-static-days-of', 'AppsettingController@staticDaysOf');
+
             //Latest Acutions
             Route::post('latest-acutions', 'AuctionController@latestAcutions');
 
