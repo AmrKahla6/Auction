@@ -20,6 +20,12 @@ class FavoriteResource extends JsonResource
         $member   = Member::where('id',$this->auction->member_id)->first();
         $username = $member->username;
 
+        if($this->is_like == 1){
+            $like = true;
+        }else{
+            $like = false;
+        }
+
 
 
         $image = ImageResource::collection(AuctionImage::where('auction_id',$this->auction_id)->get());
@@ -27,7 +33,7 @@ class FavoriteResource extends JsonResource
             'id'               => $this->id,
             'member_id'        => $this->member_id,
             'member'           => $this->member->username,
-            'is_like'          => $this->is_like,
+            'is_like'          => $like,
             'auction_id'       => $this->auction_id,
             'acution_owner'    => $username,
             'title'            => $this->auction->auction_title ,

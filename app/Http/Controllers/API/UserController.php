@@ -470,22 +470,17 @@ class UserController extends BaseController
           $member = Member::where('id',$request->member_id)->first();
           if($member){
             $auction = Auction::where('id',$request->auction_id)->first();
-            if($member->id == $auction->member_id){
-                return $this->returnError('success', __("user.impossible"));
+            $old_fav = Favorite::where('member_id',$request->member_id)->where('auction_id',$request->auction_id)->first();
+            if($old_fav){
+                $old_fav->delete();
+                return $this->returnData('success', __("user.delete_favourit"));
             }else{
-                $old_fav = Favorite::where('member_id',$request->member_id)->where('auction_id',$request->auction_id)->first();
-
-                if($old_fav){
-                    $old_fav->delete();
-                    return $this->returnData('success', __("user.delete_favourit"));
-                }else{
-                    $favorite = new Favorite;
-                    $favorite->member_id  = $request->member_id;
-                    $favorite->auction_id = $request->auction_id;
-                    $favorite->is_like = 1;
-                    $favorite->save();
-                    return $this->returnData('success', __("user.add_favourit"));
-                }
+                $favorite = new Favorite;
+                $favorite->member_id  = $request->member_id;
+                $favorite->auction_id = $request->auction_id;
+                $favorite->is_like = 1;
+                $favorite->save();
+                return $this->returnData('success', __("user.add_favourit"));
             }
           }else{
             return $this->returnError('success', __("user.usernotexist"));
@@ -500,7 +495,8 @@ class UserController extends BaseController
         $member = Member::where('id',$request->member_id)->first();
         if($member){
             $fav = FavoriteResource::collection(Favorite::where('member_id',$request->member_id)->get());
-            return $this->returnData('success', $fav);
+            $data = $this->paginate($fav);
+            return $this->returnData('success', $data);
         }else{
             return $this->returnError('success', __("user.usernotexist"));
         }

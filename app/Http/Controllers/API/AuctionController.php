@@ -79,7 +79,6 @@ class AuctionController extends BaseController
         }
 
         if($request->category_id && $request->params && $request->min_price && $request->max_price){
-            return 2;
             $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
             })->
@@ -127,8 +126,9 @@ class AuctionController extends BaseController
                 $qu->where('is_finished',0);
             })
             ->where('cat_id',$request->category_id)->get();
-
         }
+
+
         elseif($request->category_id && $request->min_price && $request->max_price){
             $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->WhereBetween('price_opining', [$request->min_price, $request->max_price])
@@ -588,63 +588,80 @@ class AuctionController extends BaseController
         $member = Member::where('id',$request->member_id)->first();
 
         if($member){
-            $auction = Auction::where('id',$request->auction_id)->first();
+            $auction  = Auction::where('id',$request->auction_id)->first();
+
+            // IF Balance Of Member < Balance Of main Category
             $sub_cat  = Category::where('id',$auction->cat_id)->first();
             $main_cat = Category::where('id',$sub_cat->parent_id)->first();
             if($member->balance < $main_cat->price){
-                return $this->sendError('success', __("user.balance_price"));
+                return $this->returnError('error', __("user.balance_price"));
             }else{
                 $member->balance = $member->balance - $main_cat->price;
                 $member->save();
             }
-            // $newStartDate = Carbon::now();
-            // if (Carbon::now()->isSameDay($newStartDate) > $auction->end_data) {
-            //     $auction->is_finished = 1;
-            //     $auction->save();
-            //     $successMeg = __('user.date_ended');
-            //     return $this->returnData('success', $successMeg);
-            // }
-            if($request->member_id == $auction->member_id){
-                return $this -> returnError('',__('user.can_not_tender'));
-            }
-            if($request->price < $auction->price_opining){
+
+
+            //if auction price > member request price or member input price < auction price opining
+            if($auction->price > $request->price or $request->price < $auction->price_opining){
                 return $this -> returnError('',__('user.low_price'));
             }
+
+            //IF member repate price to the same auction
+            $oldTenders = Tender::where('is_winner',0)->where('auction_id',$request->auction_id)->get();
+            foreach($oldTenders as $old){
+                if($old->member_id == $member->id && $old->price == $request->price){
+                    return $this -> returnError('',__('live.price_exist'));
+                }
+            }
+
+            //Store New Bide
+            $tender  = new Tender;
+
+            //If Win Bide
             if($request->price >= $auction->price_closing){
+                $tender->is_winner    = 1;
                 $auction->is_finished = 1;
-                $auction->save();
-            }
-            if($auction){
-                $tender = Tender::where('auction_id',$request->auction_id)->get();
-                for ($i=0; $i <count($tender) ; $i++) {
-                    if($tender[$i]->is_winner == 1){
-                        return $this -> returnError('',__('user.endedacutions'));
-                    }
-                }
-                $newtender = new Tender;
-                $newtender->member_id   = $request['member_id'];
-                $newtender->auction_id  = $request['auction_id'];
-                $newtender->price       = $request['price'];
-                if($request->price >= $auction->price_closing){
-                    $newtender->is_winner = 1;
-                }
-                $newtender->save();
 
-                if($request['price'] > $auction->price){
-                    $auction->price = $request['price'];
-                    $auction->save();
+                //return price to member bide
+                $old_tender = Tender::with('member')->select('id','member_id')->where('auction_id',$auction->id)->get()->unique('member_id');
+                foreach($old_tender as $old_t){
+                    $balance = $old_t->member->balance + $main_cat->price;
+                    $old_t->member->update(array("balance" => $balance));
                 }
-
-                //Show message
-                if($newtender->is_winner == 1){
-                    $successMeg = __('user.winner');
-                }else{
-                    $successMeg = __('user.tendersucc');
-                }
-                return $this->returnData('success', $successMeg);
+                // Return price to auction owner
+                $auctiom_owner = Member::where('id',$auction->member_id)->first();
+                $auctiom_owner->balance = $auctiom_owner->balance + $main_cat->price;
+                $auctiom_owner->save();
             }else{
-                return $this -> returnError('',__('user.acutionnitexists'));
+                $tender->is_winner    = 0;
+                $exists = Tender::where('auction_id',$auction->id)->exists();
+                if(!$exists){
+                    $member->balance      = $member->balance - $main_cat->price;
+                    $member->save();
+                }
             }
+
+            //If Price Of Bide > Price Auction store it in Price Auction this is the hight price of auction
+            if($request->price > $auction->price){
+                $auction->price = $request->price;
+            }
+
+            $tender->price      = $request->price;
+            $tender->member_id  = $member->id;
+            $tender->auction_id = $auction->id;
+
+            $auction->save();
+            $tender->save();
+
+
+            //Show message
+            if($tender->is_winner == 1){
+                $successMeg = __('user.winner');
+            }else{
+                $successMeg = __('user.tendersucc');
+            }
+            return $this->returnData('success', $successMeg);
+
         }else{
             return $this->sendError('success', __("user.usernotexist"));
         }
