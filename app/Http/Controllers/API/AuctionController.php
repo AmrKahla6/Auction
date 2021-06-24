@@ -32,27 +32,17 @@ class AuctionController extends BaseController
      * Search function
      */
     public function search(Request $request){
-        // return Auction::find(1)->load('images');
         $res = Auction::with('images');
-        if ($request->auction_title) {
-            // return 1;
-
-            $res= $res->where('auction_title','like', '%' . $request->auction_title . '%');
+        if ($request->search) {
+            $res= $res->where('auction_title','like', '%' . $request->search . '%');
         }
-        if ($request->city_id) {
-            $res= $res->where('city_id', $request->city_id);
-        }
-        if ($request->cat_id) {
-            $res= $res->where('cat_id', $request->cat_id);
-        }
-        return $res = $res->paginate(10);
-        // $auctions = Auction::has('images')->when($request->auction_title, function ($q) use ($request) {
-        //     return $q->where('auction_title', '%' . $request->auction_title . '%');
-        // })->when($request->city_id, function ($q) use ($request) {
-        //     return $q->where('city_id', $request->city_id);
-        // })->when($request->category_id, function ($q) use ($request) {
-        //     return $q->where('cat_id', $request->category_id);
-        // })->get();
+        // if ($request->city_id) {
+        //     $res= $res->where('city_id', $request->city_id);
+        // }
+        // if ($request->cat_id) {
+        //     $res= $res->where('cat_id', $request->cat_id);
+        // }
+        $res = $res->paginate(10);
 
         if($request->lang == "en"){
             return $this->returnData('search',  AcutionResource_en::collection($res));
@@ -539,17 +529,30 @@ class AuctionController extends BaseController
         $aucs = Auction::get();
         if($aucs){
             if($request->lang == "en"){
-                $auctions = AcutionResource_en::collection(Auction::where('status',0)->get());
+                $auctions = AcutionResource_en::collection(Auction::where('status',0)->paginate(8));
             }else{
-                $auctions = AcutionResource_ar::collection(Auction::where('status',0)->get());
+                 $auctions = AcutionResource_ar::collection(Auction::where('status',0)->paginate(8));
             }
-            $data = $this->paginate($auctions);
-            return $this->returnData('success', $data);
+            return $this->returnData('success', $auctions);
         }
             return $this->returnError('error', __('user.no_auctions'));
         }
 
     public function getAcution(Request $request){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'member_id' => 'required'
+            ],[
+                'member_id.required' => __('user.member_id'),
+            ]
+        );
+
+        if ($validator->fails()) {
+            $code = $this->returnCodeAccordingToInput($validator);
+            return $this->returnValidationError($code, $validator);
+        }
+
         $auc = Auction::where('id', $request->auction_id)->where('status',0)->first();
 
         if($auc){
@@ -675,12 +678,11 @@ class AuctionController extends BaseController
          $auctions = Auction::where('is_finished',1)->get();
          if(count($auctions) > 0){
              if($request->lang == "en"){
-                $auction = AcutionResource_en::collection(Auction::where('is_finished',1)->get());
+                $auction = AcutionResource_en::collection(Auction::where('is_finished',1)->paginate(8));
              }else{
-                $auction = AcutionResource_ar::collection(Auction::where('is_finished',1)->get());
+                $auction = AcutionResource_ar::collection(Auction::where('is_finished',1)->paginate(8));
              }
-             $data = $this->paginate($auction);
-             return $this->returnData('success', $data);
+             return $this->returnData('success', $auction);
          }else{
             return $this->sendError('success', __("user.notendedacutions"));
          }
@@ -696,12 +698,11 @@ class AuctionController extends BaseController
             $auctions = Auction::where('member_id',$request->member_id)->where('is_finished',1)->get();
             if(count($auctions) > 0){
                 if($request->lang == "en"){
-                    $auction = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->get());
+                    $auction = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->paginate(8));
                  }else{
-                    $auction = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->get());
+                    $auction = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->paginate(8));
                  }
-                 $data = $this->paginate($auction);
-                 return $this->returnData('success', $data);
+                 return $this->returnData('success', $auction);
             }else{
                 return $this->sendError('success', __("user.notendedacutions"));
             }
@@ -719,9 +720,8 @@ class AuctionController extends BaseController
         if($member){
             $tenders = Tender::get();
             if(count($tenders) > 0){
-                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',1)->get());
-                $data = $this->paginate($tender);
-                return $this->returnData('success', $data);
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',1)->paginate(8));
+                return $this->returnData('success', $tender);
             }else{
                 return $this->sendError('success', __("user.notwinnercutions"));
             }
@@ -739,9 +739,8 @@ class AuctionController extends BaseController
         if($member){
             $tenders = Tender::get();
             if(count($tenders) > 0){
-                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->get(10));
-                $data = $this->paginate($tender);
-                return $this->returnData('success', $data);
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->paginate(8));
+                return $this->returnData('success', $tender);
             }else{
                 return $this->sendError('success', __("user.notwattingcutions"));
             }
@@ -797,12 +796,11 @@ class AuctionController extends BaseController
        public function acutionCategory(Request $request){
         $auctions = Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get();
         if($request->lang == 'en'){
-            $auctions = AcutionResource_en::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get());
+            $auctions = AcutionResource_en::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->paginate(8));
         }else{
-            $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get());
+            $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->paginate(8));
         }
-        $data = $this->paginate($auctions);
-        return $this->returnData('success', $data);
+        return $this->returnData('success', $auctions);
        }
 
        /**

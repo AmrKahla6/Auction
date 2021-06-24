@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Acution;
 
+use App\Models\Auction;
 use App\Models\Favorite;
 use Illuminate\Http\Resources\Json\JsonResource;
 

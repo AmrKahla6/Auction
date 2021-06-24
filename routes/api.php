@@ -75,7 +75,7 @@ Route::group(['middleware' => ['api','changeLanguage'], 'namespace' => 'API'], f
             Route::post('filter','AuctionController@filter');
 
             //Get All  Auctions
-            Route::post('get-all-auction', 'AuctionController@getAll');
+            Route::post('get-all-auction', 'AuctionController@getAll')->name('get-all-auction');
 
             //get Auction
             Route::post('get-auction', 'AuctionController@getAcution');
