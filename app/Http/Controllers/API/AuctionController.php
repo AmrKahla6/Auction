@@ -69,51 +69,71 @@ class AuctionController extends BaseController
         }
 
         if($request->category_id && $request->params && $request->min_price && $request->max_price){
+            $auction_details = AuctionDetials::with('auctionWithImages');
+            for ($i=0; $i < count($request->params); $i++) {
+                $auction_details= $auction_details->OrWhere(function($q) use ($request,$i) {
+                    $q->where('param_value_id',$request->params[$i])->where('type_id',$request->value[$i]);
+                });
+            }
             $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->whereBetween('price_opining', [$request->min_price, $request->max_price]) ;
             })->
             when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('param_value_id',array_keys($request->params));
+                return $q->where('param_value_id',$request->params);
             })->when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('type_id',$request->params);
+                return $q->where('type_id',$request->value);
             })->where('cat_id',$request->category_id)->get();
-
         }
 
         elseif($request->category_id && $request->params && $request->min_price){
+            $auction_details = AuctionDetials::with('auctionWithImages');
+            for ($i=0; $i < count($request->params); $i++) {
+                $auction_details= $auction_details->OrWhere(function($q) use ($request,$i) {
+                    $q->where('param_value_id',$request->params[$i])->where('type_id',$request->value[$i]);
+                });
+            }
+
             $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->where('price_opining', '>=', $request->min_price) ;
             })->
             when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('param_value_id',array_keys($request->params));
-            })->when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('type_id',$request->params);
+                return $q->where('param_value_id',$request->params)->where('type_id',$request->value);
             })->where('cat_id',$request->category_id)->get();
 
         }
 
 
         elseif($request->category_id && $request->params && $request->max_price){
+            $auction_details = AuctionDetials::with('auctionWithImages');
+            for ($i=0; $i < count($request->params); $i++) {
+                $auction_details= $auction_details->OrWhere(function($q) use ($request,$i) {
+                    $q->where('param_value_id',$request->params[$i])->where('type_id',$request->value[$i]);
+                });
+            }
             $auction_details = AuctionDetials::whereHas('auctionWithImages', function ($q) use ($request){
                 $q->where('price_opining', '<=', $request->max_price) ;
             })->
             when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('param_value_id',array_keys($request->params));
-            })->when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('type_id',$request->params);
+                return $q->whereIn('param_value_id',$request->params)->where('type_id',$request->value);
             })->where('cat_id',$request->category_id)->get();
 
         }
 
-
         elseif($request->category_id && $request->params){
-            $auction_details = AuctionDetials::with('auctionWithImages')->when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('param_value_id',array_keys($request->params));
-            })->when(count($request->params) > 0 , function($q) use ($request){
-                return $q->whereIn('type_id',$request->params);
+               $auction_details = AuctionDetials::with('auctionWithImages');
+               $auction_details = $auction_details->where(function($qu) use ($request){
+                   for ($i=0; $i < count($request->params); $i++) {
+                       $qu->orWhere(function($q) use ($request,$i) {
+                           $q->where('param_value_id',$request->params[$i])->where('type_id',$request->value[$i]);
+                       });
+                   }
+               });
+
+            $auction_details = $auction_details->with('auctionWithImages')->when(count($request->params) > 0 , function($q) use ($request){
+                 $q->whereIn('param_value_id',$request->params)->whereIn('type_id',$request->value);
             })
-            ->whereHas('auction',function($qu)  {
-                $qu->where('is_finished',0);
+            ->whereHas('auctionWithImages',function($qu)  {
+               $qu->where('is_finished',0);
             })
             ->where('cat_id',$request->category_id)->get();
         }
@@ -224,7 +244,7 @@ class AuctionController extends BaseController
      */
 
      public function cities(Request $request){
-        $cities = City::select('id','governorate_id',"city_name_" .app()->getLocale() . ' as city name')->where('governorate_id',$request->governorate_id)->get();
+        $cities = City::select('id','governorate_id',"city_name_" .app()->getLocale() . ' as city name')->where('governorate_id',$request->governorate_id)->orderBy('id','DESC')->get();
         if(count($cities) > 0){
             return $this->returnData('city', $cities);
         }else{
@@ -529,11 +549,16 @@ class AuctionController extends BaseController
         $aucs = Auction::get();
         if($aucs){
             if($request->lang == "en"){
-                $auctions = AcutionResource_en::collection(Auction::where('status',0)->paginate(8));
+                $auctions = AcutionResource_en::collection(Auction::where('status',0)->orderBy('id','DESC')->paginate(8));
             }else{
-                 $auctions = AcutionResource_ar::collection(Auction::where('status',0)->paginate(8));
+                 $auctions = AcutionResource_ar::collection(Auction::where('status',0)->orderBy('id','DESC')->paginate(8));
             }
-            return $this->returnData('success', $auctions);
+            $count = Auction::where('status',0)->count();
+            $response = [
+                'acutions' => $auctions,
+                'count'    => $count,
+            ];
+            return $this->returnData('success', $response);
         }
             return $this->returnError('error', __('user.no_auctions'));
         }
@@ -678,9 +703,9 @@ class AuctionController extends BaseController
          $auctions = Auction::where('is_finished',1)->get();
          if(count($auctions) > 0){
              if($request->lang == "en"){
-                $auction = AcutionResource_en::collection(Auction::where('is_finished',1)->paginate(8));
+                $auction = AcutionResource_en::collection(Auction::where('is_finished',1)->orderBy('id','DESC')->paginate(8));
              }else{
-                $auction = AcutionResource_ar::collection(Auction::where('is_finished',1)->paginate(8));
+                $auction = AcutionResource_ar::collection(Auction::where('is_finished',1)->orderBy('id','DESC')->paginate(8));
              }
              return $this->returnData('success', $auction);
          }else{
@@ -698,9 +723,9 @@ class AuctionController extends BaseController
             $auctions = Auction::where('member_id',$request->member_id)->where('is_finished',1)->get();
             if(count($auctions) > 0){
                 if($request->lang == "en"){
-                    $auction = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->paginate(8));
+                    $auction = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->orderBy('id','DESC')->paginate(8));
                  }else{
-                    $auction = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->paginate(8));
+                    $auction = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->where('is_finished',1)->orderBy('id','DESC')->paginate(8));
                  }
                  return $this->returnData('success', $auction);
             }else{
@@ -720,7 +745,7 @@ class AuctionController extends BaseController
         if($member){
             $tenders = Tender::get();
             if(count($tenders) > 0){
-                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',1)->paginate(8));
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',1)->orderBy('id','DESC')->paginate(8));
                 return $this->returnData('success', $tender);
             }else{
                 return $this->sendError('success', __("user.notwinnercutions"));
@@ -739,7 +764,7 @@ class AuctionController extends BaseController
         if($member){
             $tenders = Tender::get();
             if(count($tenders) > 0){
-                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->paginate(8));
+                $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->where('is_winner',0)->orderBy('id','DESC')->paginate(8));
                 return $this->returnData('success', $tender);
             }else{
                 return $this->sendError('success', __("user.notwattingcutions"));
@@ -796,9 +821,9 @@ class AuctionController extends BaseController
        public function acutionCategory(Request $request){
         $auctions = Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->get();
         if($request->lang == 'en'){
-            $auctions = AcutionResource_en::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->paginate(8));
+            $auctions = AcutionResource_en::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->orderBy('id','DESC')->paginate(8));
         }else{
-            $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->paginate(8));
+            $auctions = AcutionResource_ar::collection(Auction::where('cat_id',$request->cat_id)->where('is_finished',0)->orderBy('id','DESC')->paginate(8));
         }
         return $this->returnData('success', $auctions);
        }

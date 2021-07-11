@@ -432,9 +432,9 @@ class UserController extends BaseController
             $auction = Auction::where('member_id',$request->member_id)->get();
             if($auction){
                 if($request->lang == "en"){
-                    $auctions = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->get());
+                    $auctions = AcutionResource_en::collection(Auction::where('member_id',$request->member_id)->orderBy('created_at', 'DESC')->get());
                 }else{
-                    $auctions = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->get());
+                    $auctions = AcutionResource_ar::collection(Auction::where('member_id',$request->member_id)->orderBy('created_at', 'DESC')->get());
                 }
                 return $this->returnData('success', $auctions);
             }else{
@@ -451,7 +451,7 @@ class UserController extends BaseController
      public function myTender(Request $request){
         $member = Member::where('id',$request->member_id)->first();
         if($member){
-            $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->get());
+            $tender = TenderResource::collection(Tender::where('member_id',$request->member_id)->orderBy('created_at', 'DESC')->get());
             if(count($tender) != 0){
                 return $this->returnData('success', $tender);
             }else{
@@ -494,9 +494,8 @@ class UserController extends BaseController
       public function myFavorite(Request $request){
         $member = Member::where('id',$request->member_id)->first();
         if($member){
-            $fav = FavoriteResource::collection(Favorite::where('member_id',$request->member_id)->get());
-            $data = $this->paginate($fav);
-            return $this->returnData('success', $data);
+            $fav = FavoriteResource::collection(Favorite::where('member_id',$request->member_id)->orderBy('created_at', 'DESC')->paginate(8));
+            return $this->returnData('success', $fav);
         }else{
             return $this->returnError('success', __("user.usernotexist"));
         }
