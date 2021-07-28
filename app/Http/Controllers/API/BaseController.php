@@ -50,12 +50,13 @@ class BaseController extends Controller
         ];
     }
 
-    public function returnData($key, $value, $msg = "")
+    public function returnData($key, $value, $msg = "",$count=null)
     {
         return response()->json([
             'status' => true,
             'errNum' => "S000",
             'msg' => $msg,
+            'count' => $count,
             $key => $value
         ]);
     }

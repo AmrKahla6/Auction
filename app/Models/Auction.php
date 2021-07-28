@@ -44,4 +44,10 @@ class Auction extends Model
     // public function setDateAttribute( $value ) {
     //     $this->attributes['date'] = (new Carbon($value))->format('y/m/d/h-i-s');
     //   }
+
+
+    protected $casts = [
+        'start_data' => 'date:hh:mm',
+        'end_data'   => 'date:hh:mm'
+    ];
 }
